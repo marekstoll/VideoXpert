@@ -797,6 +797,26 @@
       clip-path: circle(120px at var(--x) var(--y)) !important;
     }
   }
+    /* POSUN ODKRÝVANÉHO FOŤÁKU NÍŽ */
+.photo-img {
+  --photo-shift: 95px;
+  transform: translateY(var(--photo-shift)) !important;
+  clip-path: circle(0px at var(--x) calc(var(--y) - var(--photo-shift))) !important;
+}
+
+.device-scene.is-active .photo-img {
+  clip-path: circle(155px at var(--x) calc(var(--y) - var(--photo-shift))) !important;
+}
+
+@media (max-width: 860px) {
+  .photo-img {
+    --photo-shift: 60px;
+  }
+
+  .device-scene.is-active .photo-img {
+    clip-path: circle(120px at var(--x) calc(var(--y) - var(--photo-shift))) !important;
+  }
+}
 </style>
 </head>
 
