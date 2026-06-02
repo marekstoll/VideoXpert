@@ -769,6 +769,35 @@
       }
     }
   </style>
+  <style>
+  /* RYCHLEJŠÍ ODKRÝVÁNÍ OBRÁZKU POD MYŠÍ */
+  .photo-img {
+    transition: opacity .04s linear !important;
+    will-change: clip-path, opacity !important;
+  }
+
+  .device-scene.is-active .photo-img {
+    opacity: 1 !important;
+    clip-path: circle(155px at var(--x) var(--y)) !important;
+  }
+
+  .reveal-light {
+    transition: opacity .04s linear !important;
+    transform: translate(-50%, -50%) !important;
+    will-change: left, top, opacity !important;
+  }
+
+  .device-scene.is-active .reveal-light {
+    opacity: 1 !important;
+    transform: translate(-50%, -50%) !important;
+  }
+
+  @media (max-width: 860px) {
+    .device-scene.is-active .photo-img {
+      clip-path: circle(120px at var(--x) var(--y)) !important;
+    }
+  }
+</style>
 </head>
 
 <body>
