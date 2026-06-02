@@ -1,1 +1,924 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>VideoXpert</title>
 
+  <style>
+    :root {
+      --black: #030303;
+      --black-2: #080808;
+      --white: #ffffff;
+      --soft: #eeeeee;
+      --gray: #9a9a9a;
+      --line: rgba(255,255,255,.16);
+      --line-soft: rgba(255,255,255,.08);
+      --shadow: rgba(0,0,0,.72);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      background: var(--black);
+      color: var(--white);
+      font-family: Arial, Helvetica, sans-serif;
+      overflow-x: hidden;
+    }
+
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      z-index: 999;
+      pointer-events: none;
+      opacity: .06;
+      background-image:
+        linear-gradient(rgba(255,255,255,.55) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,.55) 1px, transparent 1px);
+      background-size: 3px 3px;
+      mix-blend-mode: screen;
+    }
+
+    a {
+      color: inherit;
+    }
+
+    .hero {
+      position: relative;
+      height: 205vh;
+      background: var(--black);
+    }
+
+    .hero-stage {
+      position: sticky;
+      top: 0;
+      height: 100vh;
+      min-height: 720px;
+      display: grid;
+      place-items: center;
+      overflow: hidden;
+      isolation: isolate;
+      background:
+        radial-gradient(circle at 50% 42%, rgba(255,255,255,.12), transparent 26%),
+        radial-gradient(circle at 20% 20%, rgba(255,255,255,.06), transparent 24%),
+        linear-gradient(180deg, #111 0%, #020202 68%, #000 100%);
+    }
+
+    .waves {
+      position: absolute;
+      inset: -8%;
+      z-index: -4;
+      opacity: .32;
+      background-image: url("data:image/svg+xml,%3Csvg width='900' height='600' viewBox='0 0 900 600' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' stroke='%23ffffff' stroke-opacity='.26' stroke-width='1.3'%3E%3Cpath d='M-80 91C85 3 186 34 254 123c86 113-39 199 86 292 104 78 246-70 393 8 117 62 129 162 249 169'/%3E%3Cpath d='M-34 405c140-102 260-65 319 26 72 112-12 203 117 258 137 59 204-108 373-54 98 32 137 103 210 138'/%3E%3Cpath d='M86-39c111 80 132 151 81 231-64 100-47 179 71 231 157 68 258-80 395-9 121 63 105 187 254 226'/%3E%3Cpath d='M450-80c-32 133 28 219 155 238 158 23 177 125 101 221-82 104-32 205 126 239'/%3E%3Cpath d='M701-62c-89 102-85 195 13 266 114 82 198 57 225 196 22 114-44 180-139 229'/%3E%3C/g%3E%3C/svg%3E");
+      background-size: 920px 620px;
+      animation: wavesMove 22s linear infinite;
+    }
+
+    @keyframes wavesMove {
+      from { transform: translate3d(0,0,0) scale(1.04); }
+      to { transform: translate3d(-90px,-40px,0) scale(1.04); }
+    }
+
+    .film-strip {
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      width: min(11vw, 150px);
+      z-index: -2;
+      opacity: .18;
+      pointer-events: none;
+      border-inline: 1px solid rgba(255,255,255,.16);
+      background:
+        linear-gradient(90deg, rgba(255,255,255,.12), transparent 34%, transparent 66%, rgba(255,255,255,.12)),
+        repeating-linear-gradient(
+          to bottom,
+          rgba(255,255,255,.14) 0 1px,
+          transparent 1px 54px
+        );
+      mask-image: linear-gradient(to bottom, transparent, #000 12%, #000 88%, transparent);
+    }
+
+    .film-strip::before,
+    .film-strip::after {
+      content: "";
+      position: absolute;
+      top: 22px;
+      bottom: 22px;
+      width: 24%;
+      background:
+        repeating-linear-gradient(
+          to bottom,
+          rgba(255,255,255,.65) 0 18px,
+          transparent 18px 46px
+        );
+      opacity: .55;
+    }
+
+    .film-strip::before {
+      left: 12%;
+    }
+
+    .film-strip::after {
+      right: 12%;
+    }
+
+    .film-left {
+      left: 0;
+    }
+
+    .film-right {
+      right: 0;
+      transform: scaleX(-1);
+    }
+
+    .hero-title {
+      position: absolute;
+      z-index: -1;
+      width: min(1180px, 92vw);
+      margin: 0;
+      text-align: center;
+      text-transform: uppercase;
+      font-weight: 950;
+      font-size: clamp(64px, 11vw, 176px);
+      line-height: .78;
+      letter-spacing: -.085em;
+      color: rgba(255,255,255,.115);
+      transform: translateY(-4vh);
+      pointer-events: none;
+      user-select: none;
+    }
+
+    .hero-kicker {
+      position: absolute;
+      top: clamp(28px, 5vw, 62px);
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 5;
+      margin: 0;
+      color: rgba(255,255,255,.68);
+      font-size: 12px;
+      font-weight: 800;
+      letter-spacing: .42em;
+      text-transform: uppercase;
+      white-space: nowrap;
+    }
+
+    .device-scene {
+      --x: 50%;
+      --y: 50%;
+      position: relative;
+      z-index: 4;
+      width: clamp(320px, 43vw, 720px);
+      aspect-ratio: 1 / 1;
+      display: grid;
+      place-items: center;
+      cursor: crosshair;
+      transition: filter .35s ease;
+      will-change: transform, opacity, filter;
+    }
+
+    .device-scene::before {
+      content: "";
+      position: absolute;
+      inset: 9%;
+      z-index: -3;
+      border-radius: 50%;
+      background:
+        radial-gradient(circle, rgba(255,255,255,.16), transparent 58%);
+      filter: blur(24px);
+      opacity: .9;
+      transform: scale(1.02);
+    }
+
+    .device-scene::after {
+      content: "PŘEJEĎ MYŠÍ";
+      position: absolute;
+      left: 50%;
+      bottom: 5%;
+      transform: translateX(-50%);
+      z-index: 8;
+      padding: 8px 13px;
+      border: 1px solid rgba(255,255,255,.22);
+      border-radius: 999px;
+      color: rgba(255,255,255,.65);
+      background: rgba(0,0,0,.42);
+      backdrop-filter: blur(10px);
+      font-size: 10px;
+      font-weight: 800;
+      letter-spacing: .28em;
+      text-transform: uppercase;
+      transition: opacity .25s ease, transform .25s ease;
+      pointer-events: none;
+    }
+
+    .device-scene.is-active::after {
+      opacity: 0;
+      transform: translateX(-50%) translateY(8px);
+    }
+
+    .device-img {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      object-position: center;
+      filter: drop-shadow(0 44px 42px rgba(0,0,0,.72));
+      user-select: none;
+      -webkit-user-drag: none;
+      pointer-events: none;
+    }
+
+    .camera-img {
+      z-index: 2;
+    }
+
+    .photo-img {
+      z-index: 3;
+      opacity: 0;
+      clip-path: circle(0px at var(--x) var(--y));
+      transition: opacity .18s ease, clip-path .18s ease;
+    }
+
+    .device-scene.is-active .photo-img {
+      opacity: 1;
+      clip-path: circle(155px at var(--x) var(--y));
+    }
+
+    .reveal-light {
+      position: absolute;
+      z-index: 5;
+      left: var(--x);
+      top: var(--y);
+      width: 230px;
+      height: 230px;
+      border: 1px solid rgba(255,255,255,.78);
+      border-radius: 50%;
+      transform: translate(-50%, -50%) scale(.92);
+      opacity: 0;
+      pointer-events: none;
+      box-shadow:
+        0 0 30px rgba(255,255,255,.18),
+        inset 0 0 34px rgba(255,255,255,.10);
+      transition: opacity .16s ease, transform .16s ease;
+    }
+
+    .reveal-light::before {
+      content: "";
+      position: absolute;
+      left: 50%;
+      top: -26%;
+      width: 2px;
+      height: 152%;
+      background: linear-gradient(to bottom, transparent, rgba(255,255,255,.95), transparent);
+      transform: translateX(-50%) rotate(14deg);
+      opacity: .9;
+    }
+
+    .device-scene.is-active .reveal-light {
+      opacity: 1;
+      transform: translate(-50%, -50%) scale(1);
+    }
+
+    .morph-logo {
+      position: absolute;
+      z-index: 6;
+      width: clamp(180px, 24vw, 350px);
+      max-height: 42vh;
+      object-fit: contain;
+      opacity: 0;
+      transform: translateY(46px) scale(.74);
+      filter: drop-shadow(0 34px 44px rgba(0,0,0,.76));
+      pointer-events: none;
+      user-select: none;
+      -webkit-user-drag: none;
+      will-change: opacity, transform;
+    }
+
+    .scroll-hint {
+      position: absolute;
+      left: 50%;
+      bottom: 28px;
+      transform: translateX(-50%);
+      z-index: 10;
+      color: rgba(255,255,255,.62);
+      font-size: 11px;
+      font-weight: 900;
+      letter-spacing: .34em;
+      text-transform: uppercase;
+    }
+
+    .scroll-hint::after {
+      content: "";
+      display: block;
+      width: 1px;
+      height: 42px;
+      margin: 12px auto 0;
+      background: linear-gradient(to bottom, rgba(255,255,255,.9), transparent);
+      animation: scrollLine 1.5s ease-in-out infinite;
+    }
+
+    @keyframes scrollLine {
+      0%, 100% { transform: scaleY(.55); opacity: .35; }
+      50% { transform: scaleY(1); opacity: 1; }
+    }
+
+    .intro {
+      position: relative;
+      z-index: 2;
+      min-height: 62vh;
+      padding: clamp(86px, 12vw, 170px) 6vw clamp(60px, 8vw, 100px);
+      background:
+        radial-gradient(circle at 50% 0%, rgba(255,255,255,.10), transparent 32%),
+        linear-gradient(180deg, #000, #050505);
+      overflow: hidden;
+    }
+
+    .intro::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      opacity: .16;
+      background-image:
+        linear-gradient(90deg, transparent 0 45%, rgba(255,255,255,.18) 45% 46%, transparent 46% 100%),
+        repeating-linear-gradient(to right, transparent 0 28px, rgba(255,255,255,.06) 28px 29px);
+      pointer-events: none;
+      mask-image: linear-gradient(to bottom, transparent, #000 20%, #000 70%, transparent);
+    }
+
+    .intro-inner {
+      position: relative;
+      width: min(980px, 100%);
+      margin: 0 auto;
+      text-align: center;
+    }
+
+    .section-kicker {
+      margin: 0 0 18px;
+      color: rgba(255,255,255,.58);
+      font-size: 12px;
+      font-weight: 900;
+      letter-spacing: .38em;
+      text-transform: uppercase;
+    }
+
+    .intro h2,
+    .gateways h2 {
+      margin: 0;
+      text-transform: uppercase;
+      font-size: clamp(34px, 6vw, 82px);
+      line-height: .88;
+      letter-spacing: -.06em;
+      font-weight: 950;
+    }
+
+    .intro p {
+      width: min(760px, 100%);
+      margin: 26px auto 0;
+      color: rgba(255,255,255,.78);
+      font-size: clamp(17px, 1.8vw, 24px);
+      line-height: 1.55;
+      font-weight: 500;
+    }
+
+    .gateways {
+      position: relative;
+      z-index: 2;
+      min-height: 100vh;
+      padding: clamp(80px, 10vw, 130px) 5vw clamp(90px, 10vw, 140px);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      background:
+        radial-gradient(circle at 50% 22%, rgba(255,255,255,.12), transparent 28%),
+        radial-gradient(circle at 15% 90%, rgba(255,255,255,.08), transparent 26%),
+        #020202;
+      overflow: hidden;
+    }
+
+    .gateways::before,
+    .gateways::after {
+      content: "";
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      width: min(9vw, 110px);
+      opacity: .13;
+      background:
+        repeating-linear-gradient(to bottom, rgba(255,255,255,.52) 0 18px, transparent 18px 44px),
+        linear-gradient(90deg, rgba(255,255,255,.12), transparent);
+      pointer-events: none;
+      mask-image: linear-gradient(to bottom, transparent, #000 18%, #000 85%, transparent);
+    }
+
+    .gateways::before {
+      left: 0;
+    }
+
+    .gateways::after {
+      right: 0;
+      transform: scaleX(-1);
+    }
+
+    .gateways-head {
+      position: relative;
+      z-index: 2;
+      text-align: center;
+      width: min(920px, 100%);
+      margin-bottom: 38px;
+    }
+
+    .portal-fan {
+      position: relative;
+      z-index: 3;
+      width: min(980px, 96vw);
+      min-height: 570px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      perspective: 1300px;
+      padding-top: 20px;
+    }
+
+    .portal-card {
+      position: relative;
+      width: min(320px, 32vw);
+      min-width: 250px;
+      height: 470px;
+      padding: 28px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      text-decoration: none;
+      color: var(--white);
+      border: 1px solid rgba(255,255,255,.22);
+      border-radius: 30px;
+      background:
+        linear-gradient(145deg, rgba(255,255,255,.16), rgba(255,255,255,.035) 40%, rgba(255,255,255,.09)),
+        #090909;
+      box-shadow:
+        0 42px 90px rgba(0,0,0,.72),
+        inset 0 1px 0 rgba(255,255,255,.16);
+      overflow: hidden;
+      transition:
+        transform .45s cubic-bezier(.2,.8,.2,1),
+        box-shadow .45s cubic-bezier(.2,.8,.2,1),
+        border-color .45s cubic-bezier(.2,.8,.2,1),
+        filter .45s cubic-bezier(.2,.8,.2,1);
+      will-change: transform;
+    }
+
+    .portal-card + .portal-card {
+      margin-left: -58px;
+    }
+
+    .portal-card:nth-child(1) {
+      z-index: 1;
+      transform: rotate(-9deg) translateY(32px);
+    }
+
+    .portal-card:nth-child(2) {
+      z-index: 2;
+      transform: rotate(0deg) translateY(-4px);
+    }
+
+    .portal-card:nth-child(3) {
+      z-index: 1;
+      transform: rotate(9deg) translateY(32px);
+    }
+
+    .portal-card:hover,
+    .portal-card:focus-visible {
+      z-index: 9;
+      border-color: rgba(255,255,255,.72);
+      box-shadow:
+        0 56px 110px rgba(0,0,0,.82),
+        inset 0 1px 0 rgba(255,255,255,.28);
+      filter: contrast(1.08);
+      outline: none;
+    }
+
+    .portal-card:nth-child(1):hover,
+    .portal-card:nth-child(1):focus-visible {
+      transform: rotate(-3deg) translateX(-34px) translateY(-34px) scale(1.055);
+    }
+
+    .portal-card:nth-child(2):hover,
+    .portal-card:nth-child(2):focus-visible {
+      transform: rotate(0deg) translateY(-48px) scale(1.065);
+    }
+
+    .portal-card:nth-child(3):hover,
+    .portal-card:nth-child(3):focus-visible {
+      transform: rotate(3deg) translateX(34px) translateY(-34px) scale(1.055);
+    }
+
+    .portal-card::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      opacity: .22;
+      background:
+        linear-gradient(120deg, transparent 0 34%, rgba(255,255,255,.20) 35%, transparent 42%),
+        repeating-linear-gradient(
+          90deg,
+          transparent 0 30px,
+          rgba(255,255,255,.12) 30px 31px
+        );
+      pointer-events: none;
+    }
+
+    .portal-card::after {
+      content: "";
+      position: absolute;
+      inset: 14px;
+      border: 1px solid rgba(255,255,255,.12);
+      border-radius: 22px;
+      pointer-events: none;
+    }
+
+    .card-number {
+      position: relative;
+      z-index: 2;
+      color: rgba(255,255,255,.55);
+      font-size: 13px;
+      font-weight: 900;
+      letter-spacing: .28em;
+    }
+
+    .card-title {
+      position: relative;
+      z-index: 2;
+      display: block;
+      max-width: 100%;
+      text-transform: uppercase;
+      font-size: clamp(34px, 3.9vw, 58px);
+      line-height: .88;
+      letter-spacing: -.065em;
+      font-weight: 950;
+      text-wrap: balance;
+    }
+
+    .portal-card:nth-child(1) .card-title {
+      text-align: left;
+    }
+
+    .portal-card:nth-child(2) .card-title {
+      text-align: center;
+    }
+
+    .portal-card:nth-child(3) .card-title {
+      text-align: right;
+    }
+
+    .card-text {
+      position: relative;
+      z-index: 2;
+      display: block;
+      width: min(220px, 100%);
+      color: rgba(255,255,255,.68);
+      font-size: 15px;
+      line-height: 1.45;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: .08em;
+    }
+
+    .portal-card:nth-child(2) .card-text {
+      margin-inline: auto;
+      text-align: center;
+    }
+
+    .portal-card:nth-child(3) .card-text {
+      margin-left: auto;
+      text-align: right;
+    }
+
+    .card-open {
+      position: relative;
+      z-index: 2;
+      display: inline-flex;
+      width: fit-content;
+      align-items: center;
+      gap: 10px;
+      padding: 11px 14px;
+      border: 1px solid rgba(255,255,255,.24);
+      border-radius: 999px;
+      color: rgba(255,255,255,.82);
+      font-size: 12px;
+      font-weight: 900;
+      letter-spacing: .18em;
+      text-transform: uppercase;
+      background: rgba(255,255,255,.045);
+    }
+
+    .portal-card:nth-child(2) .card-open {
+      margin-inline: auto;
+    }
+
+    .portal-card:nth-child(3) .card-open {
+      margin-left: auto;
+    }
+
+    .card-open::after {
+      content: "→";
+      font-size: 17px;
+      line-height: 1;
+    }
+
+    @media (max-width: 860px) {
+      .hero-stage {
+        min-height: 100svh;
+      }
+
+      .hero-title {
+        top: 19vh;
+        font-size: clamp(58px, 18vw, 112px);
+      }
+
+      .hero-kicker {
+        top: 26px;
+        font-size: 10px;
+        letter-spacing: .26em;
+      }
+
+      .device-scene {
+        width: min(88vw, 470px);
+      }
+
+      .device-scene.is-active .photo-img {
+        clip-path: circle(120px at var(--x) var(--y));
+      }
+
+      .reveal-light {
+        width: 185px;
+        height: 185px;
+      }
+
+      .film-strip {
+        width: 64px;
+        opacity: .09;
+      }
+
+      .intro-inner {
+        text-align: left;
+      }
+
+      .intro p {
+        margin-left: 0;
+      }
+
+      .gateways-head {
+        text-align: left;
+      }
+
+      .portal-fan {
+        width: 100%;
+        min-height: 760px;
+        margin-top: 18px;
+      }
+
+      .portal-card {
+        position: absolute;
+        left: 50%;
+        width: min(82vw, 360px);
+        min-width: 0;
+        height: 390px;
+        margin-left: 0 !important;
+      }
+
+      .portal-card:nth-child(1) {
+        top: 0;
+        transform: translateX(-55%) rotate(-7deg);
+      }
+
+      .portal-card:nth-child(2) {
+        top: 172px;
+        transform: translateX(-50%) rotate(0deg);
+      }
+
+      .portal-card:nth-child(3) {
+        top: 344px;
+        transform: translateX(-45%) rotate(7deg);
+      }
+
+      .portal-card:nth-child(1):hover,
+      .portal-card:nth-child(1):focus-visible {
+        transform: translateX(-55%) rotate(-3deg) translateY(-18px) scale(1.035);
+      }
+
+      .portal-card:nth-child(2):hover,
+      .portal-card:nth-child(2):focus-visible {
+        transform: translateX(-50%) rotate(0deg) translateY(-18px) scale(1.035);
+      }
+
+      .portal-card:nth-child(3):hover,
+      .portal-card:nth-child(3):focus-visible {
+        transform: translateX(-45%) rotate(3deg) translateY(-18px) scale(1.035);
+      }
+
+      .portal-card:nth-child(1) .card-title,
+      .portal-card:nth-child(2) .card-title,
+      .portal-card:nth-child(3) .card-title,
+      .portal-card:nth-child(1) .card-text,
+      .portal-card:nth-child(2) .card-text,
+      .portal-card:nth-child(3) .card-text {
+        text-align: left;
+        margin-left: 0;
+        margin-right: auto;
+      }
+
+      .portal-card:nth-child(2) .card-open,
+      .portal-card:nth-child(3) .card-open {
+        margin-left: 0;
+        margin-right: auto;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      * {
+        animation: none !important;
+        transition: none !important;
+        scroll-behavior: auto !important;
+      }
+
+      .hero {
+        height: auto;
+        min-height: 100vh;
+      }
+
+      .hero-stage {
+        position: relative;
+      }
+
+      .morph-logo {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+      }
+
+      .device-scene {
+        opacity: .2;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!--
+    Obrázky nahraj do složky images:
+    images/VideoXpert kamera.png
+    images/VideoXpert fotak.png
+    images/VideoXpert LOGO.png
+
+    Pokud GitHub ukáže příponu jako .PNG, musíš ji stejně upravit i tady v src.
+  -->
+
+  <main>
+    <section class="hero" id="uvod">
+      <div class="hero-stage">
+        <div class="waves"></div>
+        <div class="film-strip film-left"></div>
+        <div class="film-strip film-right"></div>
+
+        <p class="hero-kicker">Video • Foto • Dron</p>
+
+        <h1 class="hero-title" id="heroTitle">
+          Video<br>Xpert
+        </h1>
+
+        <div class="device-scene" id="deviceScene" aria-label="Kamera, která při přejetí myší odkrývá foťák">
+          <img class="device-img camera-img" src="images/VideoXpert kamera.png" alt="VideoXpert kamera">
+          <img class="device-img photo-img" src="images/VideoXpert fotak.png" alt="VideoXpert foťák">
+          <span class="reveal-light"></span>
+        </div>
+
+        <img class="morph-logo" id="morphLogo" src="images/VideoXpert LOGO.png" alt="VideoXpert logo">
+
+        <div class="scroll-hint" id="scrollHint">Scroll</div>
+      </div>
+    </section>
+
+    <section class="intro">
+      <div class="intro-inner">
+        <p class="section-kicker">O značce</p>
+        <h2>Filmový obraz pro chvíle, které mají vypadat skvěle.</h2>
+        <p>
+          VideoXpert je kreativní video a foto produkce zaměřená na čistý obraz,
+          atmosféru, tempo a profesionální výsledek. Tvoříme obsah pro svatby,
+          hudební projekty i firmy, které chtějí působit moderně a důvěryhodně.
+        </p>
+      </div>
+    </section>
+
+    <section class="gateways">
+      <div class="gateways-head">
+        <p class="section-kicker">Vyberte směr</p>
+        <h2>Tři specializované weby.</h2>
+      </div>
+
+      <div class="portal-fan" aria-label="Rozcestník služeb VideoXpert">
+        <a class="portal-card" href="https://svatby.videoxpert.cz/">
+          <span class="card-number">01</span>
+          <span class="card-title">Svatby</span>
+          <span class="card-text">filmové svatební příběhy</span>
+          <span class="card-open">Otevřít</span>
+        </a>
+
+        <a class="portal-card" href="https://videoklipy.videoxpert.cz/">
+          <span class="card-number">02</span>
+          <span class="card-title">Videoklipy</span>
+          <span class="card-text">hudební obraz s energií</span>
+          <span class="card-open">Otevřít</span>
+        </a>
+
+        <a class="portal-card" href="https://firemni-videa.videoxpert.cz/">
+          <span class="card-number">03</span>
+          <span class="card-title">Firemní videa</span>
+          <span class="card-text">obsah pro značky a firmy</span>
+          <span class="card-open">Otevřít</span>
+        </a>
+      </div>
+    </section>
+  </main>
+
+  <script>
+    const hero = document.querySelector(".hero");
+    const deviceScene = document.getElementById("deviceScene");
+    const morphLogo = document.getElementById("morphLogo");
+    const heroTitle = document.getElementById("heroTitle");
+    const scrollHint = document.getElementById("scrollHint");
+
+    const clamp = (value, min, max) => Math.min(Math.max(value, min), max);
+
+    function updateScrollAnimation() {
+      const maxScroll = Math.max(hero.offsetHeight - window.innerHeight, 1);
+      const heroTop = hero.offsetTop;
+      const current = clamp(window.scrollY - heroTop, 0, maxScroll);
+      const progress = clamp(current / maxScroll, 0, 1);
+
+      const deviceOpacity = clamp(1 - progress * 1.32, 0, 1);
+      const deviceScale = 1 - progress * 0.46;
+      const deviceMove = -progress * 115;
+
+      deviceScene.style.opacity = deviceOpacity;
+      deviceScene.style.transform = `translate3d(0, ${deviceMove}px, 0) scale(${deviceScale})`;
+      deviceScene.style.filter = `blur(${progress * 5}px)`;
+
+      const logoProgress = clamp((progress - 0.28) / 0.52, 0, 1);
+      const logoScale = 0.72 + logoProgress * 0.28;
+      const logoMove = (1 - logoProgress) * 48;
+
+      morphLogo.style.opacity = logoProgress;
+      morphLogo.style.transform = `translate3d(0, ${logoMove}px, 0) scale(${logoScale})`;
+
+      heroTitle.style.opacity = clamp(0.115 - progress * 0.09, 0.025, 0.115);
+      heroTitle.style.transform = `translateY(${-4 - progress * 8}vh) scale(${1 + progress * 0.08})`;
+
+      scrollHint.style.opacity = clamp(1 - progress * 2.4, 0, 1);
+    }
+
+    function setRevealPosition(event) {
+      const rect = deviceScene.getBoundingClientRect();
+      const x = event.clientX - rect.left;
+      const y = event.clientY - rect.top;
+
+      deviceScene.style.setProperty("--x", `${x}px`);
+      deviceScene.style.setProperty("--y", `${y}px`);
+    }
+
+    deviceScene.addEventListener("pointerenter", (event) => {
+      deviceScene.classList.add("is-active");
+      setRevealPosition(event);
+    });
+
+    deviceScene.addEventListener("pointermove", (event) => {
+      setRevealPosition(event);
+    });
+
+    deviceScene.addEventListener("pointerleave", () => {
+      deviceScene.classList.remove("is-active");
+    });
+
+    deviceScene.addEventListener("pointerdown", (event) => {
+      deviceScene.classList.add("is-active");
+      setRevealPosition(event);
+    });
+
+    window.addEventListener("scroll", updateScrollAnimation, { passive: true });
+    window.addEventListener("resize", updateScrollAnimation);
+    window.addEventListener("load", updateScrollAnimation);
+
+    updateScrollAnimation();
+  </script>
+
+</body>
+</html>
