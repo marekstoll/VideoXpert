@@ -826,17 +826,18 @@
   height: 100%;
   object-fit: cover;
   opacity: .18;
-  filter: grayscale(1) contrast(1.25) brightness(.65);
+  opacity: .32 !important;
+filter: contrast(1.15) brightness(.72) saturate(1.25) !important;
   pointer-events: none;
 }
 
 .hero-kicker {
-  top: 10px !important;
-  z-index: 30 !important;
+  top: 90px !important;
+  z-index: 50 !important;
 }
 
 .device-scene {
-  margin-top: 10vh !important;
+  margin-top: 4vh !important;
 }
 
 .device-scene::after {
