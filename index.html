@@ -1023,6 +1023,7 @@ margin-right: auto !important;
     const morphLogo = document.getElementById("morphLogo");
     const heroTitle = document.getElementById("heroTitle");
     const heroCopy = document.getElementById("heroCopy");
+    const heroBgVideo = document.querySelector(".hero-bg-video");
     const scrollHint = document.getElementById("scrollHint");
 
     const clamp = (value, min, max) => Math.min(Math.max(value, min), max);
@@ -1035,6 +1036,8 @@ margin-right: auto !important;
 const copyOpacity = clamp(1 - progress * 1.7, 0, 1);
 heroCopy.style.opacity = copyOpacity;
 heroCopy.style.transform = `translate3d(0, ${-progress * 90}px, 0) scale(${1 - progress * .08})`;
+      const videoBrightness = 0.72 + progress * 0.36;
+heroBgVideo.style.filter = `contrast(1.15) brightness(${videoBrightness}) saturate(1.25)`;
 heroCopy.style.filter = `blur(${progress * 5}px)`;
       const deviceOpacity = clamp(1 - progress * 1.32, 0, 1);
       const deviceScale = 1 - progress * 0.46;
