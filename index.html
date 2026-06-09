@@ -1062,7 +1062,11 @@ margin-right: auto !important;
   overflow: auto;
   display: grid;
   grid-template-columns: 38% 62%;
-  background: #f3eee7;
+  background:
+  radial-gradient(circle at 18% 28%, rgba(255,255,255,.55), transparent 26%),
+  radial-gradient(circle at 88% 82%, rgba(0,0,0,.10), transparent 30%),
+  linear-gradient(135deg, #d8d2c8 0%, #eee8dd 44%, #c9c2b8 100%);
+  background-blend-mode: screen, multiply, normal;
   color: #111;
   border: 1px solid rgba(255,255,255,.25);
   box-shadow: 0 40px 120px rgba(0,0,0,.65);
