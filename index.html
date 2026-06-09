@@ -1324,6 +1324,59 @@ margin-right: auto !important;
   <p>© 2026 VideoXpert. Všechna práva vyhrazena.</p>
 </footer>
   </main>
+  <div class="cookie-overlay" id="cookieOverlay">
+  <div class="cookie-box" role="dialog" aria-modal="true" aria-label="Nastavení cookies">
+    <div class="cookie-visual">
+      <img src="images/KLAPKA2.png" alt="Filmová klapka">
+    </div>
+
+    <div class="cookie-content">
+      <h2>Klapka, kamera aaa AKCE!</h2>
+      <p>
+        Než se pustíme do akce, prosíme o potvrzení cookies. Zpracováváme osobní údaje pomocí cookies
+        pro personalizaci reklam. Děkujeme.
+      </p>
+
+      <div class="cookie-main-actions">
+        <button class="cookie-link" id="cookieSettingsBtn">Detailnější nastavení cookies</button>
+        <button class="cookie-accept" id="cookieAcceptAll">PŘIJMOUT VŠE</button>
+      </div>
+
+      <div class="cookie-settings" id="cookieSettings">
+        <h3>Nastavení</h3>
+
+        <label class="cookie-toggle">
+          <span>
+            <strong>Nezbytné</strong>
+            <small>Nutné pro správné fungování webu.</small>
+          </span>
+          <input type="checkbox" checked disabled>
+        </label>
+
+        <label class="cookie-toggle">
+          <span>
+            <strong>Analytické</strong>
+            <small>Pomáhají nám měřit výkon webu.</small>
+          </span>
+          <input type="checkbox" id="analyticsCookies">
+        </label>
+
+        <label class="cookie-toggle">
+          <span>
+            <strong>Marketingové</strong>
+            <small>Umožní retargeting a měření reklam, například přes Facebook / Meta Pixel.</small>
+          </span>
+          <input type="checkbox" id="marketingCookies">
+        </label>
+
+        <div class="cookie-settings-actions">
+          <button id="cookieRejectAll">ZAKÁZAT VŠE</button>
+          <button id="cookieSaveSelected">PŘIJMOUT VYBRANÉ</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
 
   <script>
     const hero = document.querySelector(".hero");
@@ -1403,111 +1456,7 @@ heroCopy.style.filter = `blur(${progress * 5}px)`;
 
     updateScrollAnimation();
     const META_PIXEL_ID = "SEM_DEJ_PIXEL_ID";
-<div class="cookie-overlay" id="cookieOverlay">
 
-  <div class="cookie-box" role="dialog" aria-modal="true" aria-label="Nastavení cookies">
-
-    <div class="cookie-visual">
-
-      <img src="images/KLAPKA2.png" alt="Filmová klapka">
-
-    </div>
-
-
-
-    <div class="cookie-content">
-
-      <h2>Klapka, kamera aaa AKCE!</h2>
-
-      <p>
-
-        Než se pustíme do akce, prosíme o potvrzení cookies. Zpracováváme osobní údaje pomocí cookies
-
-        pro personalizaci reklam. Děkujeme.
-
-      </p>
-
-
-
-      <div class="cookie-main-actions">
-
-        <button class="cookie-link" id="cookieSettingsBtn">Detailnější nastavení cookies</button>
-
-        <button class="cookie-accept" id="cookieAcceptAll">PŘIJMOUT VŠE</button>
-
-      </div>
-
-
-
-      <div class="cookie-settings" id="cookieSettings">
-
-        <h3>Nastavení</h3>
-
-
-
-        <label class="cookie-toggle">
-
-          <span>
-
-            <strong>Nezbytné</strong>
-
-            <small>Nutné pro správné fungování webu.</small>
-
-          </span>
-
-          <input type="checkbox" checked disabled>
-
-        </label>
-
-
-
-        <label class="cookie-toggle">
-
-          <span>
-
-            <strong>Analytické</strong>
-
-            <small>Pomáhají nám měřit výkon webu.</small>
-
-          </span>
-
-          <input type="checkbox" id="analyticsCookies">
-
-        </label>
-
-
-
-        <label class="cookie-toggle">
-
-          <span>
-
-            <strong>Marketingové</strong>
-
-            <small>Umožní retargeting a měření reklam, například přes Facebook / Meta Pixel.</small>
-
-          </span>
-
-          <input type="checkbox" id="marketingCookies">
-
-        </label>
-
-
-
-        <div class="cookie-settings-actions">
-
-          <button id="cookieRejectAll">ZAKÁZAT VŠE</button>
-
-          <button id="cookieSaveSelected">PŘIJMOUT VYBRANÉ</button>
-
-        </div>
-
-      </div>
-
-    </div>
-
-  </div>
-
-</div>
 function loadMetaPixel() {
   if (!META_PIXEL_ID || META_PIXEL_ID === "SEM_DEJ_PIXEL_ID") return;
   if (window.fbq) return;
