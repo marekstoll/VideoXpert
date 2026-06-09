@@ -909,46 +909,19 @@ margin-right: auto !important;
 }
 
 .hero-copy h2 {
-  position: relative;
   margin: 0 auto;
   width: min(980px, 92vw);
   text-transform: uppercase;
   font-family: "Arial Black", Impact, Arial, sans-serif;
-  font-size: clamp(34px, 5.2vw, 76px);
-  line-height: .92;
-  letter-spacing: .22em;
-  font-weight: 950;
+  font-size: clamp(30px, 4.8vw, 64px);
+  line-height: 1.08;
+  letter-spacing: .045em;
+  font-weight: 900;
   color: #fff;
+  -webkit-text-stroke: 1px rgba(255,255,255,.18);
   text-shadow:
-    0 0 18px rgba(255,255,255,.18),
-    0 8px 28px rgba(0,0,0,.78);
-}
-
-.hero-copy h2::before,
-.hero-copy h2::after {
-  content: "ZACHYŤTE TO, CO STOJÍ ZA TO PROŽÍT.";
-  position: absolute;
-  inset: 0;
-  color: #fff;
-  pointer-events: none;
-}
-
-.hero-copy h2::before {
-  clip-path: inset(18% 0 66% 0);
-  transform: translateX(-7px);
-  text-shadow:
-    14px 0 0 #000,
-    42px 0 0 #000,
-    86px 0 0 #000;
-}
-
-.hero-copy h2::after {
-  clip-path: inset(63% 0 19% 0);
-  transform: translateX(6px);
-  text-shadow:
-    -18px 0 0 #000,
-    -54px 0 0 #000,
-    -98px 0 0 #000;
+    0 0 18px rgba(255,255,255,.16),
+    0 8px 28px rgba(0,0,0,.75);
 }
 
 .hero-copy p:not(.section-kicker) {
