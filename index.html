@@ -888,6 +888,47 @@ margin-right: auto !important;
     top: calc(50% + 245px) !important;
   }
 }
+    /* HERO TEXT MÍSTO KLAPKY */
+.hero-title,
+.device-scene,
+.scroll-hint {
+  display: none !important;
+}
+
+.hero-copy {
+  position: relative;
+  z-index: 12;
+  width: min(1100px, 92vw);
+  margin: 0 auto;
+  text-align: center;
+  will-change: opacity, transform, filter;
+}
+
+.hero-copy .section-kicker {
+  margin: 0 0 34px;
+}
+
+.hero-copy h2 {
+  margin: 0;
+  text-transform: uppercase;
+  font-size: clamp(34px, 6vw, 82px);
+  line-height: 1.06;
+  letter-spacing: 0em;
+  font-weight: 950;
+}
+
+.hero-copy p:not(.section-kicker) {
+  width: min(820px, 100%);
+  margin: 34px auto 0;
+  color: rgba(255,255,255,.82);
+  font-size: clamp(18px, 2vw, 28px);
+  line-height: 1.55;
+  font-weight: 500;
+}
+
+.morph-logo {
+  width: clamp(230px, 28vw, 430px) !important;
+}
 </style>
 </head>
 
@@ -913,7 +954,15 @@ margin-right: auto !important;
         <div class="film-strip film-right"></div>
 
         <p class="hero-kicker">Video • Foto • Dron • by VideoXpert</p>
-
+<div class="hero-copy" id="heroCopy">
+  <p class="section-kicker">O značce</p>
+  <h2>Zachyťte to, co stojí za to prožít.</h2>
+  <p>
+    Jsme VideoXpert, skupina kreativních nadšenců.
+    S našimi tvůrčími týmy natočíme jak produktová, instruktážní tak onboardingová videa
+    nebo stylový videoklip pro Vaši kapelu.
+  </p>
+</div>
         <h1 class="hero-title" id="heroTitle">
           Video<br>Xpert
         </h1>
@@ -946,7 +995,10 @@ margin-right: auto !important;
         <p class="section-kicker">Vyberte směr</p>
         <h2>Tři specializované weby.</h2>
       </div>
-
+const copyOpacity = clamp(1 - progress * 1.7, 0, 1);
+heroCopy.style.opacity = copyOpacity;
+heroCopy.style.transform = `translate3d(0, ${-progress * 90}px, 0) scale(${1 - progress * .08})`;
+heroCopy.style.filter = `blur(${progress * 5}px)`;
       <div class="portal-fan" aria-label="Rozcestník služeb VideoXpert">
         <a class="portal-card" href="https://svatby.videoxpert.cz/">
           <span class="card-number">01</span>
@@ -977,6 +1029,7 @@ margin-right: auto !important;
     const deviceScene = document.getElementById("deviceScene");
     const morphLogo = document.getElementById("morphLogo");
     const heroTitle = document.getElementById("heroTitle");
+    const heroCopy = document.getElementById("heroCopy");
     const scrollHint = document.getElementById("scrollHint");
 
     const clamp = (value, min, max) => Math.min(Math.max(value, min), max);
