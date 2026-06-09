@@ -937,6 +937,67 @@ margin-right: auto !important;
 .morph-logo {
   width: clamp(230px, 28vw, 430px) !important;
 }
+    .contact-strip {
+  position: relative;
+  z-index: 5;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1px;
+  background: rgba(255,255,255,.10);
+  border-top: 1px solid rgba(255,255,255,.10);
+}
+
+.contact-item {
+  min-height: 190px;
+  padding: 44px 5vw;
+  display: flex;
+  align-items: flex-start;
+  gap: 26px;
+  background: #f4f4f1;
+  color: #020202;
+}
+
+.contact-icon {
+  font-size: 34px;
+  line-height: 1;
+  color: rgba(0,0,0,.45);
+}
+
+.contact-item h3 {
+  margin: 0 0 34px;
+  font-size: clamp(22px, 2vw, 30px);
+  font-weight: 900;
+}
+
+.contact-item a {
+  color: #020202;
+  text-decoration: none;
+  font-size: clamp(17px, 1.4vw, 22px);
+}
+
+.site-footer {
+  position: relative;
+  z-index: 5;
+  padding: 28px 5vw 34px;
+  text-align: center;
+  color: rgba(255,255,255,.48);
+  background: #020202;
+  border-top: 1px solid rgba(255,255,255,.08);
+  font-size: 12px;
+  letter-spacing: .16em;
+  text-transform: uppercase;
+}
+
+@media (max-width: 860px) {
+  .contact-strip {
+    grid-template-columns: 1fr;
+  }
+
+  .contact-item {
+    min-height: auto;
+    padding: 32px 7vw;
+  }
+}
 </style>
 </head>
 
@@ -1015,6 +1076,35 @@ margin-right: auto !important;
         </a>
       </div>
     </section>
+    <section class="contact-strip">
+  <div class="contact-item">
+    <div class="contact-icon">✉</div>
+    <div>
+      <h3>E-mail</h3>
+      <a href="mailto:nezdara@videoxpert.cz">nezdara@videoxpert.cz</a>
+    </div>
+  </div>
+
+  <div class="contact-item">
+    <div class="contact-icon">▯</div>
+    <div>
+      <h3>Telefon</h3>
+      <a href="tel:+420602696202">+420 602 696 202</a>
+    </div>
+  </div>
+
+  <div class="contact-item">
+    <div class="contact-icon">◎</div>
+    <div>
+      <h3>Sociální sítě</h3>
+      <a href="https://www.youtube.com/" target="_blank">YouTube - VideoXpert</a>
+    </div>
+  </div>
+</section>
+
+<footer class="site-footer">
+  <p>© 2026 VideoXpert. Všechna práva vyhrazena.</p>
+</footer>
   </main>
 
   <script>
