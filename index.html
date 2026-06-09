@@ -979,26 +979,12 @@ margin-right: auto !important;
       </div>
     </section>
 
-    <section class="intro">
-      <div class="intro-inner">
-        <p class="section-kicker">O značce</p>
-        <h2>Zachyťte to, co stojí za to prožít.</h2>
-        <p>
-          Jsme VideoXpert, skupina kreativních nadšenců. 
-          S našimi tvůrčími týmy natočíme jak produktová, instruktážní tak onboardingová videa nebo stylový videoklip pro Vaši kapelu.
-        </p>
-      </div>
-    </section>
-
     <section class="gateways">
       <div class="gateways-head">
         <p class="section-kicker">Vyberte směr</p>
         <h2>Tři specializované weby.</h2>
       </div>
-const copyOpacity = clamp(1 - progress * 1.7, 0, 1);
-heroCopy.style.opacity = copyOpacity;
-heroCopy.style.transform = `translate3d(0, ${-progress * 90}px, 0) scale(${1 - progress * .08})`;
-heroCopy.style.filter = `blur(${progress * 5}px)`;
+
       <div class="portal-fan" aria-label="Rozcestník služeb VideoXpert">
         <a class="portal-card" href="https://svatby.videoxpert.cz/">
           <span class="card-number">01</span>
@@ -1039,7 +1025,10 @@ heroCopy.style.filter = `blur(${progress * 5}px)`;
       const heroTop = hero.offsetTop;
       const current = clamp(window.scrollY - heroTop, 0, maxScroll);
       const progress = clamp(current / maxScroll, 0, 1);
-
+const copyOpacity = clamp(1 - progress * 1.7, 0, 1);
+heroCopy.style.opacity = copyOpacity;
+heroCopy.style.transform = `translate3d(0, ${-progress * 90}px, 0) scale(${1 - progress * .08})`;
+heroCopy.style.filter = `blur(${progress * 5}px)`;
       const deviceOpacity = clamp(1 - progress * 1.32, 0, 1);
       const deviceScale = 1 - progress * 0.46;
       const deviceMove = -progress * 115;
