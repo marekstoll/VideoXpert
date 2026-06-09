@@ -1076,35 +1076,81 @@ margin-right: auto !important;
         </a>
       </div>
     </section>
-    <section class="contact-strip">
-  <div class="contact-item">
-    <div class="contact-icon">✉</div>
-    <div>
-      <h3>E-mail</h3>
-      <a href="mailto:nezdara@videoxpert.cz">nezdara@videoxpert.cz</a>
-    </div>
-  </div>
+    .contact-strip {
+  position: relative;
+  z-index: 5;
+  padding: 38px 5vw;
+  background: #020202;
+  border-top: 1px solid rgba(255,255,255,.10);
+}
 
-  <div class="contact-item">
-    <div class="contact-icon">▯</div>
-    <div>
-      <h3>Telefon</h3>
-      <a href="tel:+420602696202">+420 602 696 202</a>
-    </div>
-  </div>
+.contact-line {
+  width: min(1180px, 100%);
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 34px;
+  color: #fff;
+}
 
-  <div class="contact-item">
-    <div class="contact-icon">◎</div>
-    <div>
-      <h3>Sociální sítě</h3>
-      <a href="https://www.youtube.com/" target="_blank">YouTube - VideoXpert</a>
-    </div>
-  </div>
-</section>
+.contact-line div {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
 
-<footer class="site-footer">
-  <p>© 2026 VideoXpert. Všechna práva vyhrazena.</p>
-</footer>
+.contact-line strong {
+  font-size: 14px;
+  letter-spacing: .22em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,.55);
+}
+
+.contact-line a {
+  color: #fff;
+  text-decoration: none;
+  font-size: 17px;
+}
+
+.social-icons {
+  display: flex;
+  gap: 18px;
+}
+
+.social-icons img {
+  width: 30px;
+  height: 30px;
+  object-fit: contain;
+  filter: brightness(0) invert(1);
+  opacity: .82;
+  transition: transform .2s ease, opacity .2s ease;
+}
+
+.social-icons a:hover img {
+  transform: translateY(-3px) scale(1.08);
+  opacity: 1;
+}
+
+.site-footer {
+  position: relative;
+  z-index: 5;
+  padding: 22px 5vw 28px;
+  text-align: center;
+  color: rgba(255,255,255,.42);
+  background: #020202;
+  border-top: 1px solid rgba(255,255,255,.08);
+  font-size: 11px;
+  letter-spacing: .16em;
+  text-transform: uppercase;
+}
+
+@media (max-width: 860px) {
+  .contact-line {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}
   </main>
 
   <script>
