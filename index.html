@@ -1217,6 +1217,61 @@ margin-right: auto !important;
     align-items: stretch;
   }
 }
+    @media (max-width: 860px) {
+  .portal-fan {
+    min-height: 930px !important;
+    overflow: visible !important;
+  }
+
+  .portal-card {
+    position: absolute !important;
+    left: 50% !important;
+    width: min(86vw, 360px) !important;
+    height: 390px !important;
+    margin-left: 0 !important;
+    transform-origin: center top !important;
+  }
+
+  .portal-card:nth-child(1) {
+    top: 0 !important;
+    transform: translateX(-50%) rotate(-6deg) scale(.92) !important;
+    z-index: 1 !important;
+  }
+
+  .portal-card:nth-child(2) {
+    top: 230px !important;
+    transform: translateX(-50%) rotate(0deg) scale(.95) !important;
+    z-index: 2 !important;
+  }
+
+  .portal-card:nth-child(3) {
+    top: 460px !important;
+    transform: translateX(-50%) rotate(6deg) scale(.92) !important;
+    z-index: 1 !important;
+  }
+
+  .portal-card.is-mobile-open {
+    top: 170px !important;
+    transform: translateX(-50%) rotate(0deg) scale(1) !important;
+    z-index: 20 !important;
+  }
+
+  .portal-card .card-open {
+    opacity: 0 !important;
+    pointer-events: none !important;
+    font-size: 0 !important;
+  }
+
+  .portal-card.is-mobile-open .card-open {
+    opacity: 1 !important;
+    pointer-events: auto !important;
+  }
+
+  .portal-card.is-mobile-open .card-open::before {
+    content: "TOUCH";
+    font-size: 12px;
+  }
+}
 </style>
 </head>
 
@@ -1458,6 +1513,19 @@ heroCopy.style.filter = `blur(${progress * 5}px)`;
     window.addEventListener("resize", updateScrollAnimation);
     window.addEventListener("load", updateScrollAnimation);
 
+    const portalCards = document.querySelectorAll(".portal-card");
+
+portalCards.forEach((card) => {
+  card.addEventListener("click", (event) => {
+    if (!window.matchMedia("(max-width: 860px)").matches) return;
+
+    if (!card.classList.contains("is-mobile-open")) {
+      event.preventDefault();
+      portalCards.forEach((item) => item.classList.remove("is-mobile-open"));
+      card.classList.add("is-mobile-open");
+    }
+  });
+});
     updateScrollAnimation();
     const META_PIXEL_ID = "SEM_DEJ_PIXEL_ID";
 
