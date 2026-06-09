@@ -940,50 +940,75 @@ margin-right: auto !important;
     .contact-strip {
   position: relative;
   z-index: 5;
+  width: 100%;
+  padding: 34px 6vw 28px;
+  background: #020202;
+  border-top: 1px solid rgba(255,255,255,.08);
+}
+
+.contact-strip {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 1px;
-  background: rgba(255,255,255,.10);
-  border-top: 1px solid rgba(255,255,255,.10);
+  grid-template-columns: 1fr 1fr 1fr;
+  align-items: center;
+  gap: 34px;
 }
 
 .contact-item {
-  min-height: 190px;
-  padding: 44px 5vw;
-  display: flex;
-  align-items: flex-start;
-  gap: 26px;
-  background: #f4f4f1;
-  color: #020202;
-}
-
-.contact-icon {
-  font-size: 34px;
-  line-height: 1;
-  color: rgba(0,0,0,.45);
+  background: transparent !important;
+  color: #fff !important;
+  min-height: auto !important;
+  padding: 0 !important;
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 10px !important;
 }
 
 .contact-item h3 {
-  margin: 0 0 34px;
-  font-size: clamp(22px, 2vw, 30px);
-  font-weight: 900;
+  margin: 0 !important;
+  color: rgba(255,255,255,.55) !important;
+  font-size: 13px !important;
+  letter-spacing: .22em !important;
+  text-transform: uppercase !important;
+  font-weight: 900 !important;
 }
 
 .contact-item a {
-  color: #020202;
-  text-decoration: none;
-  font-size: clamp(17px, 1.4vw, 22px);
+  color: #fff !important;
+  text-decoration: none !important;
+  font-size: 17px !important;
+  line-height: 1.2 !important;
+}
+
+.social-icons {
+  display: flex !important;
+  flex-direction: row !important;
+  justify-content: flex-end !important;
+  align-items: center !important;
+  gap: 22px !important;
+}
+
+.social-icons img {
+  width: 32px !important;
+  height: 32px !important;
+  object-fit: contain !important;
+  display: block !important;
+}
+
+.social-icons a {
+  display: inline-flex !important;
+  width: 32px !important;
+  height: 32px !important;
 }
 
 .site-footer {
   position: relative;
   z-index: 5;
-  padding: 28px 5vw 34px;
+  padding: 18px 5vw 24px;
   text-align: center;
-  color: rgba(255,255,255,.48);
+  color: rgba(255,255,255,.38);
   background: #020202;
-  border-top: 1px solid rgba(255,255,255,.08);
-  font-size: 12px;
+  border-top: 1px solid rgba(255,255,255,.06);
+  font-size: 11px;
   letter-spacing: .16em;
   text-transform: uppercase;
 }
@@ -991,11 +1016,13 @@ margin-right: auto !important;
 @media (max-width: 860px) {
   .contact-strip {
     grid-template-columns: 1fr;
+    text-align: center;
   }
 
-  .contact-item {
-    min-height: auto;
-    padding: 32px 7vw;
+  .contact-item,
+  .social-icons {
+    align-items: center !important;
+    justify-content: center !important;
   }
 }
 </style>
