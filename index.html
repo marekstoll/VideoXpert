@@ -826,7 +826,7 @@
   height: 100%;
   object-fit: cover;
   opacity: .18;
-  opacity: .32 !important;
+  opacity: .42 !important;
 filter: contrast(1.15) brightness(.83) saturate(1.25) !important;
   pointer-events: none;
 }
@@ -1036,8 +1036,8 @@ margin-right: auto !important;
 const copyOpacity = clamp(1 - progress * 1.7, 0, 1);
 heroCopy.style.opacity = copyOpacity;
 heroCopy.style.transform = `translate3d(0, ${-progress * 90}px, 0) scale(${1 - progress * .08})`;
-      const videoBrightness = 0.72 + progress * 0.36;
-heroBgVideo.style.filter = `contrast(1.15) brightness(${videoBrightness}) saturate(1.25)`;
+      const videoBrightness = 0.83 + progress * 0.42;
+heroBgVideo.style.setProperty("filter", `contrast(1.15) brightness(${videoBrightness}) saturate(1.25)`, "important");
 heroCopy.style.filter = `blur(${progress * 5}px)`;
       const deviceOpacity = clamp(1 - progress * 1.32, 0, 1);
       const deviceScale = 1 - progress * 0.46;
