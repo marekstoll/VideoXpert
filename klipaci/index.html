@@ -313,6 +313,47 @@
         justify-content: center;
       }
     }
+    .top-nav {
+  position: fixed;
+  top: 24px;
+  right: 34px;
+  z-index: 1000;
+  display: flex;
+  gap: 24px;
+  padding: 12px 18px;
+  border: 1px solid rgba(255,255,255,.14);
+  border-radius: 999px;
+  background: rgba(0,0,0,.42);
+  backdrop-filter: blur(12px);
+}
+
+.top-nav a {
+  color: #fff;
+  text-decoration: none;
+  font-size: 12px;
+  font-weight: 900;
+  letter-spacing: .18em;
+  text-transform: uppercase;
+}
+
+.top-nav a:hover {
+  color: var(--purple);
+}
+
+@media (max-width: 860px) {
+  .top-nav {
+    top: 14px;
+    right: 50%;
+    transform: translateX(50%);
+    gap: 14px;
+    padding: 10px 14px;
+  }
+
+  .top-nav a {
+    font-size: 10px;
+    letter-spacing: .12em;
+  }
+}
   </style>
 </head>
 
