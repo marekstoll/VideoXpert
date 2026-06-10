@@ -354,6 +354,30 @@
     letter-spacing: .12em;
   }
 }
+    @media (max-width: 860px) {
+  .logo-reveal img {
+    opacity: 1 !important;
+    filter: grayscale(0) brightness(1.08) !important;
+    transform: scale(1.03) !important;
+  }
+
+  .top-nav {
+    display: flex !important;
+    flex-direction: row !important;
+    align-items: center !important;
+    justify-content: center !important;
+    flex-wrap: nowrap !important;
+    width: max-content !important;
+    max-width: calc(100vw - 28px) !important;
+    gap: 18px !important;
+  }
+
+  .top-nav a {
+    white-space: nowrap !important;
+    font-size: 10px !important;
+    letter-spacing: .12em !important;
+  }
+}
   </style>
 </head>
 
