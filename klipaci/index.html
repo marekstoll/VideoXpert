@@ -95,19 +95,19 @@
     }
 
     .logo-reveal img {
-      width: 100%;
-      height: 100%;
-      object-fit: contain;
-      filter: grayscale(1) brightness(.7);
-      opacity: .28;
-      transition: opacity .25s ease, filter .25s ease, transform .25s ease;
-    }
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  filter: grayscale(0) brightness(1.05) drop-shadow(0 0 28px rgba(141,44,255,.45));
+  opacity: .86;
+  transition: opacity .25s ease, filter .25s ease, transform .25s ease;
+}
 
-    .logo-reveal:hover img {
-      opacity: 1;
-      filter: grayscale(0) brightness(1.05);
-      transform: scale(1.04);
-    }
+   .logo-reveal:hover img {
+  opacity: 1;
+  filter: grayscale(0) brightness(1.22) drop-shadow(0 0 52px rgba(141,44,255,.85));
+  transform: scale(1.05);
+}
 
     .kicker {
       margin: 0 0 22px;
