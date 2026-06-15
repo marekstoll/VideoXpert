@@ -322,53 +322,54 @@
       text-transform: uppercase;
     }
 
-    .logo-reveal img {
-  opacity: 1 !important;
-  filter: brightness(1.08) drop-shadow(0 0 28px rgba(215,184,106,.38)) !important;
-  transform: scale(1.03) !important;
+    @media (max-width: 860px) {
+  .hero {
+    min-height: 100svh;
+    padding-top: 90px;
+  }
+
+  .logo-reveal img {
+    opacity: 1 !important;
+    filter: brightness(1.08) drop-shadow(0 0 28px rgba(215,184,106,.38)) !important;
+    transform: scale(1.03) !important;
+  }
+
+  .top-nav {
+    top: 14px !important;
+    right: 50% !important;
+    transform: translateX(50%) !important;
+    display: flex !important;
+    flex-direction: row !important;
+    align-items: center !important;
+    justify-content: center !important;
+    flex-wrap: nowrap !important;
+    width: max-content !important;
+    max-width: calc(100vw - 28px) !important;
+    gap: 18px !important;
+    padding: 10px 14px !important;
+  }
+
+  .top-nav a {
+    white-space: nowrap !important;
+    font-size: 10px !important;
+    letter-spacing: .12em !important;
+  }
+
+  .reference {
+    grid-template-columns: 1fr !important;
+  }
+
+  .contact-strip {
+    grid-template-columns: 1fr !important;
+    text-align: center !important;
+  }
+
+  .contact-item,
+  .social-icons {
+    align-items: center !important;
+    justify-content: center !important;
+  }
 }
-
-      .logo-reveal img {
-        opacity: 1 !important;
-        filter: brightness(1.1) !important;
-        transform: scale(1.03) !important;
-      }
-
-      .top-nav {
-        top: 14px;
-        right: 50%;
-        transform: translateX(50%);
-        display: flex !important;
-        flex-direction: row !important;
-        align-items: center !important;
-        justify-content: center !important;
-        flex-wrap: nowrap !important;
-        width: max-content !important;
-        max-width: calc(100vw - 28px) !important;
-        gap: 18px !important;
-        padding: 10px 14px;
-      }
-
-      .top-nav a {
-        white-space: nowrap !important;
-        font-size: 10px !important;
-        letter-spacing: .12em !important;
-      }
-
-      .reference {
-        grid-template-columns: 1fr;
-      }
-
-      .contact-strip {
-        grid-template-columns: 1fr;
-        text-align: center;
-      }
-
-      .contact-item,
-      .social-icons {
-        align-items: center;
-        justify-content: center;
-      }
     }
         }
   }
