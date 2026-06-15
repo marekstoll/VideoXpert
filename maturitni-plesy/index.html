@@ -125,13 +125,14 @@
     }
 
     .logo-reveal img {
-      width: 100%;
-      height: 100%;
-      object-fit: contain;
-      opacity: 1;
-      filter: brightness(1.08);
-      transform: scale(1.03);
-    }
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  opacity: .88;
+  filter: brightness(.92) drop-shadow(0 0 18px rgba(215,184,106,.28));
+  transform: scale(1);
+  transition: opacity .25s ease, filter .25s ease, transform .25s ease;
+}
 
     .kicker {
       margin: 0 0 22px;
