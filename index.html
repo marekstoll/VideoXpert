@@ -1526,6 +1526,14 @@ portalCards.forEach((card) => {
     }
   });
 });
+    document.addEventListener("click", (event) => {
+  if (!window.matchMedia("(max-width: 860px)").matches) return;
+  if (event.target.closest(".portal-card")) return;
+
+  portalCards.forEach((card) => {
+    card.classList.remove("is-mobile-open");
+  });
+});
     updateScrollAnimation();
     const META_PIXEL_ID = "SEM_DEJ_PIXEL_ID";
 
