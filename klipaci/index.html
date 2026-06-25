@@ -26,19 +26,20 @@
       overflow-x: hidden;
     }
 
-    body::before {
-      content: "";
-      position: fixed;
-      inset: 0;
-      z-index: 999;
-      pointer-events: none;
-      opacity: .055;
-      background-image:
-        linear-gradient(rgba(255,255,255,.55) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(255,255,255,.55) 1px, transparent 1px);
-      background-size: 3px 3px;
-      mix-blend-mode: screen;
-    }
+    .hero::after,
+#onas::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 999;
+  pointer-events: none;
+  opacity: .055;
+  background-image:
+    linear-gradient(rgba(255,255,255,.55) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,.55) 1px, transparent 1px);
+  background-size: 3px 3px;
+  mix-blend-mode: screen;
+}
 
     a {
       color: inherit;
