@@ -367,68 +367,44 @@
 .home-button:hover {
   background: rgba(255,255,255,.12);
 }
-    @media (max-width: 860px) {
-      .hero {
-        min-height: 100svh;
-        padding-top: 90px;
-      }
-.logo-reveal::before {
-  opacity: .85 !important;
-  transform: scale(1.08) !important;
-}
-      .logo-reveal img {
-        opacity: 1 !important;
-        filter: brightness(1.08) !important;
-        transform: scale(1.03) !important;
-      }
+   @media (max-width: 860px) {
+  .hero {
+    min-height: 100svh;
+    padding-top: 90px;
+  }
 
-      .top-nav {
-        top: 14px !important;
-        right: 50% !important;
-        transform: translateX(50%) !important;
-        display: flex !important;
-        flex-direction: row !important;
-        align-items: center !important;
-        justify-content: center !important;
-        flex-wrap: nowrap !important;
-        width: max-content !important;
-        max-width: calc(100vw - 28px) !important;
-        gap: 18px !important;
-        padding: 10px 14px !important;
-      }
+  .logo-reveal::before {
+    opacity: .85 !important;
+    transform: scale(1.08) !important;
+  }
 
-      .top-nav a {
-        white-space: nowrap !important;
-        font-size: 10px !important;
-        letter-spacing: .12em !important;
-      }
-      
-.home-button {
-  display: inline-flex !important;
-  position: fixed !important;
-  top: 66px !important;
-  left: 12px !important;
-  padding: 6px 9px !important;
-  z-index: 9999 !important;
-  opacity: .86 !important;
-}
+  .logo-reveal img {
+    opacity: 1 !important;
+    filter: brightness(1.08) !important;
+    transform: scale(1.03) !important;
+  }
 
-.home-button img {
-  width: 74px !important;
-  height: auto !important;
-}
+  .top-nav {
+    top: 14px !important;
+    right: 50% !important;
+    transform: translateX(50%) !important;
+    display: flex !important;
+    flex-direction: row !important;
+    align-items: center !important;
+    justify-content: center !important;
+    flex-wrap: nowrap !important;
+    width: max-content !important;
+    max-width: calc(100vw - 28px) !important;
+    gap: 18px !important;
+    padding: 10px 14px !important;
+  }
 
-      .contact-strip {
-        grid-template-columns: 1fr !important;
-        text-align: center !important;
-      }
+  .top-nav a {
+    white-space: nowrap !important;
+    font-size: 10px !important;
+    letter-spacing: .12em !important;
+  }
 
-      .contact-item,
-      .social-icons {
-        align-items: center !important;
-        justify-content: center !important;
-      }
-    @media (max-width: 860px) {
   .home-button {
     display: inline-flex !important;
     position: fixed !important;
@@ -442,6 +418,17 @@
   .home-button img {
     width: 74px !important;
     height: auto !important;
+  }
+
+  .contact-strip {
+    grid-template-columns: 1fr !important;
+    text-align: center !important;
+  }
+
+  .contact-item,
+  .social-icons {
+    align-items: center !important;
+    justify-content: center !important;
   }
 }
   </style>
