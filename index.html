@@ -1529,7 +1529,7 @@ const copyOpacity = clamp(1 - progress * 1.7, 0, 1);
 heroCopy.style.opacity = copyOpacity;
 heroCopy.style.transform = `translate3d(0, ${-progress * 90}px, 0) scale(${1 - progress * .08})`;
      const isMobileHero = window.matchMedia("(max-width: 860px)").matches;
-const videoBrightness = isMobileHero ? 1.45 : 0.90 + progress * 0.75;
+const videoBrightness = isMobileHero ? 1.16 : 0.72 + progress * 0.60;
       const videoOpacity = isMobileHero ? 0.72 : 0.42 + progress * 0.28;
 heroBgVideo.style.setProperty("filter", `contrast(1.05) brightness(${videoBrightness}) saturate(1.2)`, "important");
 heroBgVideo.style.setProperty("opacity", videoOpacity, "important");
