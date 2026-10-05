@@ -35,7 +35,16 @@
     }
 
     body::before {
-  display: none !important;
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  background:
+    radial-gradient(circle at 18% 28%, rgba(255,255,255,.045), transparent 22%),
+    radial-gradient(circle at 82% 68%, rgba(255,255,255,.035), transparent 25%);
+  opacity: .65;
+  mix-blend-mode: screen;
 }
 
     a {
