@@ -35,18 +35,8 @@
     }
 
     body::before {
-      content: "";
-      position: fixed;
-      inset: 0;
-      z-index: 999;
-      pointer-events: none;
-      opacity: .06;
-      background-image:
-        linear-gradient(rgba(255,255,255,.55) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(255,255,255,.55) 1px, transparent 1px);
-      background-size: 3px 3px;
-      mix-blend-mode: screen;
-    }
+  display: none !important;
+}
 
     a {
       color: inherit;
@@ -61,7 +51,7 @@
     .hero-stage {
       position: sticky;
       top: 0;
-      height: 82vh;
+      height: 100vh;
       min-height: 640px;
       display: grid;
       place-items: center;
@@ -74,38 +64,17 @@
     }
 
     .waves {
-      position: absolute;
-      inset: -8%;
-      z-index: -4;
-      opacity: .32;
-      background-image: url("data:image/svg+xml,%3Csvg width='900' height='600' viewBox='0 0 900 600' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' stroke='%23ffffff' stroke-opacity='.26' stroke-width='1.3'%3E%3Cpath d='M-80 91C85 3 186 34 254 123c86 113-39 199 86 292 104 78 246-70 393 8 117 62 129 162 249 169'/%3E%3Cpath d='M-34 405c140-102 260-65 319 26 72 112-12 203 117 258 137 59 204-108 373-54 98 32 137 103 210 138'/%3E%3Cpath d='M86-39c111 80 132 151 81 231-64 100-47 179 71 231 157 68 258-80 395-9 121 63 105 187 254 226'/%3E%3Cpath d='M450-80c-32 133 28 219 155 238 158 23 177 125 101 221-82 104-32 205 126 239'/%3E%3Cpath d='M701-62c-89 102-85 195 13 266 114 82 198 57 225 196 22 114-44 180-139 229'/%3E%3C/g%3E%3C/svg%3E");
-      background-size: 920px 620px;
-      animation: wavesMove 22s linear infinite;
-    }
+  display: none !important;
+}
 
     @keyframes wavesMove {
       from { transform: translate3d(0,0,0) scale(1.04); }
       to { transform: translate3d(-90px,-40px,0) scale(1.04); }
     }
 
-    .film-strip {
-      position: absolute;
-      top: 0;
-      bottom: 0;
-      width: min(11vw, 150px);
-      z-index: -2;
-      opacity: .18;
-      pointer-events: none;
-      border-inline: 1px solid rgba(255,255,255,.16);
-      background:
-        linear-gradient(90deg, rgba(255,255,255,.12), transparent 34%, transparent 66%, rgba(255,255,255,.12)),
-        repeating-linear-gradient(
-          to bottom,
-          rgba(255,255,255,.14) 0 1px,
-          transparent 1px 54px
-        );
-      mask-image: linear-gradient(to bottom, transparent, #000 12%, #000 88%, transparent);
-    }
+   .film-strip {
+  display: none !important;
+}
 
     .film-strip::before,
     .film-strip::after {
