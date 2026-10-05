@@ -929,6 +929,54 @@ margin-right: auto !important;
     padding: 9px 10px;
   }
 }
+    .info-section {
+  padding: 110px 6vw;
+  background: #020202;
+}
+
+.info-bubble {
+  width: min(1180px, 100%);
+  margin: 0 auto;
+  padding: clamp(42px, 6vw, 80px);
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: auto 1fr;
+  column-gap: clamp(40px, 7vw, 100px);
+  align-items: center;
+  border: 1px solid rgba(255,255,255,.12);
+  border-radius: 34px;
+  background:
+    radial-gradient(circle at 85% 20%, rgba(255,255,255,.08), transparent 32%),
+    rgba(255,255,255,.035);
+  .info-label {
+  grid-column: 1;
+  grid-row: 1;
+  margin-bottom: 24px;
+  color: rgba(255,255,255,.5);
+  font-size: 11px;
+  font-weight: 900;
+  letter-spacing: .28em;
+}
+
+.info-bubble h2 {
+  grid-column: 1;
+  grid-row: 2;
+  margin: 0;
+  max-width: 520px;
+  font-size: clamp(34px, 5vw, 72px);
+  line-height: .98;
+  text-transform: uppercase;
+}
+
+.info-bubble p {
+  grid-column: 2;
+  grid-row: 2;
+  margin: 0;
+  max-width: 560px;
+  color: rgba(255,255,255,.72);
+  font-size: clamp(16px, 1.5vw, 21px);
+  line-height: 1.65;
+}
 .hero-copy {
   position: relative;
   z-index: 12;
@@ -1406,11 +1454,31 @@ margin-right: auto !important;
         <div class="scroll-hint" id="scrollHint">Scroll</div>
       </div>
     </section>
-
-    <section class="gateways">
+<section class="info-section" id="onas">
+  <div class="info-bubble">
+    <div class="info-label">01 / O NÁS</div>
+    <h2>TVORBA, KTERÁ MÁ CO ŘÍCT.</h2>
+    <p>
+      Tvoříme video a foto obsah od prvního nápadu až po finální postprodukci.
+      Každý projekt stavíme tak, aby měl vlastní charakter, fungoval pro daný účel
+      a profesionálně prezentoval značku, firmu nebo událost.
+    </p>
+  </div>
+</section>
+    <section class="info-section" id="cena">
+  <div class="info-bubble">
+    <div class="info-label">02 / CENA</div>
+    <h2>CENA</h2>
+    <p>
+      Cena se vždy odvíjí od rozsahu projektu, délky natáčení, náročnosti postprodukce
+      a konkrétních požadavků. Pro přesnou nabídku nás kontaktujte a připravíme řešení na míru.
+    </p>
+  </div>
+</section>
+    <section class="gateways" id="znacky">
       <div class="gateways-head">
         <p class="section-kicker">Vyberte směr</p>
-        <h2>Naše Specializace.</h2>
+        <h2>Prozkoumej naše značky.</h2>
       </div>
 
       <div class="portal-fan" aria-label="Rozcestník služeb VideoXpert">
@@ -1439,7 +1507,27 @@ margin-right: auto !important;
 </a>
       </div>
     </section>
- <section class="contact-strip">
+    <section class="info-section" id="projekty">
+  <div class="info-bubble">
+    <div class="info-label">04 / NAŠE PROJEKTY</div>
+    <h2>NAŠE PROJEKTY</h2>
+    <p>
+      Výběr realizací, které ukazují naši práci napříč firemním videem,
+      eventy, hudební tvorbou a dalšími projekty.
+    </p>
+  </div>
+</section>
+    <section class="info-section" id="spoluprace">
+  <div class="info-bubble">
+    <div class="info-label">05 / SPOLUPRACOVALI JSME</div>
+    <h2>SPOLUPRACOVALI JSME</h2>
+    <p>
+      Za sebou máme spolupráce s firmami, značkami, interprety i pořadateli akcí.
+      Reference a loga partnerů sem následně doplníme.
+    </p>
+  </div>
+</section>
+ <section class="contact-strip" id="kontakt">
   <div class="contact-item">
     <h3>E-mail</h3>
     <a href="mailto:info@videxpert.cz">info@videxpert.cz</a>
