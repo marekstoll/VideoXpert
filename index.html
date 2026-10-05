@@ -1036,6 +1036,36 @@ margin-right: auto !important;
 .morph-logo {
   width: clamp(230px, 28vw, 430px) !important;
 }
+    .morph-logo,
+.morph-banner {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  z-index: 20;
+  object-fit: contain;
+  pointer-events: none;
+  user-select: none;
+  will-change: opacity, transform, filter;
+}
+
+.morph-logo {
+  width: clamp(230px, 28vw, 430px) !important;
+  filter:
+    drop-shadow(0 0 12px rgba(255,255,255,.45))
+    drop-shadow(0 0 32px rgba(255,255,255,.20));
+}
+
+.morph-banner {
+  width: clamp(360px, 46vw, 720px);
+  opacity: 0;
+  transform: translate(-50%, -50%) scale(.88);
+  filter:
+    drop-shadow(1px 0 0 #fff)
+    drop-shadow(-1px 0 0 #fff)
+    drop-shadow(0 1px 0 #fff)
+    drop-shadow(0 -1px 0 #fff)
+    drop-shadow(0 0 20px rgba(255,255,255,.18));
+}
     .contact-strip {
   position: relative;
   z-index: 5;
@@ -1714,6 +1744,7 @@ margin-right: auto !important;
     const hero = document.querySelector(".hero");
     const deviceScene = document.getElementById("deviceScene");
     const morphLogo = document.getElementById("morphLogo");
+    const morphBanner = document.getElementById("morphBanner");
     const heroTitle = document.getElementById("heroTitle");
     const heroCopy = document.getElementById("heroCopy");
     const heroBgVideo = document.querySelector(".hero-bg-video");
@@ -1725,9 +1756,8 @@ margin-right: auto !important;
       const maxScroll = Math.max(hero.offsetHeight - window.innerHeight, 1);
       const heroTop = hero.offsetTop;
       const current = clamp(window.scrollY - heroTop, 0, maxScroll);
-      const progress = clamp(current / maxScroll, 0, 1);
-const copyOpacity = clamp(1 - progress * 1.7, 0, 1);
-heroCopy.style.opacity = copyOpacity;
+      heroCopy.style.opacity = 0;
+heroCopy.style.pointerEvents = "none";
 heroCopy.style.transform = `translate3d(0, ${-progress * 90}px, 0) scale(${1 - progress * .08})`;
      const isMobileHero = window.matchMedia("(max-width: 860px)").matches;
 const videoBrightness = isMobileHero ? 1.16 : 0.72 + progress * 0.60;
@@ -1744,14 +1774,19 @@ heroCopy.style.filter = `blur(${progress * 5}px)`;
       deviceScene.style.filter = `blur(${progress * 5}px)`;
 
       const logoProgress = clamp((progress - 0.28) / 0.52, 0, 1);
-      const logoScale = 0.72 + logoProgress * 0.28;
-      const logoMove = (1 - logoProgress) * 48;
+      const logoOpacity = clamp(1 - progress / 0.32, 0, 1);
+const logoScale = 1 - progress * 0.06;
 
-      morphLogo.style.opacity = logoProgress;
-      morphLogo.style.transform = `translate3d(0, ${logoMove}px, 0) scale(${logoScale})`;
+morphLogo.style.opacity = logoOpacity;
+morphLogo.style.transform = `translate(-50%, -50%) scale(${logoScale})`;
 
-      heroTitle.style.opacity = clamp(0.115 - progress * 0.09, 0.025, 0.115);
-      heroTitle.style.transform = `translateY(${-4 - progress * 8}vh) scale(${1 + progress * 0.08})`;
+const bannerProgress = clamp((progress - 0.14) / 0.36, 0, 1);
+
+morphBanner.style.opacity = bannerProgress;
+morphBanner.style.transform =
+  `translate(-50%, -50%) scale(${0.90 + bannerProgress * 0.10})`;
+
+heroTitle.style.opacity = 0;
 
       scrollHint.style.opacity = clamp(1 - progress * 2.4, 0, 1);
     }
