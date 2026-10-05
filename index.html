@@ -375,19 +375,9 @@
     }
 
     .gateways::before,
-    .gateways::after {
-      content: "";
-      position: absolute;
-      top: 0;
-      bottom: 0;
-      width: min(9vw, 110px);
-      opacity: .13;
-      background:
-        repeating-linear-gradient(to bottom, rgba(255,255,255,.52) 0 18px, transparent 18px 44px),
-        linear-gradient(90deg, rgba(255,255,255,.12), transparent);
-      pointer-events: none;
-      mask-image: linear-gradient(to bottom, transparent, #000 18%, #000 85%, transparent);
-    }
+.gateways::after {
+  display: none !important;
+}
 
     .gateways::before {
       left: 0;
