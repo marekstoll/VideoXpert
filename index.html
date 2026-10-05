@@ -1774,17 +1774,18 @@ heroCopy.style.filter = `blur(${progress * 5}px)`;
       deviceScene.style.filter = `blur(${progress * 5}px)`;
 
       const logoProgress = clamp((progress - 0.28) / 0.52, 0, 1);
-      const logoOpacity = clamp(1 - progress / 0.32, 0, 1);
-const logoScale = 1 - progress * 0.06;
+      const logoFade = clamp((progress - 0.12) / 0.22, 0, 1);
+const bannerFade = clamp((progress - 0.22) / 0.28, 0, 1);
 
-morphLogo.style.opacity = logoOpacity;
-morphLogo.style.transform = `translate(-50%, -50%) scale(${logoScale})`;
+morphLogo.style.opacity = 1 - logoFade;
+morphLogo.style.transform = `translate(-50%, -50%) scale(${1 - logoFade * 0.06})`;
 
-const bannerProgress = clamp((progress - 0.14) / 0.36, 0, 1);
+morphBanner.style.opacity = bannerFade;
+morphBanner.style.transform = `translate(-50%, -50%) scale(${0.94 + bannerFade * 0.06})`;
 
-morphBanner.style.opacity = bannerProgress;
-morphBanner.style.transform =
-  `translate(-50%, -50%) scale(${0.90 + bannerProgress * 0.10})`;
+heroTitle.style.opacity = 0;
+heroCopy.style.opacity = 0;
+scrollHint.style.opacity = clamp(1 - progress * 3, 0, 1);
 
 heroTitle.style.opacity = 0;
 
