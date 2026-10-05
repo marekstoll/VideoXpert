@@ -397,16 +397,17 @@
     }
 
     .portal-fan {
-      position: relative;
-      z-index: 3;
-      width: min(833px, 82vw);
-      min-height: 570px;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      perspective: 1300px;
-      padding-top: 20px;
-    }
+  position: relative;
+  z-index: 3;
+  width: min(1180px, 92vw);
+  min-height: 520px;
+  display: flex;
+  justify-content: center;
+  align-items: stretch;
+  gap: 28px;
+  perspective: none;
+  padding-top: 20px;
+}
 
     .portal-card {
       position: relative;
@@ -437,23 +438,15 @@
     }
 
     .portal-card + .portal-card {
-      margin-left: -35px;
-    }
+  margin-left: 0;
+}
 
-    .portal-card:nth-child(1) {
-      z-index: 1;
-      transform: rotate(-9deg) translateY(32px);
-    }
-
-    .portal-card:nth-child(2) {
-      z-index: 2;
-      transform: rotate(0deg) translateY(-4px);
-    }
-
-    .portal-card:nth-child(3) {
-      z-index: 1;
-      transform: rotate(9deg) translateY(32px);
-    }
+.portal-card:nth-child(1),
+.portal-card:nth-child(2),
+.portal-card:nth-child(3) {
+  z-index: 1;
+  transform: none;
+}
 
     .portal-card:hover,
     .portal-card:focus-visible {
@@ -480,7 +473,14 @@
     .portal-card:nth-child(3):focus-visible {
       transform: rotate(3deg) translateX(34px) translateY(-34px) scale(1.055);
     }
-
+.portal-card:nth-child(1):hover,
+.portal-card:nth-child(1):focus-visible,
+.portal-card:nth-child(2):hover,
+.portal-card:nth-child(2):focus-visible,
+.portal-card:nth-child(3):hover,
+.portal-card:nth-child(3):focus-visible {
+  transform: scale(1.035);
+}
     .portal-card::before {
       content: "";
       position: absolute;
@@ -948,14 +948,26 @@ margin-right: auto !important;
   background:
     radial-gradient(circle at 85% 20%, rgba(255,255,255,.08), transparent 32%),
     rgba(255,255,255,.035);
-  .info-label {
+   backdrop-filter: blur(22px);
+  -webkit-backdrop-filter: blur(22px);
+  box-shadow: 0 30px 80px rgba(0,0,0,.45);
+}
+
+.info-label {
   grid-column: 1;
-  grid-row: 1;
-  margin-bottom: 24px;
-  color: rgba(255,255,255,.5);
-  font-size: 11px;
+  grid-row: 1 / span 2;
+  margin: 0;
+  align-self: center;
+  color: #fff;
+  font-size: clamp(34px, 5vw, 72px);
+  line-height: .98;
   font-weight: 900;
-  letter-spacing: .28em;
+  letter-spacing: 0;
+  text-transform: uppercase;
+}
+
+.info-bubble h2 {
+  display: none;
 }
 
 .info-bubble h2 {
@@ -1400,6 +1412,29 @@ margin-right: auto !important;
   letter-spacing: -.045em !important;
   text-align: center !important;
 }
+    /* FINÁLNÍ ZAROVNÁNÍ KARET */
+.portal-card {
+  text-align: center !important;
+}
+
+.portal-card .card-brand {
+  left: 50% !important;
+  transform: translateX(-50%) !important;
+}
+
+.portal-card .card-title,
+.portal-card .card-text {
+  left: 50% !important;
+  transform: translateX(-50%) !important;
+  text-align: center !important;
+  margin-left: 0 !important;
+  margin-right: 0 !important;
+}
+
+.portal-card .card-open {
+  margin-left: auto !important;
+  margin-right: auto !important;
+}
 </style>
 </head>
 
@@ -1456,7 +1491,7 @@ margin-right: auto !important;
     </section>
 <section class="info-section" id="onas">
   <div class="info-bubble">
-    <div class="info-label">01 / O NÁS</div>
+    <div class="info-label">O NÁS</div>
     <h2>TVORBA, KTERÁ MÁ CO ŘÍCT.</h2>
     <p>
       Tvoříme video a foto obsah od prvního nápadu až po finální postprodukci.
@@ -1467,7 +1502,7 @@ margin-right: auto !important;
 </section>
     <section class="info-section" id="cena">
   <div class="info-bubble">
-    <div class="info-label">02 / CENA</div>
+    <div class="info-label">CENA</div>
     <h2>CENA</h2>
     <p>
       Cena se vždy odvíjí od rozsahu projektu, délky natáčení, náročnosti postprodukce
@@ -1509,7 +1544,7 @@ margin-right: auto !important;
     </section>
     <section class="info-section" id="projekty">
   <div class="info-bubble">
-    <div class="info-label">04 / NAŠE PROJEKTY</div>
+    <div class="info-label">NAŠE PROJEKTY</div>
     <h2>NAŠE PROJEKTY</h2>
     <p>
       Výběr realizací, které ukazují naši práci napříč firemním videem,
@@ -1519,7 +1554,7 @@ margin-right: auto !important;
 </section>
     <section class="info-section" id="spoluprace">
   <div class="info-bubble">
-    <div class="info-label">05 / SPOLUPRACOVALI JSME</div>
+    <div class="info-label">SPOLUPRACOVALI JSME</div>
     <h2>SPOLUPRACOVALI JSME</h2>
     <p>
       Za sebou máme spolupráce s firmami, značkami, interprety i pořadateli akcí.
