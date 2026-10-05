@@ -1412,28 +1412,58 @@ margin-right: auto !important;
   letter-spacing: -.045em !important;
   text-align: center !important;
 }
-    /* FINÁLNÍ ZAROVNÁNÍ KARET */
+   /* FINÁLNÍ ZAROVNÁNÍ KARET */
 .portal-card {
   text-align: center !important;
 }
 
+.portal-card .card-number {
+  position: absolute !important;
+  top: 28px !important;
+  left: 0 !important;
+  width: 100% !important;
+  text-align: center !important;
+}
+
 .portal-card .card-brand {
+  top: 62px !important;
   left: 50% !important;
+  width: 110px !important;
+  height: 72px !important;
+  object-fit: contain !important;
   transform: translateX(-50%) !important;
 }
 
-.portal-card .card-title,
-.portal-card .card-text {
+.portal-card .card-title {
+  position: absolute !important;
+  top: 175px !important;
   left: 50% !important;
+  width: 88% !important;
+  max-width: 88% !important;
   transform: translateX(-50%) !important;
+  margin: 0 !important;
   text-align: center !important;
-  margin-left: 0 !important;
-  margin-right: 0 !important;
+  font-size: 32px !important;
+  line-height: 1 !important;
+}
+
+.portal-card .card-text {
+  position: absolute !important;
+  top: 285px !important;
+  left: 50% !important;
+  width: 82% !important;
+  max-width: 82% !important;
+  transform: translateX(-50%) !important;
+  margin: 0 !important;
+  text-align: center !important;
 }
 
 .portal-card .card-open {
-  margin-left: auto !important;
-  margin-right: auto !important;
+  position: absolute !important;
+  left: 50% !important;
+  bottom: 28px !important;
+  transform: translateX(-50%) !important;
+  margin: 0 !important;
 }
 </style>
 </head>
