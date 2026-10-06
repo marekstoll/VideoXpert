@@ -1578,36 +1578,55 @@ margin-right: auto !important;
 }
 #onas .info-bubble {
   position: relative;
+  grid-template-rows: auto auto;
+  align-items: center;
+}
+
+#onas .info-label {
+  grid-column: 1;
+  grid-row: 1;
+  justify-self: center;
+  align-self: end;
+  margin: 0 0 32px;
+  text-align: center;
+}
+
+#onas .info-bubble p {
+  grid-column: 2;
+  grid-row: 1 / span 2;
+  align-self: center;
 }
 
 #onas .onas-banner {
-  position: absolute;
-  left: 5.5%;
-  bottom: 48px;
+  position: static;
+  grid-column: 1;
+  grid-row: 2;
+  justify-self: center;
+  align-self: start;
 
-  width: 39%;
-  max-width: 600px;
+  width: 88%;
+  max-width: 560px;
   height: auto;
 
-  opacity: .92;
+  opacity: .96;
   filter: none;
 
   -webkit-mask-image: linear-gradient(
     to right,
     transparent 0%,
-    #000 2%,
-    #000 98%,
+    #000 3%,
+    #000 97%,
     transparent 100%
   );
 
   mask-image: linear-gradient(
     to right,
     transparent 0%,
-    #000 2%,
-    #000 98%,
+    #000 3%,
+    #000 97%,
     transparent 100%
   );
-}    
+}
 </style>
 </head>
 
