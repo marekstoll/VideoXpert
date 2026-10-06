@@ -1904,6 +1904,11 @@ updateTopNav();
       const heroTop = hero.offsetTop;
       const current = clamp(window.scrollY - heroTop, 0, maxScroll);
       const progress = clamp(current / maxScroll, 0, 1);
+      const heroExitRaw = clamp((progress - 0.72) / 0.22, 0, 1);
+const heroExit = heroExitRaw * heroExitRaw * (3 - 2 * heroExitRaw);
+
+document.querySelector(".hero-stage").style.transform =
+  `translate3d(0, ${heroExit * -22}vh, 0)`;
       const ambientAllowed = window.scrollY > heroTop + maxScroll;
 
 clearTimeout(window.vxAmbientTimer);
