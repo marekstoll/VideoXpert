@@ -824,10 +824,13 @@ filter: contrast(1.15) brightness(.83) saturate(1.25) !important;
 }
 
 .hero-kicker {
-  top: 75px !important;
+  top: 68% !important;
+  left: 50% !important;
+  transform: translateX(-50%) !important;
   z-index: 50 !important;
+  opacity: 0;
+  pointer-events: none;
 }
-
 .device-scene {
   margin-top: 10vh !important;
   width: clamp(300px, 39vw, 660px) !important;
@@ -849,15 +852,40 @@ margin-right: auto !important;
 }
 
 .scroll-hint {
-  top: calc(50% + 355px) !important;
+  position: absolute !important;
+  top: 76% !important;
   bottom: auto !important;
+  left: 50% !important;
+  transform: translateX(-50%) !important;
   z-index: 40 !important;
-  font-size: 11px !important;
+  font-size: 10px !important;
+  font-weight: 700;
+  letter-spacing: .22em;
+  color: rgba(255,255,255,.55);
+  opacity: 0;
+  pointer-events: none;
 }
 
 .scroll-hint::after {
-  height: 30px !important;
-  margin-top: 8px !important;
+  content: "";
+  display: block;
+  width: 1px;
+  height: 30px;
+  margin: 8px auto 0;
+  background: rgba(255,255,255,.55);
+  transform-origin: top;
+  animation: scrollLine 1.8s ease-in-out infinite;
+}
+
+@keyframes scrollLine {
+  0%, 100% {
+    transform: scaleY(.45);
+    opacity: .35;
+  }
+  50% {
+    transform: scaleY(1);
+    opacity: .8;
+  }
 }
 
 @media (max-width: 860px) {
@@ -876,14 +904,10 @@ margin-right: auto !important;
     padding: 11px 17px !important;
   }
 
-  .scroll-hint {
-    top: calc(50% + 245px) !important;
-  }
 }
     /* HERO TEXT MÍSTO KLAPKY */
 .hero-title,
-.device-scene,
-.scroll-hint {
+.device-scene {
   display: none !important;
 }
 .top-nav {
@@ -1560,7 +1584,7 @@ margin-right: auto !important;
         <div class="film-strip film-left"></div>
         <div class="film-strip film-right"></div>
 
-        <p class="hero-kicker">Video • Foto • Postprodukce • Marketing</p>
+        <p class="hero-kicker">Video • Foto • Postprodukce • Sociální sítě</p>
 <div class="hero-copy" id="heroCopy">
   <h2>VÁŠ PŘÍBĚH - NÁŠ OBJEKTIV</h2>
   <p>
@@ -1784,11 +1808,11 @@ morphBanner.style.transform = `translate(-50%, -50%) scale(${0.94 + bannerFade *
 
 heroTitle.style.opacity = 0;
 heroCopy.style.opacity = 0;
-scrollHint.style.opacity = clamp(1 - progress * 3, 0, 1);
 
-heroTitle.style.opacity = 0;
+const kickerFade = clamp((progress - 0.30) / 0.18, 0, 1);
 
-      scrollHint.style.opacity = clamp(1 - progress * 2.4, 0, 1);
+document.querySelector(".hero-kicker").style.opacity = kickerFade;
+scrollHint.style.opacity = kickerFade;
     }
 
     function setRevealPosition(event) {
