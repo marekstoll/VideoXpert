@@ -1841,7 +1841,7 @@ margin-right: auto !important;
 const pageProgress = clamp(window.scrollY / pageMaxScroll, 0, 1);
 
 const ambientWave = Math.max(0, Math.sin(pageProgress * Math.PI * 4));
-const ambientOpacity = Math.pow(ambientWave, 2) * 0.10;
+const ambientOpacity = Math.pow(ambientWave, 2) * 0.32;
 
 document.documentElement.style.setProperty("--ambient-opacity", ambientOpacity.toFixed(3));
       heroCopy.style.opacity = 0;
