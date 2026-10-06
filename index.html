@@ -49,27 +49,33 @@
 body::after {
   content: "";
   position: fixed;
-  inset: 0;
+  inset: -20vh -15vw;
   z-index: 2;
   pointer-events: none;
   opacity: var(--ambient-opacity, 0);
+
   background:
-    radial-gradient(circle, rgba(255,255,255,.16) 1px, transparent 1.2px),
-    linear-gradient(135deg,
-      transparent 0 68%,
-      rgba(36,76,255,.22) 68% 71%,
-      transparent 71% 73%,
-      rgba(207,157,67,.18) 73% 76%,
-      transparent 76% 78%,
-      rgba(145,67,220,.20) 78% 81%,
-      transparent 81% 100%
-    );
-  background-size:
-    18px 18px,
-    100% 100%;
-  mask-image: linear-gradient(to right, transparent 35%, #000 65%, #000 100%);
--webkit-mask-image: linear-gradient(to right, transparent 35%, #000 65%, #000 100%);
-  transition: opacity .6s ease;
+    radial-gradient(ellipse at 105% 35%,
+      transparent 0 54%,
+      rgba(36,76,255,.14) 55% 57%,
+      transparent 58% 100%),
+    radial-gradient(ellipse at 105% 35%,
+      transparent 0 59%,
+      rgba(207,157,67,.12) 60% 62%,
+      transparent 63% 100%),
+    radial-gradient(ellipse at 105% 35%,
+      transparent 0 64%,
+      rgba(145,67,220,.13) 65% 67%,
+      transparent 68% 100%),
+    radial-gradient(circle, rgba(255,255,255,.07) .8px, transparent 1px);
+
+  background-size: 100% 100%, 100% 100%, 100% 100%, 18px 18px;
+
+  transform:
+    translate3d(var(--ambient-x, 0px), var(--ambient-y, 0px), 0)
+    rotate(var(--ambient-rotate, 0deg));
+
+  transition: opacity .25s ease, transform .12s linear;
 }
     a {
       color: inherit;
