@@ -83,7 +83,7 @@ body::after {
 
     .hero {
       position: relative;
-      height: 315vh;
+      height: 285vh;
       background: var(--black);
     }
 
@@ -1953,7 +1953,7 @@ const bannerIn = bannerInRaw * bannerInRaw * (3 - 2 * bannerInRaw);
 const flyRaw = clamp((progress - 0.56) / 0.26, 0, 1);
 const bannerFly = flyRaw * flyRaw * (3 - 2 * flyRaw);
 
-const fadeRaw = clamp((progress - 0.64) / 0.18, 0, 1);
+const fadeRaw = clamp((progress - 0.56) / 0.14, 0, 1);
 const bannerOut = fadeRaw * fadeRaw * (3 - 2 * fadeRaw);
 
 const bannerScale = 1 + bannerFly * 2.6;
