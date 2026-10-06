@@ -1881,6 +1881,7 @@ margin-right: auto !important;
     const heroTitle = document.getElementById("heroTitle");
     const heroCopy = document.getElementById("heroCopy");
     const scrollHint = document.getElementById("scrollHint");
+    const kicker = document.querySelector(".hero-kicker");
     const topNav = document.querySelector(".top-nav");
     const menuPeek = document.querySelector(".menu-peek");
 let navMouseTop = false;
@@ -1954,7 +1955,7 @@ const bannerIn = bannerInRaw * bannerInRaw * (3 - 2 * bannerInRaw);
 const flyRaw = clamp((progress - 0.56) / 0.40, 0, 1);
 const bannerFly = flyRaw * flyRaw * (3 - 2 * flyRaw);
 
-cconst fadeRaw = clamp((progress - 0.68) / 0.24, 0, 1);
+const fadeRaw = clamp((progress - 0.68) / 0.24, 0, 1);
 const bannerOut = fadeRaw * fadeRaw * (3 - 2 * fadeRaw);
 
 const bannerScale = 1 + bannerFly * 2.6;
