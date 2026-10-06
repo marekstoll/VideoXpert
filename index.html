@@ -1951,10 +1951,10 @@ heroCopy.style.filter = `blur(${progress * 5}px)`;
 const bannerInRaw = clamp((progress - 0.10) / 0.32, 0, 1);
 const bannerIn = bannerInRaw * bannerInRaw * (3 - 2 * bannerInRaw);
 
-const flyRaw = clamp((progress - 0.56) / 0.26, 0, 1);
+const flyRaw = clamp((progress - 0.56) / 0.40, 0, 1);
 const bannerFly = flyRaw * flyRaw * (3 - 2 * flyRaw);
 
-const fadeRaw = clamp((progress - 0.56) / 0.14, 0, 1);
+cconst fadeRaw = clamp((progress - 0.68) / 0.24, 0, 1);
 const bannerOut = fadeRaw * fadeRaw * (3 - 2 * fadeRaw);
 
 const bannerScale = 1 + bannerFly * 2.6;
