@@ -399,20 +399,16 @@ body::after {
     }
 
     .gateways {
-      position: relative;
-      z-index: 2;
-      min-height: 100vh;
-      padding: clamp(45px, 6vw, 80px) 5vw clamp(45px, 6vw, 80px);
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      background:
-  linear-gradient(to bottom, transparent 62%, #020202 100%),
-  radial-gradient(circle at 50% 22%, rgba(255,255,255,.12), transparent 28%),
-  radial-gradient(circle at 15% 90%, rgba(255,255,255,.08), transparent 26%),
-  #020202;
-      overflow: hidden;
-    }
+  position: relative;
+  z-index: 3;
+  min-height: 100vh;
+  padding: clamp(45px, 6vw, 80px) 5vw clamp(45px, 6vw, 80px);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background: transparent;
+  overflow: hidden;
+}
 
     .gateways::before,
 .gateways::after {
