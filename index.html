@@ -83,7 +83,7 @@ body::after {
 
     .hero {
       position: relative;
-      height: 285vh;
+      height: 340vh;
       background: var(--black);
     }
 
@@ -1154,12 +1154,8 @@ margin-right: auto !important;
   width: clamp(360px, 46vw, 720px);
   opacity: 0;
   transform: translate(-50%, -50%) scale(.88);
-  filter:
-  drop-shadow(1px 0 0 #fff)
-  drop-shadow(-1px 0 0 #fff)
-  drop-shadow(0 1px 0 #fff)
-  drop-shadow(0 -1px 0 #fff)
-  drop-shadow(0 0 20px rgba(255,255,255,.18));
+  ffilter: none;
+will-change: transform, opacity;
 }
     .contact-strip {
   position: relative;
@@ -1952,10 +1948,10 @@ heroCopy.style.filter = `blur(${progress * 5}px)`;
 const bannerInRaw = clamp((progress - 0.10) / 0.32, 0, 1);
 const bannerIn = bannerInRaw * bannerInRaw * (3 - 2 * bannerInRaw);
 
-const flyRaw = clamp((progress - 0.56) / 0.40, 0, 1);
+const flyRaw = clamp((progress - 0.42) / 0.40, 0, 1);
 const bannerFly = flyRaw * flyRaw * (3 - 2 * flyRaw);
 
-const fadeRaw = clamp((progress - 0.68) / 0.24, 0, 1);
+const fadeRaw = clamp((progress - 0.58) / 0.24, 0, 1);
 const bannerOut = fadeRaw * fadeRaw * (3 - 2 * fadeRaw);
 
 const bannerScale = 1 + bannerFly * 2.6;
