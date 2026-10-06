@@ -1849,6 +1849,20 @@ margin-right: auto !important;
     const heroTitle = document.getElementById("heroTitle");
     const heroCopy = document.getElementById("heroCopy");
     const scrollHint = document.getElementById("scrollHint");
+    const topNav = document.querySelector(".top-nav");
+let navMouseTop = false;
+
+function updateTopNav() {
+  const heroEnd = hero.offsetTop + hero.offsetHeight - window.innerHeight;
+  const inHero = window.scrollY <= heroEnd;
+
+  topNav.classList.toggle("is-hidden", !inHero && !navMouseTop);
+}
+
+document.addEventListener("mousemove", (event) => {
+  navMouseTop = event.clientY < 110;
+  updateTopNav();
+});
 
     const clamp = (value, min, max) => Math.min(Math.max(value, min), max);
 
