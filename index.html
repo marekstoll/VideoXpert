@@ -545,6 +545,11 @@ body::after {
     .memoria-brand {
   width: 133px !important;
   opacity: .9;
+  filter:
+    drop-shadow(1px 0 0 #e7c77a)
+    drop-shadow(-1px 0 0 #8f6728)
+    drop-shadow(0 1px 0 #c99a43)
+    drop-shadow(0 -1px 0 #f1d89a);
 }
 
 .brandarna-brand {
@@ -1613,21 +1618,6 @@ margin-right: auto !important;
   opacity: .96;
   filter: none;
 
-  -webkit-mask-image: linear-gradient(
-    to right,
-    transparent 0%,
-    #000 1%,
-    #000 99%,
-    transparent 100%
-  );
-
-  mask-image: linear-gradient(
-    to right,
-    transparent 0%,
-    #000 3%,
-    #000 97%,
-    transparent 100%
-  );
 }
 </style>
 </head>
