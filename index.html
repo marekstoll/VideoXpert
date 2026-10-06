@@ -1863,6 +1863,8 @@ document.addEventListener("mousemove", (event) => {
   navMouseTop = event.clientY < 110;
   updateTopNav();
 });
+    window.addEventListener("scroll", updateTopNav, { passive: true });
+updateTopNav();
 
     const clamp = (value, min, max) => Math.min(Math.max(value, min), max);
 
