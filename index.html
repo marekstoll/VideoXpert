@@ -1889,6 +1889,7 @@ function updateTopNav() {
   const inHero = window.scrollY <= heroEnd;
 
   topNav.classList.toggle("is-hidden", !inHero && !navMouseTop);
+menuPeek.classList.toggle("is-visible", !inHero && !navMouseTop);
 }
 
 document.addEventListener("mousemove", (event) => {
