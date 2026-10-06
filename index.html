@@ -945,7 +945,7 @@ margin-right: auto !important;
   position: fixed;
   top: 22px;
   left: 50%;
-  transform: translateX(-50%);
+  transform: translateX(-50%) translateY(0);
   z-index: 1000;
   display: flex;
   align-items: center;
@@ -958,6 +958,14 @@ margin-right: auto !important;
   -webkit-backdrop-filter: blur(18px);
   box-shadow: 0 10px 35px rgba(0,0,0,.35);
   white-space: nowrap;
+  opacity: 1;
+  transition: transform .28s ease, opacity .28s ease;
+}
+
+.top-nav.is-hidden {
+  transform: translateX(-50%) translateY(-150%);
+  opacity: 0;
+  pointer-events: none;
 }
 
 .top-nav a {
