@@ -1890,25 +1890,28 @@ heroCopy.style.filter = `blur(${progress * 5}px)`;
 
       const logoProgress = clamp((progress - 0.28) / 0.52, 0, 1);
       const logoFade = clamp((progress - 0.12) / 0.22, 0, 1);
-const bannerFade = clamp((progress - 0.20) / 0.16, 0, 1);
-const bannerFly = clamp((progress - 0.34) / 0.62, 0, 1);
-const bannerExit = clamp((progress - 0.90) / 0.10, 0, 1);
+const bannerInRaw = clamp((progress - 0.16) / 0.16, 0, 1);
+const bannerIn = bannerInRaw * bannerInRaw * (3 - 2 * bannerInRaw);
 
-const bannerScale = 0.90 + bannerFly * 4.3;
-const bannerOpacity = bannerFade * (1 - bannerExit);
-const kickerFadeOut = clamp((progress - 0.42) / 0.22, 0, 1);
-const kickerOpacity = bannerFade * (1 - kickerFadeOut);
-morphLogo.style.opacity = 1 - logoFade;
-morphLogo.style.transform = `translate(-50%, -50%) scale(${1 - logoFade * 0.06})`;
+const flyRaw = clamp((progress - 0.58) / 0.42, 0, 1);
+const bannerFly = flyRaw * flyRaw * (3 - 2 * flyRaw);
+
+const fadeRaw = clamp((progress - 0.68) / 0.32, 0, 1);
+const bannerOut = fadeRaw * fadeRaw * (3 - 2 * fadeRaw);
+
+const bannerScale = 1 + bannerFly * 4.2;
+const bannerOpacity = bannerIn * (1 - bannerOut);
+const kickerOpacity = bannerIn * (1 - bannerOut);
+
+morphLogo.style.opacity = 1 - bannerIn;
+morphLogo.style.transform = `translate(-50%, -50%) scale(${1 - bannerIn * 0.06})`;
 
 morphBanner.style.opacity = bannerOpacity;
 morphBanner.style.transform = `translate(-50%, -50%) scale(${bannerScale})`;
-
 heroTitle.style.opacity = 0;
 heroCopy.style.opacity = 0;
 
 kicker.style.setProperty("opacity", kickerOpacity, "important");
-kicker.style.setProperty("opacity", bannerOpacity, "important");
 kicker.style.setProperty(
   "transform",
   `translateX(-50%) scale(${bannerScale})`,
