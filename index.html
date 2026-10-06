@@ -1649,9 +1649,6 @@ margin-right: auto !important;
 </nav>
     <section class="hero" id="uvod">
       <div class="hero-stage">
-        <video class="hero-bg-video" autoplay muted loop playsinline preload="metadata">
-  <source src="images/WEB%20TEST%20HLAVN%C3%8D.mp4" type="video/mp4">
-</video>
         <div class="waves"></div>
         <div class="film-strip film-left"></div>
         <div class="film-strip film-right"></div>
@@ -1843,7 +1840,6 @@ margin-right: auto !important;
     const morphBanner = document.getElementById("morphBanner");
     const heroTitle = document.getElementById("heroTitle");
     const heroCopy = document.getElementById("heroCopy");
-    const heroBgVideo = document.querySelector(".hero-bg-video");
     const scrollHint = document.getElementById("scrollHint");
 
     const clamp = (value, min, max) => Math.min(Math.max(value, min), max);
@@ -1883,11 +1879,6 @@ window.vxAmbientTimer = setTimeout(() => {
       heroCopy.style.opacity = 0;
 heroCopy.style.pointerEvents = "none";
 heroCopy.style.transform = `translate3d(0, ${-progress * 90}px, 0) scale(${1 - progress * .08})`;
-     const isMobileHero = window.matchMedia("(max-width: 860px)").matches;
-const videoBrightness = isMobileHero ? 1.16 : 0.72 + progress * 0.60;
-      const videoOpacity = isMobileHero ? 0.72 : 0.42 + progress * 0.28;
-heroBgVideo.style.setProperty("filter", `contrast(1.05) brightness(${videoBrightness}) saturate(1.2)`, "important");
-heroBgVideo.style.setProperty("opacity", videoOpacity, "important");
 heroCopy.style.filter = `blur(${progress * 5}px)`;
       const deviceOpacity = clamp(1 - progress * 1.32, 0, 1);
       const deviceScale = 1 - progress * 0.46;
