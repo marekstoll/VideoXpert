@@ -1858,13 +1858,18 @@ margin-right: auto !important;
       const heroTop = hero.offsetTop;
       const current = clamp(window.scrollY - heroTop, 0, maxScroll);
       const progress = clamp(current / maxScroll, 0, 1);
-      const pageMaxScroll = Math.max(document.documentElement.scrollHeight - window.innerHeight, 1);
-const pageProgress = clamp(window.scrollY / pageMaxScroll, 0, 1);
+      const ambientAllowed = window.scrollY > heroTop + maxScroll;
 
-const ambientWave = Math.max(0, Math.sin(pageProgress * Math.PI * 4));
-const ambientOpacity = Math.pow(ambientWave, 2) * 0.32;
+clearTimeout(window.vxAmbientTimer);
 
-document.documentElement.style.setProperty("--ambient-opacity", ambientOpacity.toFixed(3));
+document.documentElement.style.setProperty(
+  "--ambient-opacity",
+  ambientAllowed ? "0.32" : "0"
+);
+
+window.vxAmbientTimer = setTimeout(() => {
+  document.documentElement.style.setProperty("--ambient-opacity", "0");
+}, 260);
       heroCopy.style.opacity = 0;
 heroCopy.style.pointerEvents = "none";
 heroCopy.style.transform = `translate3d(0, ${-progress * 90}px, 0) scale(${1 - progress * .08})`;
