@@ -46,7 +46,31 @@
   opacity: .65;
   mix-blend-mode: screen;
 }
-
+body::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: 2;
+  pointer-events: none;
+  opacity: 0;
+  background:
+    radial-gradient(circle, rgba(255,255,255,.16) 1px, transparent 1.2px),
+    linear-gradient(135deg,
+      transparent 0 68%,
+      rgba(36,76,255,.22) 68% 71%,
+      transparent 71% 73%,
+      rgba(207,157,67,.18) 73% 76%,
+      transparent 76% 78%,
+      rgba(145,67,220,.20) 78% 81%,
+      transparent 81% 100%
+    );
+  background-size:
+    18px 18px,
+    100% 100%;
+  mask-image: linear-gradient(to left, #000 0%, transparent 48%);
+  -webkit-mask-image: linear-gradient(to left, #000 0%, transparent 48%);
+  transition: opacity .6s ease;
+}
     a {
       color: inherit;
     }
