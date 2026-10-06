@@ -1576,28 +1576,35 @@ margin-right: auto !important;
   margin: 0 !important;
   text-align: center !important;
 }
+#onas .info-bubble {
+  position: relative;
+}
+
 #onas .onas-banner {
-  grid-column: 2;
-  width: 100%;
-  max-width: 720px;
+  position: absolute;
+  left: 5.5%;
+  bottom: 48px;
+
+  width: 39%;
+  max-width: 600px;
   height: auto;
-  justify-self: center;
-  margin-top: 28px;
-  opacity: .72;
-  filter: brightness(.72) contrast(1.05);
+
+  opacity: .92;
+  filter: none;
 
   -webkit-mask-image: linear-gradient(
     to right,
     transparent 0%,
-    #000 9%,
-    #000 91%,
+    #000 2%,
+    #000 98%,
     transparent 100%
   );
+
   mask-image: linear-gradient(
     to right,
     transparent 0%,
-    #000 9%,
-    #000 91%,
+    #000 2%,
+    #000 98%,
     transparent 100%
   );
 }    
