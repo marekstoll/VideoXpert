@@ -1859,7 +1859,7 @@ clearTimeout(window.vxAmbientTimer);
 
 document.documentElement.style.setProperty(
   "--ambient-opacity",
-  ambientAllowed ? "0.34" : "0"
+  ambientAllowed ? "0.374" : "0"
 );
 
 document.documentElement.style.setProperty(
@@ -1899,23 +1899,29 @@ heroCopy.style.filter = `blur(${progress * 5}px)`;
 
       const logoProgress = clamp((progress - 0.28) / 0.52, 0, 1);
       const logoFade = clamp((progress - 0.12) / 0.22, 0, 1);
-const bannerFade = clamp((progress - 0.20) / 0.18, 0, 1);
-const bannerPunch = clamp((progress - 0.36) / 0.18, 0, 1);
-const bannerSettle = clamp((progress - 0.62) / 0.16, 0, 1);
+const bannerFade = clamp((progress - 0.20) / 0.16, 0, 1);
+const bannerFly = clamp((progress - 0.34) / 0.62, 0, 1);
+const bannerExit = clamp((progress - 0.90) / 0.10, 0, 1);
+
+const bannerScale = 0.90 + bannerFly * 4.3;
+const bannerOpacity = bannerFade * (1 - bannerExit);
 
 morphLogo.style.opacity = 1 - logoFade;
 morphLogo.style.transform = `translate(-50%, -50%) scale(${1 - logoFade * 0.06})`;
 
-morphBanner.style.opacity = bannerFade;
-morphBanner.style.transform = `translate(-50%, -50%) scale(${0.90 + bannerPunch * 0.42 - bannerSettle * 0.18})`;
+morphBanner.style.opacity = bannerOpacity;
+morphBanner.style.transform = `translate(-50%, -50%) scale(${bannerScale})`;
 
 heroTitle.style.opacity = 0;
 heroCopy.style.opacity = 0;
 
-const kickerFade = clamp((progress - 0.30) / 0.18, 0, 1);
-
-document.querySelector(".hero-kicker").style.opacity = kickerFade;
-scrollHint.style.opacity = kickerFade;
+const kicker = document.querySelector(".hero-kicker");
+kicker.style.setProperty("opacity", bannerOpacity, "important");
+kicker.style.setProperty(
+  "transform",
+  `translateX(-50%) scale(${bannerScale})`,
+  "important"
+);
     }
 
     function setRevealPosition(event) {
