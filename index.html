@@ -83,7 +83,7 @@ body::after {
 
     .hero {
       position: relative;
-      height: 155vh;
+      height: 210vh;
       background: var(--black);
     }
 
@@ -1899,13 +1899,15 @@ heroCopy.style.filter = `blur(${progress * 5}px)`;
 
       const logoProgress = clamp((progress - 0.28) / 0.52, 0, 1);
       const logoFade = clamp((progress - 0.12) / 0.22, 0, 1);
-const bannerFade = clamp((progress - 0.22) / 0.28, 0, 1);
+const bannerFade = clamp((progress - 0.20) / 0.18, 0, 1);
+const bannerPunch = clamp((progress - 0.36) / 0.18, 0, 1);
+const bannerSettle = clamp((progress - 0.62) / 0.16, 0, 1);
 
 morphLogo.style.opacity = 1 - logoFade;
 morphLogo.style.transform = `translate(-50%, -50%) scale(${1 - logoFade * 0.06})`;
 
 morphBanner.style.opacity = bannerFade;
-morphBanner.style.transform = `translate(-50%, -50%) scale(${0.94 + bannerFade * 0.06})`;
+morphBanner.style.transform = `translate(-50%, -50%) scale(${0.90 + bannerPunch * 0.42 - bannerSettle * 0.18})`;
 
 heroTitle.style.opacity = 0;
 heroCopy.style.opacity = 0;
