@@ -1659,6 +1659,236 @@ will-change: transform, opacity;
     0 0 0 1px rgba(241,216,154,.35),
     0 0 18px rgba(201,154,67,.18);
 }
+    /* GALERIE NAŠE PROJEKTY */
+
+#projekty .projects-bubble {
+  grid-template-columns: minmax(220px, 0.9fr) minmax(0, 1.8fr);
+  grid-template-rows: auto;
+  gap: 30px;
+  align-items: center;
+  padding: clamp(28px, 3.5vw, 46px);
+}
+
+#projekty .projects-intro {
+  min-width: 0;
+}
+
+#projekty .projects-intro .info-label {
+  font-size: clamp(32px, 3.5vw, 54px);
+  line-height: 1;
+  letter-spacing: -0.035em;
+  text-align: left;
+}
+
+#projekty .projects-intro p {
+  margin-top: 22px;
+  font-size: clamp(14px, 1.15vw, 17px);
+  line-height: 1.6;
+  color: rgba(255,255,255,.72);
+}
+
+/* MALÁ GALERIE */
+
+#projekty .project-gallery {
+  min-width: 0;
+  display: grid;
+  grid-template-columns: 34px minmax(0, 1fr) 34px;
+  grid-template-rows: auto 18px;
+  align-items: center;
+  gap: 12px;
+}
+
+#projekty .project-track {
+  grid-column: 2;
+  grid-row: 1;
+  display: flex;
+  gap: 10px;
+  min-width: 0;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  scroll-behavior: smooth;
+  scrollbar-width: none;
+}
+
+#projekty .project-track::-webkit-scrollbar {
+  display: none;
+}
+
+#projekty .project-thumb {
+  flex: 0 0 calc((100% - 30px) / 4);
+  height: 180px;
+  min-width: 0;
+  padding: 0;
+  border: 1px solid rgba(255,255,255,.25);
+  border-radius: 12px;
+  overflow: hidden;
+  background: #111;
+  cursor: zoom-in;
+  scroll-snap-align: start;
+  transition: border-color .25s ease;
+}
+
+#projekty .project-thumb:hover {
+  border-color: rgba(255,255,255,.85);
+}
+
+#projekty .project-thumb img {
+  width: 100%;
+  height: 100%;
+  display: block;
+  object-fit: cover;
+  transition: transform .35s ease;
+}
+
+#projekty .project-thumb:hover img {
+  transform: scale(1.06);
+}
+
+/* ŠIPKY */
+
+#projekty .project-prev,
+#projekty .project-next {
+  grid-row: 1;
+  width: 34px;
+  height: 34px;
+  padding: 0;
+  border: 1px solid rgba(255,255,255,.25);
+  border-radius: 50%;
+  background: rgba(10,10,10,.8);
+  color: white;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background .2s ease;
+}
+
+#projekty .project-prev {
+  grid-column: 1;
+}
+
+#projekty .project-next {
+  grid-column: 3;
+}
+
+#projekty .project-prev:hover,
+#projekty .project-next:hover {
+  background: rgba(255,255,255,.18);
+}
+
+/* TEČKY POD GALERIÍ */
+
+#projekty .project-dots {
+  grid-column: 2;
+  grid-row: 2;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 9px;
+}
+
+#projekty .project-dots button {
+  width: 7px;
+  height: 7px;
+  padding: 0;
+  border: 0;
+  border-radius: 50%;
+  background: rgba(255,255,255,.3);
+  cursor: pointer;
+}
+
+#projekty .project-dots button.active {
+  background: white;
+}
+
+/* GALERIE PŘES CELOU OBRAZOVKU */
+
+.project-lightbox[hidden] {
+  display: none !important;
+}
+
+.project-lightbox {
+  position: fixed;
+  inset: 0;
+  z-index: 99999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 65px 75px;
+  background: rgba(0,0,0,.96);
+}
+
+.project-lightbox img {
+  display: block;
+  max-width: 100%;
+  max-height: calc(100vh - 130px);
+  width: auto;
+  height: auto;
+  object-fit: contain;
+  border-radius: 8px;
+}
+
+.project-lightbox button {
+  position: absolute;
+  z-index: 2;
+  width: 44px;
+  height: 44px;
+  border: 1px solid rgba(255,255,255,.3);
+  border-radius: 50%;
+  background: rgba(20,20,20,.85);
+  color: white;
+  font-size: 20px;
+  cursor: pointer;
+}
+
+.project-close {
+  top: 22px;
+  right: 28px;
+}
+
+.project-lightbox-prev {
+  top: 50%;
+  left: 18px;
+  transform: translateY(-50%);
+}
+
+.project-lightbox-next {
+  top: 50%;
+  right: 18px;
+  transform: translateY(-50%);
+}
+
+.project-counter {
+  position: absolute;
+  bottom: 22px;
+  left: 50%;
+  transform: translateX(-50%);
+  color: rgba(255,255,255,.7);
+  font-size: 13px;
+  letter-spacing: .15em;
+}
+
+/* MOBIL A TABLET */
+
+@media (max-width: 1100px) {
+  #projekty .project-thumb {
+    flex-basis: calc((100% - 20px) / 3);
+  }
+}
+
+@media (max-width: 760px) {
+  #projekty .projects-bubble {
+    grid-template-columns: 1fr;
+    gap: 25px;
+  }
+
+  #projekty .project-thumb {
+    flex-basis: calc((100% - 10px) / 2);
+    height: 160px;
+  }
+
+  .project-lightbox {
+    padding: 65px 55px;
+  }
+}
 </style>
 </head>
 
@@ -1767,15 +1997,58 @@ will-change: transform, opacity;
       </div>
     </section>
     <section class="info-section" id="projekty">
-  <div class="info-bubble">
-    <div class="info-label">NAŠE PROJEKTY</div>
-    <h2>NAŠE PROJEKTY</h2>
-    <p>
-      Výběr realizací, které ukazují naši práci napříč firemním videem,
-      eventy, hudební tvorbou a dalšími projekty.
-    </p>
+  <div class="info-bubble projects-bubble">
+
+    <div class="projects-intro">
+      <div class="info-label">NAŠE PROJEKTY</div>
+      <p>
+        Výběr realizací, které ukazují naši práci
+        napříč firemním videem, eventy,
+        hudební tvorbou a dalšími projekty.
+      </p>
+    </div>
+
+    <div class="project-gallery">
+      <button class="project-prev" type="button">&#10094;</button>
+
+      <div class="project-track" id="projectTrack">
+
+        <button class="project-thumb" type="button">
+          <img src="images/120-DSC01409.jpg" alt="Projekt 1">
+        </button>
+
+        <button class="project-thumb" type="button">
+          <img src="images/c1.00_00_52_17.Still134.jpg" alt="Projekt 2">
+        </button>
+
+        <button class="project-thumb" type="button">
+          <img src="images/DSC00207.JPG" alt="Projekt 3">
+        </button>
+
+        <button class="project-thumb" type="button">
+          <img src="images/DSC00249.JPG" alt="Projekt 4">
+        </button>
+
+        <button class="project-thumb" type="button">
+          <img src="images/IMG_6887.jpg" alt="Projekt 5">
+        </button>
+
+      </div>
+
+      <button class="project-next" type="button">&#10095;</button>
+      <div class="project-dots"></div>
+    </div>
+
   </div>
 </section>
+
+<div class="project-lightbox" id="projectLightbox" role="dialog" aria-modal="true" aria-label="Galerie projektů" hidden>
+  <button class="project-close" type="button">&#10005;</button>
+  <button class="project-lightbox-prev" type="button">&#10094;</button>
+  <img id="projectLightboxImage" alt="Fotografie projektu">
+  <button class="project-lightbox-next" type="button">&#10095;</button>
+  <span class="project-counter"></span>
+</div>
     <section class="info-section" id="spoluprace">
   <div class="info-bubble">
     <div class="info-label" style="grid-column:1 / -1; grid-row:1; align-self:start; justify-self:center; width:100%; margin:0; white-space:nowrap; text-align:center;">SPOLUPRACOVALI JSME</div>
@@ -2032,6 +2305,130 @@ portalCards.forEach((card) => {
   });
 });
     updateScrollAnimation();
+    /* GALERIE NAŠE PROJEKTY */
+(() => {
+  const track = document.getElementById("projectTrack");
+  const lightbox = document.getElementById("projectLightbox");
+  if (!track || !lightbox) return;
+
+  const thumbs = [...track.querySelectorAll(".project-thumb")];
+  const photos = thumbs.map(item => item.querySelector("img"));
+  const gallery = track.closest(".project-gallery");
+  const dots = gallery.querySelector(".project-dots");
+  const largeImage = document.getElementById("projectLightboxImage");
+  const counter = lightbox.querySelector(".project-counter");
+
+  let photoIndex = 0;
+  let previousFocus = null;
+  let previousOverflow = "";
+
+  function step() {
+    if (thumbs.length < 2) return track.clientWidth;
+    return thumbs[1].getBoundingClientRect().left -
+           thumbs[0].getBoundingClientRect().left;
+  }
+
+  function maxPage() {
+    return Math.max(0, Math.round(
+      (track.scrollWidth - track.clientWidth) / step()
+    ));
+  }
+
+  function currentPage() {
+    return Math.max(0, Math.min(
+      maxPage(), Math.round(track.scrollLeft / step())
+    ));
+  }
+
+  function goToPage(index) {
+    const page = Math.max(0, Math.min(index, maxPage()));
+    track.scrollTo({
+      left: page * step(),
+      behavior: "smooth"
+    });
+  }
+
+  function updateDots() {
+    [...dots.children].forEach((dot, index) => {
+      dot.classList.toggle("active", index === currentPage());
+    });
+  }
+
+  function createDots() {
+    dots.innerHTML = "";
+
+    for (let i = 0; i <= maxPage(); i++) {
+      const dot = document.createElement("button");
+      dot.type = "button";
+      dot.setAttribute("aria-label", `Pozice galerie ${i + 1}`);
+      dot.addEventListener("click", () => goToPage(i));
+      dots.appendChild(dot);
+    }
+
+    updateDots();
+  }
+
+  gallery.querySelector(".project-prev").addEventListener("click", () => {
+    goToPage(currentPage() - 1);
+  });
+
+  gallery.querySelector(".project-next").addEventListener("click", () => {
+    goToPage(currentPage() + 1);
+  });
+
+  track.addEventListener("scroll", updateDots, { passive: true });
+  window.addEventListener("resize", createDots);
+
+  function showPhoto(index) {
+    photoIndex = (index + photos.length) % photos.length;
+    largeImage.src = photos[photoIndex].src;
+    largeImage.alt = photos[photoIndex].alt;
+    counter.textContent = `${photoIndex + 1} / ${photos.length}`;
+  }
+
+  function openGallery(index) {
+    previousFocus = document.activeElement;
+    previousOverflow = document.body.style.overflow;
+    showPhoto(index);
+    lightbox.hidden = false;
+    document.body.style.overflow = "hidden";
+    lightbox.querySelector(".project-close").focus();
+  }
+
+  function closeGallery() {
+    lightbox.hidden = true;
+    document.body.style.overflow = previousOverflow;
+    if (previousFocus) previousFocus.focus();
+  }
+
+  thumbs.forEach((thumb, index) => {
+    thumb.addEventListener("click", () => openGallery(index));
+  });
+
+  lightbox.querySelector(".project-close")
+    .addEventListener("click", closeGallery);
+
+  lightbox.querySelector(".project-lightbox-prev")
+    .addEventListener("click", () => showPhoto(photoIndex - 1));
+
+  lightbox.querySelector(".project-lightbox-next")
+    .addEventListener("click", () => showPhoto(photoIndex + 1));
+
+  lightbox.addEventListener("click", event => {
+    if (event.target === lightbox) closeGallery();
+  });
+
+  document.addEventListener("keydown", event => {
+    if (lightbox.hidden) return;
+
+    if (event.key === "Escape") closeGallery();
+    if (event.key === "ArrowRight") showPhoto(photoIndex + 1);
+    if (event.key === "ArrowLeft") showPhoto(photoIndex - 1);
+  });
+
+  createDots();
+  window.addEventListener("load", createDots);
+})();
     const META_PIXEL_ID = "SEM_DEJ_PIXEL_ID";
 
 function loadMetaPixel() {
