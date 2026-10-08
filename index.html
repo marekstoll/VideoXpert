@@ -2369,11 +2369,11 @@ portalCards.forEach((card) => {
   }
 
   gallery.querySelector(".project-prev").addEventListener("click", () => {
-    goToPage(currentPage() - 1);
+    goToPage(currentPage() <= 0 ? maxPage() : currentPage() - 1);
   });
 
   gallery.querySelector(".project-next").addEventListener("click", () => {
-    goToPage(currentPage() + 1);
+    goToPage(currentPage() >= maxPage() ? 0 : currentPage() + 1);
   });
 
   track.addEventListener("scroll", updateDots, { passive: true });
