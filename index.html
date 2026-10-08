@@ -2709,7 +2709,29 @@ portalCards.forEach((card) => {
 
   prev.addEventListener("click", () => move(-1));
   next.addEventListener("click", () => move(1));
+/* AUTOMATICKÉ POSOUVÁNÍ LOG KAŽDÉ 4 SEKUNDY */
+const partnersGallery = track.closest(".partners-gallery");
+let partnersTimer = null;
 
+function stopPartnersAuto() {
+  clearInterval(partnersTimer);
+  partnersTimer = null;
+}
+
+function startPartnersAuto() {
+  stopPartnersAuto();
+
+  if (partnersGallery.matches(":hover")) return;
+
+  partnersTimer = setInterval(() => {
+    if (!document.hidden) move(1);
+  }, 4000);
+}
+
+partnersGallery.addEventListener("mouseenter", stopPartnersAuto);
+partnersGallery.addEventListener("mouseleave", startPartnersAuto);
+
+startPartnersAuto();
   window.addEventListener("resize", () => {
     if (!moving) jumpTo(index);
   });
