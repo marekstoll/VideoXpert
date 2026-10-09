@@ -2592,6 +2592,17 @@ portalCards.forEach((card) => {
 
   const thumbs = [...track.querySelectorAll(".project-thumb")];
   const photos = thumbs.map(item => item.querySelector("img"));
+  thumbs.forEach((thumb, i) => thumb.dataset.photoIndex = i);
+
+const makeCopies = () => thumbs.map(thumb => thumb.cloneNode(true));
+
+track.prepend(...makeCopies());
+track.append(...makeCopies());
+
+const slides = [...track.querySelectorAll(".project-thumb")];
+let slideIndex = thumbs.length;
+let slideMoving = false;
+let slidePending = 0;
   const gallery = track.closest(".project-gallery");
   const dots = gallery.querySelector(".project-dots");
   const largeImage = document.getElementById("projectLightboxImage");
