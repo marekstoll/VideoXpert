@@ -2714,13 +2714,9 @@ function goToPage(index) {
     updateDots();
   }
 
-  gallery.querySelector(".project-prev").addEventListener("click", () => {
-    goToPage(currentPage() <= 0 ? maxPage() : currentPage() - 1);
-  });
+  gallery.querySelector(".project-prev").addEventListener("click", () => moveSlide(-1));
 
-  gallery.querySelector(".project-next").addEventListener("click", () => {
-    goToPage(currentPage() >= maxPage() ? 0 : currentPage() + 1);
-  });
+gallery.querySelector(".project-next").addEventListener("click", () => moveSlide(1));
 
   track.addEventListener("scroll", updateDots, { passive: true });
   window.addEventListener("resize", createDots);
@@ -2747,9 +2743,13 @@ function goToPage(index) {
     if (previousFocus) previousFocus.focus();
   }
 
-  thumbs.forEach((thumb, index) => {
-    thumb.addEventListener("click", () => openGallery(index));
-  });
+  track.addEventListener("click", (event) => {
+  const thumb = event.target.closest(".project-thumb");
+  if (!thumb || !track.contains(thumb)) return;
+  openGallery(Number(thumb.dataset.photoIndex));
+});
+
+jumpTo(slideIndex);
 
   lightbox.querySelector(".project-close")
     .addEventListener("click", closeGallery);
