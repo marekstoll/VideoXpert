@@ -3176,6 +3176,50 @@ if (activeRipples >= 2) return;
   }, { passive: true });
 })();
     
+/* CAREER EXPO 2026 */
+(() => {
+  const promo = document.getElementById("careerExpoPromo");
+  const lightbox = document.getElementById("careerExpoLightbox");
+  if (!promo || !lightbox) return;
+
+  const start = new Date("2026-10-09T00:00:00+02:00");
+  const end = new Date("2026-10-26T00:00:00+01:00");
+  const closeBtn = lightbox.querySelector(".career-expo-close");
+  let oldOverflow = "";
+
+  function closeExpo() {
+    if (lightbox.hidden) return;
+    lightbox.hidden = true;
+    document.body.style.overflow = oldOverflow;
+  }
+
+  function checkDate() {
+    const now = new Date();
+    promo.hidden = !(now >= start && now < end);
+    if (promo.hidden) closeExpo();
+  }
+
+  promo.querySelector(".career-expo-banner").addEventListener("click", () => {
+    oldOverflow = document.body.style.overflow;
+    lightbox.hidden = false;
+    document.body.style.overflow = "hidden";
+    closeBtn.focus();
+  });
+
+  closeBtn.addEventListener("click", closeExpo);
+
+  lightbox.addEventListener("click", (event) => {
+    if (event.target === lightbox) closeExpo();
+  });
+
+  document.addEventListener("keydown", (event) => {
+    if (event.key === "Escape") closeExpo();
+  });
+
+  checkDate();
+  setInterval(checkDate, 60000);
+})();
+
     const META_PIXEL_ID = "SEM_DEJ_PIXEL_ID";
 
 function loadMetaPixel() {
