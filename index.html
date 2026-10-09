@@ -992,7 +992,38 @@ margin-right: auto !important;
 
   transition: opacity .25s ease, transform .25s ease;
 }
+/* ZLATÉ TLAČÍTKO SOUTĚŽ */
+a.contest-peek {
+  position: fixed;
+  top: 22px;
+  left: 28px;
+  z-index: 1002;
 
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 10px 16px;
+
+  background: linear-gradient(135deg, #f9dc90, #d6a33d);
+  border: 1px solid rgba(255,236,184,.75);
+  border-radius: 12px;
+
+  color: #101010 !important;
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: .18em;
+  line-height: 1.2;
+  text-decoration: none;
+
+  box-shadow: 0 0 18px rgba(218,165,58,.25);
+  transition: box-shadow .25s ease, background .25s ease;
+  cursor: pointer;
+}
+
+a.contest-peek:hover {
+  background: #ffe3a0;
+  box-shadow: 0 0 25px rgba(245,190,75,.6);
+}
 .menu-peek.is-visible {
   opacity: 1;
   transform: translateY(0);
@@ -2241,6 +2272,7 @@ will-change: transform, opacity;
   <a href="#kontakt">Kontakt</a>
 </nav>
     <div class="menu-peek">MENU</div>
+    <a href="soutez.html" class="contest-peek">SOUTĚŽ</a>
     <section class="hero" id="uvod">
       <div class="hero-stage">
         <div class="waves"></div>
