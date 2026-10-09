@@ -2166,7 +2166,7 @@ will-change: transform, opacity;
 .career-expo-promo {
   position: relative;
   z-index: 3;
-  margin-top: -230px;
+  margin-top: -280px;
   padding: 35px 6vw 20px;
 }
 
@@ -2174,7 +2174,7 @@ will-change: transform, opacity;
   position: relative;
   display: block;
   width: min(590px, 100%);
-  height: clamp(145px, 23.5vw, 300px);
+  height: clamp(170px, 27.5vw, 345px);
   margin: auto;
   padding: 0;
   overflow: hidden;
@@ -3201,11 +3201,8 @@ if (activeRipples >= 2) return;
   }
 
   promo.querySelector(".career-expo-banner").addEventListener("click", () => {
-    oldOverflow = document.body.style.overflow;
-    lightbox.hidden = false;
-    document.body.style.overflow = "hidden";
-    closeBtn.focus();
-  });
+  window.open("https://careerexpo.cz/", "_blank", "noopener,noreferrer");
+});
 
   closeBtn.addEventListener("click", closeExpo);
 
