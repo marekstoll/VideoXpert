@@ -2695,7 +2695,18 @@ kicker.style.setProperty(
       setRevealPosition(event);
     });
 
-    window.addEventListener("scroll", updateScrollAnimation, { passive: true });
+    let vxScrollFramePending = false;
+
+window.addEventListener("scroll", () => {
+  if (vxScrollFramePending) return;
+
+  vxScrollFramePending = true;
+
+  requestAnimationFrame(() => {
+    vxScrollFramePending = false;
+    updateScrollAnimation();
+  });
+}, { passive: true });
     window.addEventListener("resize", updateScrollAnimation);
     window.addEventListener("load", updateScrollAnimation);
 
@@ -2731,7 +2742,17 @@ portalCards.forEach((card) => {
   const photos = thumbs.map(item => item.querySelector("img"));
   thumbs.forEach((thumb, i) => thumb.dataset.photoIndex = i);
 
-const makeCopies = () => thumbs.map(thumb => thumb.cloneNode(true));
+const makeCopies = () => thumbs.map(thumb => {
+  const copy = thumb.cloneNode(true);
+  const img = copy.querySelector("img");
+
+  if (img) {
+    img.loading = "lazy";
+    img.decoding = "async";
+  }
+
+  return copy;
+});
 
 track.prepend(...makeCopies());
 track.append(...makeCopies());
