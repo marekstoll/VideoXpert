@@ -2125,6 +2125,98 @@ will-change: transform, opacity;
     display: none;
   }
 }
+    /* CAREER EXPO 2026 */
+
+.career-expo-promo[hidden],
+.career-expo-lightbox[hidden] {
+  display: none !important;
+}
+
+.career-expo-promo {
+  position: relative;
+  z-index: 3;
+  padding: 35px 6vw 20px;
+}
+
+.career-expo-banner {
+  position: relative;
+  display: block;
+  width: min(1180px, 100%);
+  height: clamp(290px, 47vw, 600px);
+  margin: auto;
+  padding: 0;
+  overflow: hidden;
+  border: 1px solid rgba(255,255,255,.18);
+  border-radius: 30px;
+  background: #080808;
+  cursor: pointer;
+}
+
+.career-expo-banner img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center top;
+  transition: filter .3s ease;
+}
+
+.career-expo-banner:hover img {
+  filter: brightness(.45);
+}
+
+.career-expo-hover {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  color: white;
+  font-size: clamp(22px, 3vw, 40px);
+  font-weight: 900;
+  letter-spacing: .18em;
+  opacity: 0;
+  transition: opacity .3s ease;
+  pointer-events: none;
+}
+
+.career-expo-banner:hover .career-expo-hover,
+.career-expo-banner:focus-visible .career-expo-hover {
+  opacity: 1;
+}
+
+.career-expo-lightbox {
+  position: fixed;
+  inset: 0;
+  z-index: 100000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 35px;
+  background: rgba(0,0,0,.97);
+}
+
+.career-expo-lightbox img {
+  max-width: 95vw;
+  max-height: 95vh;
+  width: auto;
+  height: auto;
+  object-fit: contain;
+}
+
+.career-expo-close {
+  position: absolute;
+  top: 20px;
+  right: 25px;
+  z-index: 2;
+  width: 48px;
+  height: 48px;
+  border: 1px solid #777;
+  border-radius: 50%;
+  background: #151515;
+  color: white;
+  font-size: 30px;
+  cursor: pointer;
+}
 </style>
 </head>
 
@@ -2178,6 +2270,18 @@ will-change: transform, opacity;
         <div class="scroll-hint" id="scrollHint">Scroll</div>
       </div>
     </section>
+    <!-- CAREER EXPO 2026 -->
+<section class="career-expo-promo" id="careerExpoPromo" hidden>
+  <button class="career-expo-banner" type="button">
+    <img src="images/CE26 ig.png" alt="Jsme součástí Career Expo 2026">
+    <span class="career-expo-hover">CLICK HERE</span>
+  </button>
+</section>
+
+<div class="career-expo-lightbox" id="careerExpoLightbox" role="dialog" aria-modal="true" aria-label="Career Expo 2026" hidden>
+  <button class="career-expo-close" type="button" aria-label="Zavřít">×</button>
+  <img src="images/CE26 ig.png" alt="Career Expo 2026 – celý banner">
+</div>
 <section class="info-section" id="onas">
   <div class="info-bubble">
     <div class="info-label">O NÁS</div>
@@ -3039,6 +3143,7 @@ if (activeRipples >= 2) return;
 
   }, { passive: true });
 })();
+    
     const META_PIXEL_ID = "SEM_DEJ_PIXEL_ID";
 
 function loadMetaPixel() {
