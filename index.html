@@ -2021,6 +2021,92 @@ will-change: transform, opacity;
     height: 30px;
   }
 }
+    /* ZLATÝ KURZOR VIDEОXPERT */
+
+.vx-gold-cursor {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  background: #e8bd68;
+  box-shadow: 0 0 8px rgba(232,189,104,.35);
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+  z-index: 2147483647;
+  opacity: 0;
+  transition:
+    width .2s ease,
+    height .2s ease,
+    box-shadow .2s ease,
+    opacity .15s ease;
+}
+
+.vx-gold-cursor.is-on-bubble {
+  width: 15px;
+  height: 15px;
+  box-shadow:
+    0 0 12px rgba(255,210,115,.9),
+    0 0 30px rgba(232,174,65,.55),
+    0 0 55px rgba(232,174,65,.25);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  body.vx-cursor-ready,
+  body.vx-cursor-ready * {
+    cursor: none !important;
+  }
+}
+    /* JEMNÉ VODNÍ VLNĚNÍ NA ČERNÉM POZADÍ */
+
+.vx-water-ripple {
+  position: fixed;
+  width: 180px;
+  height: 180px;
+  left: 0;
+  top: 0;
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 2;
+  opacity: 0;
+
+  background: radial-gradient(
+    circle,
+    transparent 34%,
+    rgba(238, 207, 150, .07) 40%,
+    transparent 46%,
+    rgba(210, 225, 240, .09) 55%,
+    transparent 61%,
+    rgba(255, 255, 255, .05) 70%,
+    transparent 76%
+  );
+
+  transform: translate3d(-50%, -50%, 0) scale(.2);
+  animation: vx-water-expand .95s ease-out forwards;
+}
+
+@keyframes vx-water-expand {
+  0% {
+    opacity: 0;
+    transform: translate3d(-50%, -50%, 0) scale(.2);
+  }
+
+  20% {
+    opacity: .65;
+  }
+
+  100% {
+    opacity: 0;
+    transform: translate3d(-50%, -50%, 0) scale(1.25);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .vx-water-ripple {
+    display: none;
+  }
+}
 </style>
 </head>
 
@@ -2744,6 +2830,122 @@ startPartnersAuto();
   window.addEventListener("resize", () => {
     if (!moving) jumpTo(index);
   });
+})();
+    /* ZLATÝ KURZOR VIDEOXPERT */
+(() => {
+  if (!window.matchMedia("(hover: hover) and (pointer: fine)").matches) return;
+
+  const cursor = document.createElement("div");
+  cursor.className = "vx-gold-cursor";
+  document.body.appendChild(cursor);
+
+  let mouseX = 0;
+  let mouseY = 0;
+  let frame = null;
+
+  document.addEventListener("pointermove", (event) => {
+    if (event.pointerType !== "mouse") return;
+
+    mouseX = event.clientX;
+    mouseY = event.clientY;
+
+    const target = event.target;
+    const onBubble = target.closest(".info-bubble");
+    const onCard = target.closest(
+      ".portal-card, .project-thumb, .partners-track a"
+    );
+
+    cursor.classList.toggle("is-on-bubble", !!onBubble && !onCard);
+    cursor.style.opacity = "1";
+
+    if (frame === null) {
+      frame = requestAnimationFrame(() => {
+        cursor.style.transform =
+          `translate3d(${mouseX}px, ${mouseY}px, 0) translate(-50%, -50%)`;
+        frame = null;
+      });
+    }
+  });
+
+  document.addEventListener("pointerout", (event) => {
+    if (!event.relatedTarget) cursor.style.opacity = "0";
+  });
+
+  window.addEventListener("blur", () => {
+    cursor.style.opacity = "0";
+  });
+
+  document.body.classList.add("vx-cursor-ready");
+})();
+    /* VODNÍ VLNĚNÍ NA ČERNÉM POZADÍ */
+(() => {
+  if (!window.matchMedia("(hover: hover) and (pointer: fine)").matches) return;
+  if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+
+  let lastTime = 0;
+  let lastX = -1000;
+  let lastY = -1000;
+  let activeRipples = 0;
+
+  const excluded = [
+    ".info-bubble",
+    ".portal-card",
+    ".project-gallery",
+    ".partners-gallery",
+    ".top-nav",
+    ".menu-peek",
+    ".contact-strip",
+    ".site-footer",
+    ".hero-copy",
+    ".hero-title",
+    ".hero-kicker",
+    "#scrollHint",
+    ".device-scene",
+    ".film-strip",
+    ".project-lightbox",
+    ".cookie-overlay",
+    "h1", "h2", "h3", "h4",
+    "p", "a", "button", "img", "svg", "video"
+  ].join(", ");
+
+  document.addEventListener("pointermove", (event) => {
+    if (event.pointerType !== "mouse") return;
+    if (document.hidden) return;
+    if (!(event.target instanceof Element)) return;
+
+    // Žádné vlnění nad texty, bublinami a kartami
+    if (event.target.closest(excluded)) return;
+
+    const now = performance.now();
+    const distance = Math.hypot(
+      event.clientX - lastX,
+      event.clientY - lastY
+    );
+
+    // Omezení výkonu
+    if (now - lastTime < 180) return;
+    if (distance < 55) return;
+    if (activeRipples >= 4) return;
+
+    lastTime = now;
+    lastX = event.clientX;
+    lastY = event.clientY;
+
+    const ripple = document.createElement("span");
+    ripple.className = "vx-water-ripple";
+
+    ripple.style.left = `${event.clientX}px`;
+    ripple.style.top = `${event.clientY}px`;
+
+    document.body.appendChild(ripple);
+    activeRipples++;
+
+    ripple.addEventListener("animationend", () => {
+      ripple.remove();
+      activeRipples--;
+    }, { once: true });
+
+  }, { passive: true });
 })();
     const META_PIXEL_ID = "SEM_DEJ_PIXEL_ID";
 
