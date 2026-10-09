@@ -2696,7 +2696,7 @@ kicker.style.setProperty(
     });
 
     let vxScrollFramePending = false;
-
+let vxHeroFinished = false;
 window.addEventListener("scroll", () => {
   if (vxScrollFramePending) return;
 
@@ -2704,7 +2704,14 @@ window.addEventListener("scroll", () => {
 
   requestAnimationFrame(() => {
     vxScrollFramePending = false;
-    updateScrollAnimation();
+    const finished = window.scrollY >=
+  hero.offsetTop + hero.offsetHeight - window.innerHeight;
+
+if (!finished || !vxHeroFinished) {
+  updateScrollAnimation();
+}
+
+vxHeroFinished = finished;
   });
 }, { passive: true });
     window.addEventListener("resize", updateScrollAnimation);
