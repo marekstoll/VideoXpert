@@ -2619,24 +2619,80 @@ let slidePending = 0;
   }
 
   function maxPage() {
-    return Math.max(0, Math.round(
-      (track.scrollWidth - track.clientWidth) / step()
-    ));
+  return thumbs.length - 1;
+}
+
+function currentPage() {
+  return ((slideIndex % thumbs.length) + thumbs.length) % thumbs.length;
+}
+
+function slidePosition(i) {
+  return slides[i].offsetLeft - slides[0].offsetLeft;
+}
+
+function jumpTo(i) {
+  track.style.scrollSnapType = "none";
+  track.style.scrollBehavior = "auto";
+  track.scrollLeft = slidePosition(i);
+  void track.offsetWidth;
+  track.style.scrollSnapType = "";
+  track.style.scrollBehavior = "";
+}
+
+function moveSlide(direction) {
+  if (slideMoving) {
+    slidePending += direction;
+    return;
   }
 
-  function currentPage() {
-    return Math.max(0, Math.min(
-      maxPage(), Math.round(track.scrollLeft / step())
-    ));
+  slideMoving = true;
+  slideIndex += direction;
+
+  let finished = false;
+  let fallback;
+
+  function finish() {
+    if (finished) return;
+    finished = true;
+
+    clearTimeout(fallback);
+    track.removeEventListener("scrollend", finish);
+
+    if (slideIndex >= thumbs.length * 2) {
+      slideIndex -= thumbs.length;
+      jumpTo(slideIndex);
+    } else if (slideIndex < thumbs.length) {
+      slideIndex += thumbs.length;
+      jumpTo(slideIndex);
+    }
+
+    slideMoving = false;
+    updateDots();
+
+    if (slidePending !== 0) {
+      const direction = Math.sign(slidePending);
+      slidePending -= direction;
+      moveSlide(direction);
+    }
   }
 
-  function goToPage(index) {
-    const page = Math.max(0, Math.min(index, maxPage()));
-    track.scrollTo({
-      left: page * step(),
-      behavior: "smooth"
-    });
+  track.addEventListener("scrollend", finish, { once: true });
+
+  track.scrollTo({
+    left: slidePosition(slideIndex),
+    behavior: "smooth"
+  });
+
+  fallback = setTimeout(finish, 1100);
+}
+
+function goToPage(index) {
+  const diff = index - currentPage();
+
+  for (let i = 0; i < Math.abs(diff); i++) {
+    moveSlide(Math.sign(diff));
   }
+}
 
   function updateDots() {
     [...dots.children].forEach((dot, index) => {
