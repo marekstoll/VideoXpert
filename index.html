@@ -2868,12 +2868,15 @@ startPartnersAuto();
     mouseY = event.clientY;
 
     const target = event.target;
-    const onBubble = target.closest(".info-bubble");
-    const onCard = target.closest(
-      ".portal-card, .project-thumb, .partners-track a"
-    );
+    const target = event.target;
 
-    cursor.classList.toggle("is-on-bubble", !!onBubble && !onCard);
+const onTarget = target.closest(
+  ".info-bubble, .portal-card, .project-thumb, " +
+  ".partners-track a, .onas-banner, .morph-banner, " +
+  ".morph-logo, .project-lightbox img, .hero-stage img"
+);
+
+cursor.classList.toggle("is-on-target", !!onTarget);
     cursor.style.opacity = "1";
 
     if (frame === null) {
@@ -2904,7 +2907,11 @@ startPartnersAuto();
   let lastX = -1000;
   let lastY = -1000;
   let activeRipples = 0;
+let pauseRipplesUntil = 0;
 
+window.addEventListener("scroll", () => {
+  pauseRipplesUntil = performance.now() + 450;
+}, { passive: true });
   const excluded = [
     ".info-bubble",
     ".portal-card",
@@ -2929,6 +2936,7 @@ startPartnersAuto();
   document.addEventListener("pointermove", (event) => {
     if (event.pointerType !== "mouse") return;
     if (document.hidden) return;
+    if (performance.now() < pauseRipplesUntil) return;
     if (!(event.target instanceof Element)) return;
 
     // Žádné vlnění nad texty, bublinami a kartami
@@ -2941,9 +2949,9 @@ startPartnersAuto();
     );
 
     // Omezení výkonu
-    if (now - lastTime < 180) return;
-    if (distance < 55) return;
-    if (activeRipples >= 4) return;
+    if (now - lastTime < 320) return;
+if (distance < 80) return;
+if (activeRipples >= 2) return;
 
     lastTime = now;
     lastX = event.clientX;
