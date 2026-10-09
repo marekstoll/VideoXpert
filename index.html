@@ -2051,6 +2051,24 @@ will-change: transform, opacity;
     0 0 30px rgba(232,174,65,.55),
     0 0 55px rgba(232,174,65,.25);
 }
+    /* ZLATÁ ZÁŘE NEUSTÁLE */
+.vx-gold-cursor {
+  box-shadow:
+    0 0 12px rgba(255,210,115,.95),
+    0 0 30px rgba(232,174,65,.65),
+    0 0 55px rgba(232,174,65,.3);
+}
+
+/* BÍLÁ ZÁŘ NAD PRVKY */
+.vx-gold-cursor.is-on-target {
+  width: 17px;
+  height: 17px;
+  background: #fff;
+  box-shadow:
+    0 0 15px rgba(255,255,255,1),
+    0 0 35px rgba(255,255,255,.85),
+    0 0 60px rgba(255,255,255,.4);
+}
 
 @media (hover: hover) and (pointer: fine) {
   body.vx-cursor-ready,
