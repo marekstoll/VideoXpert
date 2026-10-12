@@ -2270,6 +2270,44 @@ will-change: transform, opacity;
   font-size: clamp(8px, 1vw, 13px) !important;
   letter-spacing: .22em !important;
 }
+    /* NOVÉ BANNERY MÍSTO KARET */
+.portal-fan .portal-card {
+  padding: 0 !important;
+  height: auto !important;
+  aspect-ratio: 2 / 3;
+  border: none !important;
+  border-radius: 26px !important;
+  background: transparent !important;
+  box-shadow: none !important;
+  overflow: hidden;
+}
+
+/* ODSTRANĚNÍ PŮVODNÍCH EFEKTŮ KARET */
+.portal-fan .portal-card::before,
+.portal-fan .portal-card::after {
+  display: none !important;
+}
+
+/* OBRÁZKY BANNERŮ */
+.portal-fan .portal-banner {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  border-radius: inherit;
+}
+
+/* JEMNÝ EFEKT PŘI NAJETÍ */
+.portal-fan .portal-card:hover {
+  filter: brightness(1.12);
+}
+
+/* MOBILNÍ ZOBRAZENÍ */
+@media (max-width: 860px) {
+  .portal-fan {
+    min-height: 1020px !important;
+  }
+}
 </style>
 </head>
 
