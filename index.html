@@ -2250,6 +2250,26 @@ will-change: transform, opacity;
   font-size: 30px;
   cursor: pointer;
 }
+/* NOVÝ BÍLÝ BANNER */
+.morph-banner {
+  width: min(720px, 80vw) !important;
+  height: clamp(80px, 11vw, 160px) !important;
+  object-fit: contain;
+  filter:
+    drop-shadow(0 0 12px rgba(255,255,255,.35))
+    drop-shadow(0 0 30px rgba(255,255,255,.15));
+}
+
+/* STATICKÝ TEXT POD BANNEREM */
+.hero-kicker {
+  top: calc(50% + clamp(75px, 8vw, 105px)) !important;
+  left: 50% !important;
+  width: 94vw;
+  text-align: center;
+  white-space: nowrap;
+  font-size: clamp(8px, 1vw, 13px) !important;
+  letter-spacing: .22em !important;
+}
 </style>
 </head>
 
@@ -2299,7 +2319,7 @@ will-change: transform, opacity;
         </div>
 
         <img class="morph-logo" id="morphLogo" src="images/VideoXpert LOGO.png" alt="VideoXpert logo">
-<img class="morph-banner" id="morphBanner" src="images/videoxpert black.png" alt="VideoXpert – experti přes videa">
+<img class="morph-banner" id="morphBanner" src="images/Videoxpert white.png" alt="VideoXpert – experti přes videa">
 
         <div class="scroll-hint" id="scrollHint">Scroll</div>
       </div>
@@ -2649,24 +2669,20 @@ const bannerFly = flyRaw * flyRaw * (3 - 2 * flyRaw);
 const fadeRaw = clamp((progress - 0.58) / 0.24, 0, 1);
 const bannerOut = fadeRaw * fadeRaw * (3 - 2 * fadeRaw);
 
-const bannerScale = 1 + bannerFly * 2.6;
 const bannerOpacity = bannerIn * (1 - bannerOut);
-const kickerOpacity = bannerIn * (1 - bannerOut);
+const kickerOpacity = bannerOpacity;
 
 morphLogo.style.opacity = 1 - bannerIn;
-morphLogo.style.transform = `translate(-50%, -50%) scale(${1 - bannerIn * 0.06})`;
+morphLogo.style.transform = "translate(-50%, -50%)";
 
 morphBanner.style.opacity = bannerOpacity;
-morphBanner.style.transform = `translate3d(-50%, -50%, 0) scale(${bannerScale})`;
+morphBanner.style.transform = "translate(-50%, -50%)";
+
 heroTitle.style.opacity = 0;
 heroCopy.style.opacity = 0;
 
 kicker.style.setProperty("opacity", kickerOpacity, "important");
-kicker.style.setProperty(
-  "transform",
-  `translateX(-50%) scale(${bannerScale})`,
-  "important"
-);
+kicker.style.setProperty("transform", "translateX(-50%)", "important");
     }
 
     function setRevealPosition(event) {
