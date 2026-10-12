@@ -25,6 +25,8 @@ dialog{border:1px solid var(--line);border-radius:16px;background:#faf9f6;color:
 .game-brand-strip{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:1px;background:#d9dce3;border-top:1px solid #d9dce3}.game-brand-strip canvas{width:100%;height:auto;aspect-ratio:480/126;touch-action:auto}
 @media(max-width:600px) and (orientation:portrait){.game-brand-strip{grid-template-columns:repeat(2,minmax(0,1fr))}}
 @media(max-height:550px) and (orientation:landscape){.canvas-wrap{width:min(100%,calc((100dvh - 194px)*16/9))}.game-brand-strip{max-height:40px}.game-brand-strip canvas{height:40px;object-fit:contain}}
+
+.closed-message{max-width:620px;margin:22px auto 12px;font-size:clamp(15px,2vw,19px);line-height:1.6;font-weight:600;color:#866221}
 </style>
 </head>
 <body>
@@ -39,17 +41,18 @@ dialog{border:1px solid var(--line);border-radius:16px;background:#faf9f6;color:
   <main>
     <section class="hero wrap" aria-labelledby="heroTitle">
       <p class="eyebrow"><span class="live-dot" aria-hidden="true"></span> SOUTĚŽ VIDEOXPERT</p>
-      <h1 id="heroTitle">Vyhraj foto a video produkci za <span class="prize-value">10 000<span>Kč</span></span></h1>
-      <p class="prize-detail">Poukaz včetně dopravy. Využitelný i bez doplatku.<br>Platnost 12 měsíců od vystavení · doručení výherci e-mailem v PDF.</p>
+      <h1 id="heroTitle"><span id="activePrizeTitle">Vyhraj foto a video produkci za <span class="prize-value">10 000<span>Kč</span></span></span><span id="closedTitle" hidden>SOUTĚŽ UKONČENA</span></h1>
+      <p id="closedMessage" class="closed-message" role="status" hidden>Ale nebojte se, brzy nás čeká soutěž další!</p>
+      <p id="prizeDetail" class="prize-detail">Poukaz včetně dopravy. Využitelný i bez doplatku.<br>Platnost 12 měsíců od vystavení · doručení výherci e-mailem v PDF.</p>
       <p class="dates"><time datetime="2026-10-21T01:00:00+02:00">21. 10. 2026, 01:00</time><span aria-hidden="true">—</span><time datetime="2026-11-20T23:59:00+01:00">20. 11. 2026, 23:59</time></p>
       <button class="play-button" type="button" id="enterButton"><span>HRÁT</span><span class="play-icon" aria-hidden="true">▶</span></button>
-      <p class="instructions-bubble">Přeskakuj překážky. Sbírej klapky. Získej nejvyšší skóre.</p>
+      <p id="playInstructions" class="instructions-bubble">Přeskakuj překážky. Sbírej klapky. Získej nejvyšší skóre.</p>
       <p id="phaseText" class="phase-text" role="status" hidden></p>
       <p id="pageStatus" class="status" role="status" aria-live="polite"></p>
     </section>
 
     <section class="essentials wrap" aria-label="Jak soutěžit">
-      <p class="quiet">Účast zdarma od 18 let z ČR · pokus nejvýše 3 minuty · hrát můžeš opakovaně</p>
+      <p id="participationInfo" class="quiet">Účast zdarma od 18 let z ČR · bez časového limitu pokusu · hrát můžeš opakovaně</p>
       <div class="legal-links"><a href="#pravidla" data-document="pravidla">Pravidla soutěže ↗</a><a href="#gdpr" data-document="gdpr">Osobní údaje ↗</a><a href="#marketing" data-document="marketing">Marketingový souhlas ↗</a></div>
     </section>
 
@@ -66,7 +69,7 @@ dialog{border:1px solid var(--line);border-radius:16px;background:#faf9f6;color:
   <dialog id="gameDialog" class="game-dialog" aria-labelledby="gameTitle">
     <div class="game-dialog-head"><div><h2 id="gameTitle">Kamera. Klapka. Běžíš.</h2><p id="gameMode">Trénink · bez zápisu do žebříčku</p></div><button class="close-button" id="closeGame" type="button" aria-label="Zavřít hru">×</button></div>
     <div id="gameShell" class="game-shell">
-      <div class="game-hud"><div>SKÓRE<strong id="score">0</strong></div><div>KLAPKY<strong id="frames">0</strong></div><div>ČAS<strong id="time">3:00</strong></div><div class="difficulty-hud">OBTÍŽNOST<strong id="difficultyName">Rozjezd</strong></div><button id="soundButton" type="button" aria-pressed="false">Zvuk: vypnutý</button></div>
+      <div class="game-hud"><div>SKÓRE<strong id="score">0</strong></div><div>KLAPKY<strong id="frames">0</strong></div><div class="difficulty-hud">OBTÍŽNOST<strong id="difficultyName">Rozjezd</strong></div><button id="soundButton" type="button" aria-pressed="false">Zvuk: vypnutý</button></div>
       <div class="canvas-wrap"><canvas id="gameCanvas" width="960" height="540" tabindex="0" aria-label="Hra s kameramanem. Mezerník, šipka nahoru nebo klepnutí znamená skok."></canvas>
         <div id="gameOverlay" class="game-overlay"><h3 id="overlayTitle">Jde se na plac.</h3><p id="overlayText">Na bedně můžeš přistát. Pozor na náraz z boku, auta a drony.</p><button class="play-button" id="startButton" type="button">HRÁT</button></div>
       </div>
@@ -78,7 +81,7 @@ dialog{border:1px solid var(--line);border-radius:16px;background:#faf9f6;color:
       </div>
       <div class="game-controls"><span>MEZERNÍK / ↑ / KLEPNUTÍ</span><button id="fullscreenButton" type="button">Celá obrazovka ↗</button><button class="jump-button" id="jumpButton" type="button">SKOK ↑</button></div>
     </div>
-    <div class="practice-tools" id="practiceTools" hidden><label for="practiceDifficulty">Zkusit obtížnost</label><select id="practiceDifficulty"><option value="0">Od začátku</option><option value="1">Svižná · od 30. sekundy</option><option value="2">Náročná · od 60. sekundy</option><option value="3">Expert · od 90. sekundy</option><option value="4">Extrémní · od 120. sekundy</option><option value="5">Finále · od 150. sekundy</option></select><button class="text-button" id="applyDifficulty" type="button">SPUSTIT ÚROVEŇ ↗</button></div>
+    <div class="practice-tools" id="practiceTools" hidden><label for="practiceDifficulty">Zkusit obtížnost</label><select id="practiceDifficulty"><option value="0">Od začátku</option><option value="1">Svižná</option><option value="2">Náročná</option><option value="3">Expert</option><option value="4">Extrémní</option><option value="5">Boss</option><option value="6">Boss+</option></select><button class="text-button" id="applyDifficulty" type="button">SPUSTIT ÚROVEŇ ↗</button></div>
     <p id="gameStatus" class="status" role="status" aria-live="polite">Připraveno ke hře.</p>
     <p class="mobile-hint">Pro větší obraz otoč telefon na šířku.</p>
     <div id="attemptCaptcha" class="attempt-captcha" aria-label="Ověření před soutěžním pokusem"></div>
@@ -100,11 +103,11 @@ dialog{border:1px solid var(--line);border-radius:16px;background:#faf9f6;color:
     </form><div id="authCaptcha"></div><p class="status" id="registrationStatus" role="status" aria-live="polite"></p>
   </dialog>
 
-  <dialog id="pravidla" class="legal-dialog" aria-label="Kompletní pravidla soutěže"><button class="close-button legal-close" type="button" aria-label="Zavřít pravidla">×</button><article class="legal-copy"><p class="eyebrow">VERZE 2026-10-09-v3</p><h1>Pravidla soutěže<br>Vyhraj foto a video produkci za 10 000 Kč</h1>
+  <dialog id="pravidla" class="legal-dialog" aria-label="Kompletní pravidla soutěže"><button class="close-button legal-close" type="button" aria-label="Zavřít pravidla">×</button><article class="legal-copy"><p class="eyebrow">VERZE 2026-10-09-v4</p><h1>Pravidla soutěže<br>Vyhraj foto a video produkci za 10 000 Kč</h1>
 <h2>1. Pořadatel</h2><p>Pořadatelem je Adam Nezdara, podnikající fyzická osoba, IČO 22191283, se sídlem 1. máje 28, 257 68 Dolní Kralovice, vystupující pod značkou VideoXpert. Kontakt pro soutěž, námitky a uplatnění výhry: <a href="mailto:info@videxpert.cz">info@videxpert.cz</a>.</p>
 <h2>2. Termín a účast</h2><p>Soutěž probíhá od <strong>21. října 2026 v 01:00</strong> do <strong>20. listopadu 2026 ve 23:59 včetně celé poslední minuty</strong>, v časovém pásmu Europe/Prague. Rozhoduje čas serveru; pokus musí být před koncem nejen zahájený, ale také dokončený a přijatý serverem.</p><p>Účast je zdarma, bez nákupu a bez sázky. Jde o dovednostní soutěž, výherce není losován. Účastnit se může fyzická osoba, která dovršila 18 let a má bydliště v České republice. Ze soutěže jsou vyloučeny osoby podílející se na jejím technickém nebo organizačním zajištění a osoby jim blízké.</p>
 <h2>3. Registrace</h2><ol><li>Účastník vyplní pravdivé jméno, příjmení a vlastní e-mail. Potvrdí věk, bydliště, pravidla a seznámení s informacemi o ochraně osobních údajů a ověří e-mail jednorázovým kódem. Pro skutečnou soutěžní registraci je ověření e-mailu nutné.</li><li>Jedna osoba smí mít jeden soutěžní účet. Stejný účet lze použít na různých zařízeních. Různé adresy se stejnou doménou jsou samozřejmě přípustné.</li><li>Souhlas s marketingovou nabídkou je samostatný a dobrovolný. Odmítnutí ani odvolání souhlasu nesnižuje počet pokusů, skóre ani možnost vyhrát.</li></ol>
-<h2>4. Hra a skóre</h2><ol><li>Účastník ovládá kameramana klávesou mezerník, šipkou nahoru nebo klepnutím. Překonává překážky a sbírá filmové klapky. Rychlost plynule roste a každých 30 sekund přichází náročnější úroveň. Bedny mají různé rozměry a nepravidelné rozestupy. Při sestupu lze bezpečně přistát na horní hraně bedny nebo auta a znovu se odrazit; náraz do boku překážky pokus ukončí. Proti hráči přijíždějí auta a přilétají drony ve dvou výškách: nízký dron je třeba přeskočit, vysoký lze podběhnout. Kontakt s dronem ukončí pokus. Poslední dvě úrovně vyžadují velmi přesné načasování. V soutěžním pokusu začínají všichni od první úrovně; volba vyššího začátku slouží výhradně nesoutěžní zkoušce.</li><li>Skóre tvoří body za překonanou vzdálenost a 250 bodů za každou klapku. Jeden pokus trvá nejvýše tři minuty a končí nárazem nebo uplynutím limitu.</li><li>Hrát lze opakovaně. Do pořadí se započítává nejlepší platné skóre jednoho účastníka. Proti zneužití mohou být krátkodobě omezeny příliš časté požadavky.</li><li>Průběh je počítán podle stejných herních pravidel na mobilu i počítači. Server kontroluje záznam skoků, průběh, dosažitelný výsledek, jednorázovost pokusu a čas. Skóre zaslané samotným prohlížečem není podkladem k přiznání výhry.</li><li>Přepnutí do jiné aplikace nebo delší pozastavení zařízení přeruší pokus; takový pokus se do žebříčku nezapisuje. Před začátkem soutěže je dostupný nesoutěžní trénink, jehož výsledky se neukládají.</li></ol>
+<h2>4. Hra a skóre</h2><ol><li>Účastník ovládá kameramana klávesou mezerník, šipkou nahoru nebo klepnutím. Překonává překážky a sbírá filmové klapky. Rychlost plynule roste přes sedm úrovní po 30 sekundách až na úroveň Boss+, na které se ustálí. Bedny mají různé rozměry a nepravidelné rozestupy. Při sestupu lze bezpečně přistát na horní hraně bedny nebo auta a znovu se odrazit; náraz do boku překážky pokus ukončí. Proti hráči přijíždějí auta a přilétají drony ve dvou výškách: nízký dron je třeba přeskočit, vysoký lze podběhnout. Kontakt s dronem ukončí pokus. Úrovně Boss a Boss+ vyžadují velmi přesné načasování; na Boss+ přijíždějí auta častěji. V soutěžním pokusu začínají všichni od první úrovně; volba vyššího začátku slouží výhradně nesoutěžní zkoušce.</li><li>Skóre tvoří body za překonanou vzdálenost a 250 bodů za každou klapku. Jednotlivý pokus nemá časový limit a končí nárazem. Hráč může pokračovat, dokud nenarazí; soutěžní pokus je však nutné dokončit a odeslat před uzavřením celé soutěže.</li><li>Hrát lze opakovaně. Do pořadí se započítává nejlepší platné skóre jednoho účastníka. Proti zneužití mohou být krátkodobě omezeny příliš časté požadavky.</li><li>Průběh je počítán podle stejných herních pravidel na mobilu i počítači. Server kontroluje záznam skoků, průběh, dosažitelný výsledek, jednorázovost pokusu a čas. Skóre zaslané samotným prohlížečem není podkladem k přiznání výhry.</li><li>Přepnutí do jiné aplikace nebo delší pozastavení zařízení přeruší pokus; takový pokus se do žebříčku nezapisuje. Před začátkem soutěže je dostupný nesoutěžní trénink, jehož výsledky se neukládají.</li></ol>
 <h2>5. Férová hra a přezkum</h2><p>Zakázané je automatizované hraní, ovládání pomocí botů nebo AI, úprava herního kódu či komunikace za účelem získání výhody, falšování záznamů, zneužití chyby a obcházení pravidla jednoho účtu. Zakázáno je také vydávání se za jinou osobu.</p><p>Výsledek může být dočasně zařazen ke kontrole a do jejího dokončení nezveřejněn. Vysoké skóre nebo technický příznak samo o sobě neprokazuje podvod. Pořadatel hodnotí konkrétní záznam a okolnosti, umožní účastníkovi vysvětlení a rozhodnutí o zneplatnění výsledku odůvodní. Ruční přezkum lze požadovat na kontaktním e-mailu. Ochrana snižuje možnost manipulace, nezaručuje dokonalé rozpoznání automatizovaného hraní.</p>
 <h2>6. Žebříček a výherce</h2><ol><li>Veřejně se zobrazuje pořadí, křestní jméno s iniciálou příjmení a nejlepší platné skóre. Celé příjmení a e-mail se v žebříčku nezveřejňují.</li><li>Vyhrává jedna osoba s nejvyšším platným skóre po skončení soutěže a přezkoumání výsledků. Při rovnosti rozhoduje dřívější serverový čas přijetí nejlepšího skóre, potom dřívější registrace. Při úplné shodě i těchto údajů rozhoduje stabilní vzestupné pořadí identifikátoru účtu.</li><li>Průběžný ani dosud nepřezkoumaný žebříček není definitivním potvrzením nároku na výhru. Pořadatel zpravidla do sedmi dnů po konci soutěže kontaktuje předběžného výherce na ověřeném registračním e-mailu; případné prodloužení nutné kontroly oznámí na soutěžním webu.</li><li>Výherce má 14 dnů od zaslání oznámení k odpovědi a doložení splnění podmínek v přiměřeném nezbytném rozsahu. Nevyžadují se automaticky kopie osobních dokladů. Pokud výhru odmítne, včas se neozve nebo nesplní podmínky, je osloven další účastník v pořadí.</li><li>Po potvrzení nároku pořadatel výherci zašle poukaz ve formátu PDF na jeho e-mail, zpravidla do sedmi dnů od dokončení ověření.</li></ol>
 <h2>7. Poukaz v hodnotě 10 000 Kč</h2><ol><li>Výhrou je jeden poukaz v hodnotě <strong>10 000 Kč</strong> na foto/video produkci VideoXpert včetně služeb značek Memoria, Brandárna a Klipáci. Realizace proběhne na území ČR.</li><li>Výhra zahrnuje dopravu. Pořadatel umožní výherci skutečné využití služby v hodnotě poukazu <strong>bez povinného doplatku či dalšího nákupu</strong>. Konkrétní rozsah a termín služby budou předem písemně dohodnuty.</li><li>Pokud si výherce dobrovolně vybere rozsáhlejší službu, cenu a případný doplatek musí předem výslovně odsouhlasit. Doplatek není podmínkou získání ani využití výhry.</li><li>Poukaz je platný <strong>12 měsíců od vystavení</strong>. Datum vystavení a poslední den platnosti budou uvedeny přímo v PDF. Nejpozději poslední den platnosti je nutné požádat e-mailem o jeho uplatnění; konkrétní termín realizace se dohodne podle charakteru zakázky a dostupnosti. Poukaz objednaný včas nezanikne jen tím, že pořadatel nabídne pozdější termín.</li><li>Poukaz je určen na jednu zakázku. Nevyčerpaná část se nevyplácí v penězích; peněžní náhrada za výhru se neposkytuje. Případný převod na jinou osobu je možný po předchozí písemné dohodě s pořadatelem.</li></ol>
@@ -112,7 +115,7 @@ dialog{border:1px solid var(--line);border-radius:16px;background:#faf9f6;color:
 <h2>9. Technické problémy a námitky</h2><p>Účastník potřebuje funkční prohlížeč a připojení k internetu. Při přerušení spojení či neúplném záznamu nemusí být pokus uznán. Pořadatel řeší závady přiměřeně a transparentně; změny nezbytné kvůli závažné technické příčině zveřejní s odůvodněním a nesmí jimi svévolně znevýhodnit účastníky nebo určit jiného výherce.</p><p>Námitky a žádosti o přezkum přijímá info@videxpert.cz; pro rychlé vyřízení je vhodné uvést registrační e-mail, přibližný čas pokusu a důvod. Námitku proti výsledku doporučujeme zaslat do sedmi dnů od jeho oznámení. Tím nejsou dotčena zákonná práva účastníka.</p>
 <h2>10. Osobní údaje a závěr</h2><p>Zpracování údajů popisuje dokument <a href="#gdpr" data-document="gdpr">Ochrana osobních údajů</a>. Vztahy se řídí právem České republiky. Pravidla neomezují práva, která nelze podle zákona vyloučit. Po skončení se soutěžní registrace a ukládání dalších výsledků uzavřou; žebříček zůstane přístupný v rozsahu a po dobu uvedenou v informacích o zpracování údajů.</p>
 </article></dialog>
-  <dialog id="gdpr" class="legal-dialog" aria-label="Ochrana osobních údajů"><button class="close-button legal-close" type="button" aria-label="Zavřít informace o osobních údajích">×</button><article class="legal-copy"><p class="eyebrow">INFORMACE PODLE ČLÁNKU 13 GDPR · VERZE 2026-10-09-v3</p><h1>Ochrana osobních údajů</h1>
+  <dialog id="gdpr" class="legal-dialog" aria-label="Ochrana osobních údajů"><button class="close-button legal-close" type="button" aria-label="Zavřít informace o osobních údajích">×</button><article class="legal-copy"><p class="eyebrow">INFORMACE PODLE ČLÁNKU 13 GDPR · VERZE 2026-10-09-v4</p><h1>Ochrana osobních údajů</h1>
 <h2>1. Správce a kontakt</h2><p>Správcem údajů je Adam Nezdara, IČO 22191283, se sídlem 1. máje 28, 257 68 Dolní Kralovice, pořadatel soutěže VideoXpert Runner. Pro dotazy, odvolání souhlasu a uplatnění práv použij <a href="mailto:info@videxpert.cz">info@videxpert.cz</a>.</p>
 <h2>2. Údaje a jejich původ</h2><ul><li>Od účastníka: jméno, příjmení, vlastní e-mail, potvrzení věku alespoň 18 let a bydliště v ČR, přijetí pravidel, seznámení s těmito informacemi a nepovinná marketingová volba.</li><li>Z přihlašování a používání hry: ověření e-mailu, identifikátor účtu a relace, čas a verze potvrzení, začátky a konce herních pokusů, časování skoků, skóre, nasbírané klapky, technické příznaky a záznamy přezkumu.</li><li>Provozní a bezpečnostní záznamy poskytovatelů mohou obsahovat IP adresu, údaje o prohlížeči či zařízení a časy požadavků. Cloudflare Turnstile zpracovává bezpečnostní signály k ochraně před automatizací.</li><li>U výherce navíc údaje nezbytné pro přiměřené ověření nároku, vystavení a doručení PDF poukazu, rezervaci a realizaci služby a případné zákonné evidence.</li></ul>
 <h2>3. Účely a právní základy</h2><div class="table-wrap"><table><thead><tr><th>Účel</th><th>Právní základ</th></tr></thead><tbody>
@@ -157,13 +160,14 @@ dialog{border:1px solid var(--line);border-radius:16px;background:#faf9f6;color:
     ]
   });
   </script>
-  <script>// Kanonický engine SHA-256: 0fcf36a6bb82462787062a203f1f7b100fe46bbf85f9e33adaee3b46c6bfaa4e
+  <script>// Kanonický engine SHA-256: ebf2e6bb0d0175082983a2fdf6bc0959d6eccdcdd13789c7816c776d211f0259
 window.VXEngine=(()=>{
 // Jediný zdroj herních pravidel. build.mjs kopíruje stejný soubor do webu.
-const VERSION = 'vx-2026-10-09.4';
-const RULES_VERSION = '2026-10-09-v3';
+const VERSION = 'vx-2026-10-09.5';
+const RULES_VERSION = '2026-10-09-v4';
 const FPS = 60;
-const MAX_TICKS = 180 * FPS;
+// Velikost jedné dávky serverového ověření, NIKOLI časový limit hry.
+const REPLAY_CHUNK_TICKS = 180 * FPS;
 const WORLD = Object.freeze({ width: 960, height: 540, ground: 420, playerX: 160, playerW: 36, playerH: 70 });
 const START_AT = '2026-10-21T01:00:00+02:00';
 // Horní hranice je výlučná: zahrnuje celou poslední minutu 20. listopadu.
@@ -182,23 +186,26 @@ const LEVELS = Object.freeze([
   {name:'Náročná',speed:8.4,gap:38,jitter:70,minH:70,maxH:100,minW:180,maxW:255,drones:.24,cars:.16},
   {name:'Expert',speed:10.3,gap:36,jitter:60,minH:74,maxH:112,minW:185,maxW:265,drones:.28,cars:.18},
   {name:'Extrémní',speed:12.5,gap:34,jitter:52,minH:78,maxH:122,minW:190,maxW:275,drones:.32,cars:.19},
-  {name:'Finále',speed:14.5,gap:32,jitter:44,minH:82,maxH:132,minW:195,maxW:285,drones:.36,cars:.20}
+  {name:'Boss',speed:14.5,gap:32,jitter:44,minH:82,maxH:132,minW:195,maxW:285,drones:.36,cars:.20},
+  {name:'Boss+',speed:16,gap:30,jitter:40,minH:84,maxH:132,minW:195,maxW:285,drones:.28,cars:.38}
 ].map(Object.freeze));
+const RAMP_TICKS=(LEVELS.length-1)*30*FPS;
+const TOP_SPEED=LEVELS.at(-1).speed;
 
 function speedAt(tick) {
-  const position=Math.max(0,Math.min(MAX_TICKS,tick))/(30*FPS);
+  const position=Math.max(0,Math.min(RAMP_TICKS,tick))/(30*FPS);
   const level=Math.min(LEVELS.length-1,Math.floor(position));
-  const current=LEVELS[level].speed,next=LEVELS[level+1]?.speed??16;
+  const current=LEVELS[level].speed,next=LEVELS[level+1]?.speed??TOP_SPEED;
   return current+(next-current)*Math.min(1,position-level);
 }
 // Součet rychlostí se vytvoří jen jednou. Generátor už při každé překážce
 // nealokuje stovky objektů obtížnosti ani neprochází vzdálenou frontu po snímcích.
-const travelPrefix=new Float64Array(MAX_TICKS+4097);
+const travelPrefix=new Float64Array(RAMP_TICKS+1);
 for(let i=0;i<travelPrefix.length-1;i++)travelPrefix[i+1]=travelPrefix[i]+speedAt(i);
 function travel(firstTick,count,extra=0) {
   const end=firstTick+count,limit=travelPrefix.length-1;
   return travelPrefix[Math.min(end,limit)]-travelPrefix[Math.min(firstTick,limit)]
-    +Math.max(0,end-Math.max(firstTick,limit))*16+count*extra;
+    +Math.max(0,end-Math.max(firstTick,limit))*TOP_SPEED+count*extra;
 }
 function ticksToTravel(distance,tick,extra=0) {
   if(distance<=0)return 0;
@@ -216,9 +223,9 @@ function riseTicks(height) {
 }
 
 function difficultyAt(tick) {
-  const position=Math.max(0,Math.min(MAX_TICKS,tick))/(30*FPS);
+  const position=Math.max(0,Math.min(RAMP_TICKS,tick))/(30*FPS);
   const level=Math.min(LEVELS.length-1,Math.floor(position));
-  const current=LEVELS[level],next=LEVELS[level+1]?.speed??16;
+  const current=LEVELS[level],next=LEVELS[level+1]?.speed??TOP_SPEED;
   return {...current,level,speed:current.speed+(next-current.speed)*Math.min(1,position-level)};
 }
 
@@ -320,20 +327,18 @@ function advance(s, jump = false) {
     return o.x + o.w > -30;
   });
   s.score = Math.floor(s.distance * 0.076) + s.frames * 250;
-  if (s.tick >= MAX_TICKS && !s.ended) { s.ended = true; s.reason = 'limit'; }
   return jumped;
 }
 
-// Klient neposílá autoritativní skóre: server ho získá výhradně vlastní simulací.
-function replayRun(seed, jumpTicks, finishTick) {
-  if (!Array.isArray(jumpTicks) || jumpTicks.length > 600 || !Number.isInteger(finishTick)
-      || finishTick < 1 || finishTick > MAX_TICKS) throw new Error('INVALID_REPLAY');
-  let previous = 0;
+// Stav smí pocházet jen z vytvoření pokusu nebo ze serverem ověřené předchozí dávky.
+function replaySegment(s, jumpTicks, finishTick, final) {
+  if (!Array.isArray(jumpTicks) || jumpTicks.length > 600 || !Number.isSafeInteger(finishTick)
+      || finishTick <= s.tick || finishTick-s.tick > REPLAY_CHUNK_TICKS || typeof final!=='boolean') throw new Error('INVALID_REPLAY');
+  let previous = s.tick;
   for (const t of jumpTicks) {
     if (!Number.isInteger(t) || t <= previous || t > finishTick) throw new Error('INVALID_INPUT_ORDER');
     previous = t;
   }
-  const s = createRun(seed);
   let i = 0;
   while (s.tick < finishTick) {
     if (s.ended) throw new Error('INPUT_AFTER_END');
@@ -344,15 +349,35 @@ function replayRun(seed, jumpTicks, finishTick) {
       i++;
     }
   }
-  if (!s.ended || i !== jumpTicks.length) throw new Error('UNFINISHED_RUN');
+  if (i !== jumpTicks.length || (final&&!s.ended)) throw new Error('UNFINISHED_RUN');
+  if (!final&&s.ended) throw new Error('INPUT_AFTER_END');
+  return s;
+}
+
+// Po nárazu se dlouhý záznam rozdělí na malé dávky. Během hraní není síťový provoz.
+function* replayChunks(jumpTicks, finishTick) {
+  if(!Array.isArray(jumpTicks)||!Number.isSafeInteger(finishTick)||finishTick<1)throw new Error('INVALID_REPLAY');
+  let index=0,previous=0;
+  for(const t of jumpTicks){if(!Number.isSafeInteger(t)||t<=previous||t>finishTick)throw new Error('INVALID_INPUT_ORDER');previous=t;}
+  for(let fromTick=0;fromTick<finishTick;fromTick+=REPLAY_CHUNK_TICKS){
+    const end=Math.min(fromTick+REPLAY_CHUNK_TICKS,finishTick),start=index;
+    while(index<jumpTicks.length&&jumpTicks[index]<=end)index++;
+    yield {fromTick,finishTick:end,totalTicks:finishTick,jumpTicks:jumpTicks.slice(start,index),final:end===finishTick};
+  }
+}
+
+// Pomůcka pro místní testy; server provádí vždy jen jednu omezenou dávku.
+function replayRun(seed, jumpTicks, finishTick) {
+  const s=createRun(seed);
+  for(const part of replayChunks(jumpTicks,finishTick))replaySegment(s,part.jumpTicks,part.finishTick,part.final);
   return { score: s.score, frames: s.frames, ticks: s.tick, jumps: s.jumps,
     durationMs: Math.round(s.tick * 1000 / FPS), reason: s.reason };
 }
 
-return {VERSION,RULES_VERSION,FPS,MAX_TICKS,WORLD,START_AT,CLOSE_AT,LEVELS,difficultyAt,phaseAt,createRun,advance,replayRun};
+return {VERSION,RULES_VERSION,FPS,REPLAY_CHUNK_TICKS,WORLD,START_AT,CLOSE_AT,LEVELS,difficultyAt,phaseAt,createRun,advance,replayRun,replaySegment,replayChunks};
 })();</script>
   <script>window.VXRunner=(()=>{
-const { createRun, advance, difficultyAt, FPS, MAX_TICKS, WORLD } = window.VXEngine;
+const { createRun, advance, difficultyAt, FPS, WORLD } = window.VXEngine;
 const colors=['#111111','#bf9447','#8e36cd','#254cff'];
 const $=id=>document.getElementById(id);
 
@@ -410,7 +435,7 @@ class Runner {
     }
     this.draw(t/1000);if(this.playing)this.wake();
   }
-  hud(){const set=(id,value)=>{const node=$(id),text=String(value);if(node.textContent!==text)node.textContent=text;};set('score',this.numberFormat.format(this.run.score));set('frames',this.run.frames);set('difficultyName',difficultyAt(this.run.tick).name);const secs=Math.max(0,Math.ceil((MAX_TICKS-this.run.tick)/FPS));set('time',Math.floor(secs/60)+':'+String(secs%60).padStart(2,'0'));}
+  hud(){const set=(id,value)=>{const node=$(id),text=String(value);if(node.textContent!==text)node.textContent=text;};set('score',this.numberFormat.format(this.run.score));set('frames',this.run.frames);set('difficultyName',difficultyAt(this.run.tick).name);}
   surface(w,h){const canvas=document.createElement('canvas');canvas.width=w;canvas.height=h;return canvas;}
   prepareScenery(){
     this.sky=this.surface(960,420);let c=this.sky.getContext('2d');
@@ -508,7 +533,7 @@ return Runner;
 })();</script>
   <script>(async function () {
   'use strict';
-  const {VERSION,RULES_VERSION,START_AT,CLOSE_AT,phaseAt}=window.VXEngine;
+  const {VERSION,RULES_VERSION,START_AT,CLOSE_AT,LEVELS,phaseAt,replayChunks}=window.VXEngine;
   const $=id=>document.getElementById(id),cfg=window.VIDEOXPERT_CONFIG;
   const isFile=location.protocol==='file:';
   const configured=!isFile&&Boolean(cfg.supabaseUrl&&cfg.supabasePublishableKey&&cfg.turnstileSiteKey);
@@ -530,14 +555,17 @@ return Runner;
 
   function updatePhase(){
     const p=phase();if(lastPhase===p)return;lastPhase=p;
+    const closed=ended();
+    for(const id of ['activePrizeTitle','prizeDetail','playInstructions','participationInfo'])$(id).hidden=closed;
+    $('closedTitle').hidden=!closed;$('closedMessage').hidden=!closed;
     if(ended()){
       $('phaseText').hidden=false;
-      $('phaseText').textContent='Soutěž skončila. Děkujeme za účast.';
-      $('enterButton').textContent='ŽEBŘÍČEK';$('leaderboardTitle').textContent='Konečné pořadí';
+      $('phaseText').textContent='Děkujeme za účast. Výsledky najdete v žebříčku níže.';
+      $('enterButton').textContent='ZOBRAZIT ŽEBŘÍČEK';$('leaderboardTitle').textContent='Žebříček po ukončení soutěže';
       $('startButton').disabled=true;
       generation++;busy=false;$('enterButton').disabled=false;if(cancelAttemptCaptcha)cancelAttemptCaptcha();
       if(runner.playing)runner.abort('Soutěž skončila. Tento pokus již nelze zapsat.');
-      runner.overlay('Soutěž skončila','Žebříček zůstává na této stránce.','UKONČENO');
+      runner.overlay('SOUTĚŽ UKONČENA','Ale nebojte se, brzy nás čeká soutěž další! Žebříček zůstává na této stránce.','UKONČENO');
       if(registrationDialog.open)registrationDialog.close();
     }else{
       $('enterButton').textContent='HRÁT';$('startButton').disabled=busy;
@@ -646,7 +674,7 @@ return Runner;
       if(practice()){
         if(!previewProfile){await openRegistration();return;}
         attempt=null;const level=Number($('practiceDifficulty').value)||0;
-        runner.start(crypto.getRandomValues(new Uint32Array(1))[0],false,Math.max(0,Math.min(5,level)));
+        runner.start(crypto.getRandomValues(new Uint32Array(1))[0],false,Math.max(0,Math.min(LEVELS.length-1,level)));
         $('gameMode').textContent=previewProfile.first+' '+previewProfile.last.slice(0,1)+'. · zkušební hra';return;
       }
       await refreshProfile();checkGeneration(current);
@@ -667,9 +695,14 @@ return Runner;
     runner.overlay('Ověřujeme výsledek','Za chvíli bude hotovo.','OVĚŘUJI…');
     try{
       if(!currentAttempt)throw new Error('Chybí soutěžní pokus.');
-      const payload={attemptId:currentAttempt.attemptId,token:currentAttempt.token,version:VERSION,jumpTicks:result.jumpTicks,finishTick:result.finishTick};
       let data;
-      try{data=await edge('vx-finish',payload);}catch(error){if(error.name==='TimeoutError'||error instanceof TypeError)data=await edge('vx-finish',payload);else throw error;}
+      for(const part of replayChunks(result.jumpTicks,result.finishTick)){
+        const payload={attemptId:currentAttempt.attemptId,token:currentAttempt.token,version:VERSION,...part};
+        try{data=await edge('vx-finish',payload);}catch(error){if(error.name==='TimeoutError'||error instanceof TypeError)data=await edge('vx-finish',payload);else throw error;}
+        if(['valid','review'].includes(data.status))break;
+        if(data.status!=='verifying'||data.verifiedTick!==part.finishTick)throw new Error('Ověřování hry se nepodařilo dokončit.');
+      }
+      if(!['valid','review'].includes(data?.status))throw new Error('Výsledek ještě není ověřený.');
       if(current===generation){const pending=data.status==='review';runner.overlay(Number(data.score).toLocaleString('cs-CZ')+' bodů',pending?'Výsledek byl přijat ke kontrole pořadatelem.':'Hotovo. Do žebříčku se počítá tvůj nejlepší platný výsledek.');msg('gameStatus',pending?'Kontrola výsledku není automatické obvinění z podvodu.':'Skóre je uložené.');}
       await Promise.allSettled([refreshProfile(),loadLeaderboard()]);
     }catch(error){if(current===generation){runner.overlay('Výsledek se neuložil',error.message);msg('gameStatus',error.message,true);}}
@@ -777,6 +810,8 @@ return Runner;
     let retried=false;img.onload=()=>{img.hidden=false;};img.onerror=()=>{if(!retried){retried=true;img.src='https://videoxpert.cz/'+brand.url;}else img.hidden=true;};img.src=brand.url;
   }
   updatePhase();setInterval(updatePhase,1000);
+  window.addEventListener('pageshow',updatePhase);
+  document.addEventListener('visibilitychange',()=>{if(!document.hidden)updatePhase();});
   if(configured){connect().catch(error=>msg('pageStatus',error.message,true));setInterval(()=>{if(client&&!document.hidden&&!runner.playing)refreshStatus().catch(()=>{});},60000+Math.floor(Math.random()*15000));}
   else loadLeaderboard();
 })();
