@@ -2345,60 +2345,84 @@ will-change: transform, opacity;
 <style>
 @media screen and (max-width: 600px) {
 
-  /* 1. MENU STÁLE VIDITELNÉ */
-  .top-nav,
-  .top-nav.is-hidden {
-    position: fixed !important;
-    top: 70px !important;
-    left: 50% !important;
-    width: calc(100% - 24px) !important;
-    max-width: 540px !important;
-    display: grid !important;
-    grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
-    gap: 4px !important;
-    padding: 7px !important;
-    align-items: stretch !important;
-    justify-content: center !important;
-    white-space: normal !important;
-    overflow: visible !important;
-    transform: translateX(-50%) !important;
-    opacity: 1 !important;
-    visibility: visible !important;
-    pointer-events: auto !important;
-    background: rgba(7,7,7,.94) !important;
-    border-radius: 18px !important;
-    z-index: 1001 !important;
-  }
+  /* MOBIL - PEVNÉ HORIZONTÁLNÍ MENU */
+.top-nav,
+.top-nav.is-hidden {
+  position: fixed !important;
+  top: 70px !important;
+  left: 115px !important;
+  right: 12px !important;
+  width: calc(100% - 127px) !important;
+  max-width: none !important;
+  height: 50px !important;
 
-  .top-nav a {
-    display: flex !important;
-    align-items: center !important;
-    justify-content: center !important;
-    min-width: 0 !important;
-    min-height: 36px;
-    padding: 7px 3px !important;
-    font-size: 9px !important;
-    line-height: 1.2 !important;
-    letter-spacing: .02em !important;
-    white-space: normal !important;
-    text-align: center !important;
-  }
+  display: flex !important;
+  flex-direction: row !important;
+  flex-wrap: nowrap !important;
+  align-items: center !important;
+  justify-content: flex-start !important;
+  gap: 4px !important;
+  padding: 5px 10px !important;
 
-  /* 2. ODSTRANĚNÍ TLAČÍTKA MENU */
-  .menu-peek,
-  .menu-peek.is-visible {
-    display: none !important;
-  }
+  overflow-x: auto !important;
+  overflow-y: hidden !important;
+  white-space: nowrap !important;
+  scrollbar-width: none !important;
+  -webkit-overflow-scrolling: touch;
+  touch-action: pan-x;
 
-  /* 3. SOUTĚŽ SAMOSTATNĚ NAD MENU */
-  a.contest-peek {
-    position: fixed !important;
-    top: 12px !important;
-    left: 16px !important;
-    z-index: 1003 !important;
-    padding: 10px 16px !important;
-    border-radius: 12px !important;
-  }
+  transform: none !important;
+  opacity: 1 !important;
+  visibility: visible !important;
+  pointer-events: auto !important;
+
+  background: rgba(7,7,7,.94) !important;
+  border-radius: 18px !important;
+  z-index: 1001 !important;
+}
+
+.top-nav::-webkit-scrollbar {
+  display: none;
+}
+
+/* POLOŽKY MENU V JEDNOM ŘÁDKU */
+.top-nav a {
+  display: flex !important;
+  flex: 0 0 auto !important;
+  align-items: center !important;
+  justify-content: center !important;
+  min-width: max-content !important;
+  min-height: 0 !important;
+  padding: 12px 10px !important;
+  font-size: 10px !important;
+  line-height: 1 !important;
+  letter-spacing: .05em !important;
+  white-space: nowrap !important;
+  text-align: center !important;
+}
+
+/* ODSTRANĚNÍ TLAČÍTKA MENU */
+.menu-peek,
+.menu-peek.is-visible {
+  display: none !important;
+}
+
+/* SOUTĚŽ VYČNÍVÁ Z LEVÉ STRANY MENU */
+a.contest-peek {
+  position: fixed !important;
+  top: 60px !important;
+  left: 12px !important;
+  width: 109px !important;
+  height: 51px !important;
+
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+
+  padding: 0 !important;
+  border-radius: 14px !important;
+  z-index: 1003 !important;
+}
 
   /* ODKAZY SE NEZAKRYJÍ PEVNÝM MENU */
   #onas,
