@@ -45,7 +45,7 @@ dialog{border:1px solid var(--line);border-radius:16px;background:#faf9f6;color:
       <p id="closedMessage" class="closed-message" role="status" hidden>Ale nebojte se, brzy nás čeká soutěž další!</p>
       <p id="prizeDetail" class="prize-detail">Poukaz včetně dopravy. Využitelný i bez doplatku.<br>Platnost 12 měsíců od vystavení · doručení výherci e-mailem v PDF.</p>
       <p class="dates"><time datetime="2026-10-21T01:00:00+02:00">21. 10. 2026, 01:00</time><span aria-hidden="true">—</span><time datetime="2026-11-20T23:59:00+01:00">20. 11. 2026, 23:59</time></p>
-      <button class="play-button" type="button" id="enterButton"><span>HRÁT</span><span class="play-icon" aria-hidden="true">▶</span></button>
+      <button class="play-button" type="button" id="enterButton" disabled><span>OVĚŘUJI TERMÍN…</span><span class="play-icon" aria-hidden="true">▶</span></button>
       <p id="playInstructions" class="instructions-bubble">Přeskakuj překážky. Sbírej klapky. Získej nejvyšší skóre.</p>
       <p id="phaseText" class="phase-text" role="status" hidden></p>
       <p id="pageStatus" class="status" role="status" aria-live="polite"></p>
@@ -59,7 +59,7 @@ dialog{border:1px solid var(--line);border-radius:16px;background:#faf9f6;color:
     <section class="leaderboard wrap" id="zebricek" aria-labelledby="leaderboardTitle">
       <div class="section-head"><div><p class="eyebrow">KDO MÁ NEJLEPŠÍ ZÁBĚR?</p><h2 id="leaderboardTitle">Veřejný žebříček</h2></div><button class="text-button" type="button" id="refreshButton" aria-label="Obnovit žebříček">Obnovit <span aria-hidden="true">↻</span></button></div>
       <div class="table-wrap"><table><thead><tr><th scope="col">Pořadí</th><th scope="col">Hráč</th><th scope="col">Skóre</th></tr></thead><tbody id="leaderboardBody"><tr class="empty-row"><td colspan="3">První místo zatím čeká.<small>Soutěžní výsledky se objeví po zahájení soutěže.</small></td></tr></tbody></table></div>
-      <div class="ranking-notes"><p>Počítá se nejlepší platné skóre. Výherce potvrdíme po kontrole výsledků.</p><p id="leaderboardStatus" role="status">Tréninkové výsledky se nezapisují.</p></div>
+      <div class="ranking-notes"><p>Počítá se nejlepší platné skóre. Výherce potvrdíme po kontrole výsledků.</p><p id="leaderboardStatus" role="status">Výsledky se zapisují pouze během soutěže.</p></div>
       <div class="account-row" id="accountRow" hidden><span id="accountName"></span><button id="withdrawButton" class="text-button" type="button">Odvolat souhlas s nabídkou</button><button id="logoutButton" class="text-button" type="button">Odhlásit</button></div>
     </section>
   </main>
@@ -67,11 +67,11 @@ dialog{border:1px solid var(--line);border-radius:16px;background:#faf9f6;color:
   <footer class="footer wrap"><span>© 2026 VideoXpert</span><a href="mailto:info@videxpert.cz">info@videxpert.cz</a><div class="brand-family" aria-label="Značky VideoXpert"><span>Memoria</span><span>Klipáci</span><span>Brandárna</span></div></footer>
 
   <dialog id="gameDialog" class="game-dialog" aria-labelledby="gameTitle">
-    <div class="game-dialog-head"><div><h2 id="gameTitle">Kamera. Klapka. Běžíš.</h2><p id="gameMode">Trénink · bez zápisu do žebříčku</p></div><button class="close-button" id="closeGame" type="button" aria-label="Zavřít hru">×</button></div>
+    <div class="game-dialog-head"><div><h2 id="gameTitle">Kamera. Klapka. Běžíš.</h2><p id="gameMode">Soutěžní pokus</p></div><button class="close-button" id="closeGame" type="button" aria-label="Zavřít hru">×</button></div>
     <div id="gameShell" class="game-shell">
       <div class="game-hud"><div>SKÓRE<strong id="score">0</strong></div><div>KLAPKY<strong id="frames">0</strong></div><div class="difficulty-hud">OBTÍŽNOST<strong id="difficultyName">Rozjezd</strong></div><button id="soundButton" type="button" aria-pressed="false">Zvuk: vypnutý</button></div>
       <div class="canvas-wrap"><canvas id="gameCanvas" width="960" height="540" tabindex="0" aria-label="Hra s kameramanem. Mezerník, šipka nahoru nebo klepnutí znamená skok."></canvas>
-        <div id="gameOverlay" class="game-overlay"><h3 id="overlayTitle">Jde se na plac.</h3><p id="overlayText">Na bedně můžeš přistát. Pozor na náraz z boku, auta a drony.</p><button class="play-button" id="startButton" type="button">HRÁT</button></div>
+        <div id="gameOverlay" class="game-overlay"><h3 id="overlayTitle">Jde se na plac.</h3><p id="overlayText">Na bedně můžeš přistát. Pozor na náraz z boku, auta a drony.</p><button class="play-button" id="startButton" type="button" disabled>HRÁT</button></div>
       </div>
       <div class="game-brand-strip" aria-label="Značky VideoXpert">
         <canvas id="adBrand0" width="480" height="126" role="img" aria-label="VideoXpert"></canvas>
@@ -81,7 +81,6 @@ dialog{border:1px solid var(--line);border-radius:16px;background:#faf9f6;color:
       </div>
       <div class="game-controls"><span>MEZERNÍK / ↑ / KLEPNUTÍ</span><button id="fullscreenButton" type="button">Celá obrazovka ↗</button><button class="jump-button" id="jumpButton" type="button">SKOK ↑</button></div>
     </div>
-    <div class="practice-tools" id="practiceTools" hidden><label for="practiceDifficulty">Zkusit obtížnost</label><select id="practiceDifficulty"><option value="0">Od začátku</option><option value="1">Svižná</option><option value="2">Náročná</option><option value="3">Expert</option><option value="4">Extrémní</option><option value="5">Boss</option><option value="6">Boss+</option></select><button class="text-button" id="applyDifficulty" type="button">SPUSTIT ÚROVEŇ ↗</button></div>
     <p id="gameStatus" class="status" role="status" aria-live="polite">Připraveno ke hře.</p>
     <p class="mobile-hint">Pro větší obraz otoč telefon na šířku.</p>
     <div id="attemptCaptcha" class="attempt-captcha" aria-label="Ověření před soutěžním pokusem"></div>
@@ -90,7 +89,6 @@ dialog{border:1px solid var(--line);border-radius:16px;background:#faf9f6;color:
   <dialog id="registrationDialog" class="registration-dialog" aria-labelledby="registrationTitle">
     <button class="close-button" id="closeRegistration" type="button" aria-label="Zavřít registraci">×</button>
     <p class="eyebrow">JEŠTĚ NEŽ SE ROZBĚHNEŠ</p><h2 id="registrationTitle">Zaregistrovat a hrát</h2>
-    <p class="preview-note" id="previewNote" hidden>Zkušební formulář: nic se neodesílá ani neukládá. E-mail se teď neověřuje.</p>
     <form id="emailForm" hidden><p>Pošleme ti kód pro přihlášení. Stejným e-mailem se vrátíš ke svému skóre i z jiného zařízení.</p><label for="loginEmail">E-mail</label><input id="loginEmail" type="email" autocomplete="email" maxlength="254" required><p class="quiet">Přihlášení není souhlas se zasíláním nabídek. <a href="#gdpr" data-document="gdpr">Jak pracujeme s údaji</a>.</p><button class="form-submit" type="submit">POSLAT KÓD</button><button class="text-button" id="newRegistration" type="button">Jsem tu poprvé</button></form>
     <form id="otpForm" hidden><p id="otpHint"></p><label for="otp">Kód z e-mailu</label><input id="otp" autocomplete="one-time-code" inputmode="numeric" pattern="[0-9]{6,10}" minlength="6" maxlength="10" required><button class="form-submit" type="submit">OVĚŘIT E-MAIL</button><button class="text-button" id="changeEmail" type="button">Změnit e-mail / poslat nový kód</button></form>
     <form id="profileForm">
@@ -107,7 +105,7 @@ dialog{border:1px solid var(--line);border-radius:16px;background:#faf9f6;color:
 <h2>1. Pořadatel</h2><p>Pořadatelem je Adam Nezdara, podnikající fyzická osoba, IČO 22191283, se sídlem 1. máje 28, 257 68 Dolní Kralovice, vystupující pod značkou VideoXpert. Kontakt pro soutěž, námitky a uplatnění výhry: <a href="mailto:info@videxpert.cz">info@videxpert.cz</a>.</p>
 <h2>2. Termín a účast</h2><p>Soutěž probíhá od <strong>21. října 2026 v 01:00</strong> do <strong>20. listopadu 2026 ve 23:59 včetně celé poslední minuty</strong>, v časovém pásmu Europe/Prague. Rozhoduje čas serveru; pokus musí být před koncem nejen zahájený, ale také dokončený a přijatý serverem.</p><p>Účast je zdarma, bez nákupu a bez sázky. Jde o dovednostní soutěž, výherce není losován. Účastnit se může fyzická osoba, která dovršila 18 let a má bydliště v České republice. Ze soutěže jsou vyloučeny osoby podílející se na jejím technickém nebo organizačním zajištění a osoby jim blízké.</p>
 <h2>3. Registrace</h2><ol><li>Účastník vyplní pravdivé jméno, příjmení a vlastní e-mail. Potvrdí věk, bydliště, pravidla a seznámení s informacemi o ochraně osobních údajů a ověří e-mail jednorázovým kódem. Pro skutečnou soutěžní registraci je ověření e-mailu nutné.</li><li>Jedna osoba smí mít jeden soutěžní účet. Stejný účet lze použít na různých zařízeních. Různé adresy se stejnou doménou jsou samozřejmě přípustné.</li><li>Souhlas s marketingovou nabídkou je samostatný a dobrovolný. Odmítnutí ani odvolání souhlasu nesnižuje počet pokusů, skóre ani možnost vyhrát.</li></ol>
-<h2>4. Hra a skóre</h2><ol><li>Účastník ovládá kameramana klávesou mezerník, šipkou nahoru nebo klepnutím. Překonává překážky a sbírá filmové klapky. Rychlost plynule roste přes sedm úrovní po 30 sekundách až na úroveň Boss+, na které se ustálí. Bedny mají různé rozměry a nepravidelné rozestupy. Při sestupu lze bezpečně přistát na horní hraně bedny nebo auta a znovu se odrazit; náraz do boku překážky pokus ukončí. Proti hráči přijíždějí auta a přilétají drony ve dvou výškách: nízký dron je třeba přeskočit, vysoký lze podběhnout. Kontakt s dronem ukončí pokus. Úrovně Boss a Boss+ vyžadují velmi přesné načasování; na Boss+ přijíždějí auta častěji. V soutěžním pokusu začínají všichni od první úrovně; volba vyššího začátku slouží výhradně nesoutěžní zkoušce.</li><li>Skóre tvoří body za překonanou vzdálenost a 250 bodů za každou klapku. Jednotlivý pokus nemá časový limit a končí nárazem. Hráč může pokračovat, dokud nenarazí; soutěžní pokus je však nutné dokončit a odeslat před uzavřením celé soutěže.</li><li>Hrát lze opakovaně. Do pořadí se započítává nejlepší platné skóre jednoho účastníka. Proti zneužití mohou být krátkodobě omezeny příliš časté požadavky.</li><li>Průběh je počítán podle stejných herních pravidel na mobilu i počítači. Server kontroluje záznam skoků, průběh, dosažitelný výsledek, jednorázovost pokusu a čas. Skóre zaslané samotným prohlížečem není podkladem k přiznání výhry.</li><li>Přepnutí do jiné aplikace nebo delší pozastavení zařízení přeruší pokus; takový pokus se do žebříčku nezapisuje. Před začátkem soutěže je dostupný nesoutěžní trénink, jehož výsledky se neukládají.</li></ol>
+<h2>4. Hra a skóre</h2><ol><li>Účastník ovládá kameramana klávesou mezerník, šipkou nahoru nebo klepnutím. Překonává překážky a sbírá filmové klapky. Rychlost plynule roste přes sedm úrovní po 30 sekundách až na úroveň Boss+, na které se ustálí. Bedny mají různé rozměry a nepravidelné rozestupy. Při sestupu lze bezpečně přistát na horní hraně bedny nebo auta a znovu se odrazit; náraz do boku překážky pokus ukončí. Proti hráči přijíždějí auta a přilétají drony ve dvou výškách: nízký dron je třeba přeskočit, vysoký lze podběhnout. Kontakt s dronem ukončí pokus. Úrovně Boss a Boss+ vyžadují velmi přesné načasování; na Boss+ přijíždějí auta častěji. V soutěžním pokusu začínají všichni od první úrovně.</li><li>Skóre tvoří body za překonanou vzdálenost a 250 bodů za každou klapku. Jednotlivý pokus nemá časový limit a končí nárazem. Hráč může pokračovat, dokud nenarazí; soutěžní pokus je však nutné dokončit a odeslat před uzavřením celé soutěže.</li><li>Hrát lze opakovaně. Do pořadí se započítává nejlepší platné skóre jednoho účastníka. Proti zneužití mohou být krátkodobě omezeny příliš časté požadavky.</li><li>Průběh je počítán podle stejných herních pravidel na mobilu i počítači. Server kontroluje záznam skoků, průběh, dosažitelný výsledek, jednorázovost pokusu a čas. Skóre zaslané samotným prohlížečem není podkladem k přiznání výhry.</li><li>Přepnutí do jiné aplikace nebo delší pozastavení zařízení přeruší pokus; takový pokus se do žebříčku nezapisuje. Registrace i hraní jsou dostupné pouze v termínu soutěže; před zahájením ani po ukončení není možné se registrovat nebo spustit hru.</li></ol>
 <h2>5. Férová hra a přezkum</h2><p>Zakázané je automatizované hraní, ovládání pomocí botů nebo AI, úprava herního kódu či komunikace za účelem získání výhody, falšování záznamů, zneužití chyby a obcházení pravidla jednoho účtu. Zakázáno je také vydávání se za jinou osobu.</p><p>Výsledek může být dočasně zařazen ke kontrole a do jejího dokončení nezveřejněn. Vysoké skóre nebo technický příznak samo o sobě neprokazuje podvod. Pořadatel hodnotí konkrétní záznam a okolnosti, umožní účastníkovi vysvětlení a rozhodnutí o zneplatnění výsledku odůvodní. Ruční přezkum lze požadovat na kontaktním e-mailu. Ochrana snižuje možnost manipulace, nezaručuje dokonalé rozpoznání automatizovaného hraní.</p>
 <h2>6. Žebříček a výherce</h2><ol><li>Veřejně se zobrazuje pořadí, křestní jméno s iniciálou příjmení a nejlepší platné skóre. Celé příjmení a e-mail se v žebříčku nezveřejňují.</li><li>Vyhrává jedna osoba s nejvyšším platným skóre po skončení soutěže a přezkoumání výsledků. Při rovnosti rozhoduje dřívější serverový čas přijetí nejlepšího skóre, potom dřívější registrace. Při úplné shodě i těchto údajů rozhoduje stabilní vzestupné pořadí identifikátoru účtu.</li><li>Průběžný ani dosud nepřezkoumaný žebříček není definitivním potvrzením nároku na výhru. Pořadatel zpravidla do sedmi dnů po konci soutěže kontaktuje předběžného výherce na ověřeném registračním e-mailu; případné prodloužení nutné kontroly oznámí na soutěžním webu.</li><li>Výherce má 14 dnů od zaslání oznámení k odpovědi a doložení splnění podmínek v přiměřeném nezbytném rozsahu. Nevyžadují se automaticky kopie osobních dokladů. Pokud výhru odmítne, včas se neozve nebo nesplní podmínky, je osloven další účastník v pořadí.</li><li>Po potvrzení nároku pořadatel výherci zašle poukaz ve formátu PDF na jeho e-mail, zpravidla do sedmi dnů od dokončení ověření.</li></ol>
 <h2>7. Poukaz v hodnotě 10 000 Kč</h2><ol><li>Výhrou je jeden poukaz v hodnotě <strong>10 000 Kč</strong> na foto/video produkci VideoXpert včetně služeb značek Memoria, Brandárna a Klipáci. Realizace proběhne na území ČR.</li><li>Výhra zahrnuje dopravu. Pořadatel umožní výherci skutečné využití služby v hodnotě poukazu <strong>bez povinného doplatku či dalšího nákupu</strong>. Konkrétní rozsah a termín služby budou předem písemně dohodnuty.</li><li>Pokud si výherce dobrovolně vybere rozsáhlejší službu, cenu a případný doplatek musí předem výslovně odsouhlasit. Doplatek není podmínkou získání ani využití výhry.</li><li>Poukaz je platný <strong>12 měsíců od vystavení</strong>. Datum vystavení a poslední den platnosti budou uvedeny přímo v PDF. Nejpozději poslední den platnosti je nutné požádat e-mailem o jeho uplatnění; konkrétní termín realizace se dohodne podle charakteru zakázky a dostupnosti. Poukaz objednaný včas nezanikne jen tím, že pořadatel nabídne pozdější termín.</li><li>Poukaz je určen na jednu zakázku. Nevyčerpaná část se nevyplácí v penězích; peněžní náhrada za výhru se neposkytuje. Případný převod na jinou osobu je možný po předchozí písemné dohodě s pořadatelem.</li></ol>
@@ -144,13 +142,13 @@ dialog{border:1px solid var(--line);border-radius:16px;background:#faf9f6;color:
   </article></dialog>
   <noscript><style>.legal-dialog{display:block;position:static;margin:2rem auto;max-height:none}.legal-dialog .close-button{display:none}#enterButton{display:none}</style><p class="wrap">Hraní vyžaduje zapnutý JavaScript. Kompletní pravidla a informace o soukromí jsou uvedeny níže.</p></noscript>
 
-  <!-- Vše potřebné pro trénink je uvnitř tohoto HTML. Není třeba lokální server. -->
+  <!-- Soutěžní hra: registraci a pokusy povoluje pouze otevřený termín potvrzený serverem. -->
   <script>
-  // NASTAVENI SOUTEZE — později doplníme pouze tyto tři VEŘEJNÉ hodnoty.
+  // NASTAVENI SOUTEZE — pouze VEŘEJNÉ hodnoty; tajné klíče zůstávají v Supabase.
   window.VIDEOXPERT_CONFIG = Object.freeze({
-    supabaseUrl: '',
-    supabasePublishableKey: '',
-    turnstileSiteKey: '',
+    supabaseUrl: 'https://fodsndmquvnpykajxtcw.supabase.co',
+    supabasePublishableKey: 'sb_publishable_b4GtcB-zlNofY3x2pSml8A_TwKTNcJ7',
+    turnstileSiteKey: '0x4AAAAAAFVpcoy3fvt-9DFQ',
     contactEmail: 'info@videxpert.cz',
     logos: [
       {name:'VideoXpert',color:'#111111',url:'images/VideoXpert%20LOGO.png'},
@@ -404,9 +402,10 @@ class Runner {
   }
   wake(){if(this.animationFrame===null)this.animationFrame=requestAnimationFrame(t=>this.loop(t));}
   start(seed, ranked, startLevel = 0) {
+    if(!ranked||typeof this.canPlay!=='function'||!this.canPlay())return;
     this.run=createRun(seed,ranked?0:startLevel);this.ranked=ranked;this.inputs=[];this.queuedUntil=-1;this.elapsed=0;this.last=performance.now();this.playing=true;this.previousY=this.run.y;this.lastHud=-Infinity;
-    $('gameOverlay').hidden=true;$('gameMode').textContent=ranked?'Soutěžní pokus · ověření výsledku na serveru':'Trénink · bez zápisu do žebříčku';
-    $('gameStatus').textContent=ranked?'Hraješ o poukaz. Po dobu pokusu zůstaň v této kartě.':'Na bedně můžeš přistát a znovu skočit. Nízký dron přeskoč, vysoký podběhni.';
+    $('gameOverlay').hidden=true;$('gameMode').textContent='Soutěžní pokus · ověření výsledku na serveru';
+    $('gameStatus').textContent='Hraješ o poukaz. Po dobu pokusu zůstaň v této kartě.';
     this.canvas.focus({preventScroll:true});this.hud();this.wake();
   }
   overlay(title,text,button='HRÁT ZNOVU'){$('overlayTitle').textContent=title;$('overlayText').textContent=text;$('startButton').textContent=button;$('gameOverlay').hidden=false;}
@@ -416,6 +415,7 @@ class Runner {
   loop(t){
     this.animationFrame=null;
     const dt=Math.max(0,this.last?(t-this.last)/1000:0);this.last=t;
+    if(this.playing&&!this.canPlay()){this.abort('Soutěž již není otevřená. Tento pokus nelze zapsat.');return;}
     if(this.playing){
       if(dt>.65){this.abort('Zařízení hru na delší chvíli pozastavilo. Pro férové měření začni nový pokus.');}
       else{
@@ -533,44 +533,48 @@ return Runner;
 })();</script>
   <script>(async function () {
   'use strict';
-  const {VERSION,RULES_VERSION,START_AT,CLOSE_AT,LEVELS,phaseAt,replayChunks}=window.VXEngine;
+  const {VERSION,RULES_VERSION,START_AT,CLOSE_AT,phaseAt,replayChunks}=window.VXEngine;
   const $=id=>document.getElementById(id),cfg=window.VIDEOXPERT_CONFIG;
   const isFile=location.protocol==='file:';
   const configured=!isFile&&Boolean(cfg.supabaseUrl&&cfg.supabasePublishableKey&&cfg.turnstileSiteKey);
   const gameDialog=$('gameDialog'),registrationDialog=$('registrationDialog');
-  let client=null,connecting=null,profile=null,settings={startsAt:START_AT,closesAt:CLOSE_AT,enabled:true},clockOffset=0;
+  let client=null,connecting=null,profile=null,settings={startsAt:START_AT,closesAt:CLOSE_AT,enabled:true},serverClock=0,clockVerifiedAt=0,statusVerified=false;
   let busy=false,attempt=null,email='',authWidget=null,authToken='',captchaReady=null,cancelAttemptCaptcha=null;
   let generation=0,profileGeneration=0,lastPhase='';
-  let previewProfile=null,pendingRegistration=null;
-  let connected=false,statusRequest=null,boardRequest=null,lastStatus=0,lastBoard=0;
+  let pendingRegistration=null;
+  let connected=false,statusRequest=null,boardRequest=null,lastStatus=null,lastBoard=0;
   const runner=new window.VXRunner(onFinish);
-  const period=()=>settings.enabled?phaseAt(Date.now()+clockOffset,settings.startsAt,settings.closesAt):'closed';
-  const phase=()=>isFile?'preview':period();
+  // Server time plus elapsed monotonic time: changing the device clock cannot open the game.
+  const period=()=>!configured||!statusVerified?'unavailable':settings.enabled?phaseAt(serverClock+performance.now()-clockVerifiedAt,settings.startsAt,settings.closesAt):'closed';
+  const phase=period;
   const ended=()=>['after','closed'].includes(phase());
-  const practice=()=>isFile||!configured||period()==='before';
+  runner.canPlay=()=>phase()==='open';
+  const startDate=()=>new Date(settings.startsAt).toLocaleString('cs-CZ',{timeZone:'Europe/Prague',day:'numeric',month:'numeric',year:'numeric',hour:'2-digit',minute:'2-digit'});
+  const phaseMessage=()=>phase()==='before'?'Registrace a hra se otevřou '+startDate()+' českého času.':ended()?'Soutěž je ukončena. Žebříček zůstává dostupný.':'Termín soutěže se nepodařilo ověřit. Zkus tlačítko Obnovit.';
+  function requireOpen(){if(phase()!=='open'){updatePhase();throw new Error(phaseMessage());}}
   const msg=(id,text,error=false)=>{$(id).textContent=text;$(id).classList.toggle('error',error);};
   const stopError=()=>Object.assign(new Error('Pokus byl zrušen.'),{name:'AbortError'});
-  function checkGeneration(value){if(value!==generation||!gameDialog.open)throw stopError();}
-  function setBusy(value){busy=value;$('startButton').disabled=value||ended();$('enterButton').disabled=value;}
+  function checkGeneration(value){if(phase()!=='open'){updatePhase();throw stopError();}if(value!==generation||!gameDialog.open)throw stopError();}
+  function setBusy(value){busy=value;$('startButton').disabled=value||phase()!=='open';$('enterButton').disabled=ended()?false:value||phase()!=='open';}
 
   function updatePhase(){
     const p=phase();if(lastPhase===p)return;lastPhase=p;
-    const closed=ended();
+    const closed=ended(),open=p==='open';
     for(const id of ['activePrizeTitle','prizeDetail','playInstructions','participationInfo'])$(id).hidden=closed;
     $('closedTitle').hidden=!closed;$('closedMessage').hidden=!closed;
-    if(ended()){
-      $('phaseText').hidden=false;
-      $('phaseText').textContent='Děkujeme za účast. Výsledky najdete v žebříčku níže.';
-      $('enterButton').textContent='ZOBRAZIT ŽEBŘÍČEK';$('leaderboardTitle').textContent='Žebříček po ukončení soutěže';
-      $('startButton').disabled=true;
-      generation++;busy=false;$('enterButton').disabled=false;if(cancelAttemptCaptcha)cancelAttemptCaptcha();
-      if(runner.playing)runner.abort('Soutěž skončila. Tento pokus již nelze zapsat.');
-      runner.overlay('SOUTĚŽ UKONČENA','Ale nebojte se, brzy nás čeká soutěž další! Žebříček zůstává na této stránce.','UKONČENO');
+    $('leaderboardTitle').textContent=closed?'Žebříček po ukončení soutěže':'Veřejný žebříček';
+    $('phaseText').hidden=open;
+    $('phaseText').textContent=open?'':p==='unavailable'?'Registrace a hra čekají na ověření termínu soutěže.':phaseMessage();
+    $('enterButton').textContent=closed?'ZOBRAZIT ŽEBŘÍČEK':open?'HRÁT':p==='before'?'SOUTĚŽ JEŠTĚ NEZAČALA':'NYNÍ NEDOSTUPNÉ';
+    if(!open){
+      generation++;busy=false;attempt=null;pendingRegistration=null;
+      if(cancelAttemptCaptcha)cancelAttemptCaptcha();
+      if(runner.playing)runner.abort(phaseMessage());
       if(registrationDialog.open)registrationDialog.close();
-    }else{
-      $('enterButton').textContent='HRÁT';$('startButton').disabled=busy;
-      $('phaseText').textContent='';$('phaseText').hidden=true;
+      if(closed)runner.overlay('SOUTĚŽ UKONČENA','Ale nebojte se, brzy nás čeká soutěž další! Žebříček zůstává na této stránce.','UKONČENO');
+      else if(gameDialog.open)gameDialog.close();
     }
+    setBusy(busy);
   }
 
   function loadScript(src){return new Promise((resolve,reject)=>{
@@ -584,15 +588,18 @@ return Runner;
     if(!captchaReady)captchaReady=loadScript('https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit').catch(error=>{captchaReady=null;throw error;});
     await captchaReady;
   }
-  async function refreshStatus(){
+  async function refreshStatus(force=false){
     if(!client)return;
     if(statusRequest)return statusRequest;
-    if(lastStatus&&Date.now()-lastStatus<30000)return;
+    if(!force&&statusVerified&&lastStatus!==null&&performance.now()-lastStatus<30000)return;
     statusRequest=(async()=>{
-      const before=Date.now(),{data,error}=await client.rpc('vx_status');
-      const serverTime=Date.parse(data?.serverNow);
-      if(error||!data||!Number.isFinite(serverTime))throw new Error('Stav soutěže se nepodařilo ověřit. Zkus to za chvíli.');
-      settings=data;clockOffset=serverTime-(before+Date.now())/2;lastStatus=Date.now();lastPhase='';updatePhase();
+      try{
+        const {data,error}=await client.rpc('vx_status');
+        const serverTime=Date.parse(data?.serverNow),starts=Date.parse(data?.startsAt),closes=Date.parse(data?.closesAt);
+        if(error||!data||![serverTime,starts,closes].every(Number.isFinite)||closes<=starts||typeof data.enabled!=='boolean')throw new Error('Stav soutěže se nepodařilo ověřit. Zkus tlačítko Obnovit.');
+        settings=data;serverClock=serverTime;clockVerifiedAt=performance.now();lastStatus=clockVerifiedAt;statusVerified=true;
+        lastPhase='';updatePhase();
+      }catch(error){statusVerified=false;lastPhase='';updatePhase();throw error;}
     })();
     try{await statusRequest;}finally{statusRequest=null;}
   }
@@ -608,7 +615,7 @@ return Runner;
     if(profile){$('accountName').textContent=profile.firstName+' '+profile.lastName+' · nejlepší skóre '+Number(profile.bestScore).toLocaleString('cs-CZ');$('withdrawButton').hidden=!profile.marketingConsent;}
   }
   async function loadLeaderboard(){
-    if(!client){msg('leaderboardStatus','Tréninkové výsledky se nezapisují.');return;}
+    if(!client){msg('leaderboardStatus','Žebříček se načte po připojení k soutěži.');return;}
     if(boardRequest)return boardRequest;
     if(runner.playing||(lastBoard&&Date.now()-lastBoard<30000))return;
     $('refreshButton').disabled=true;
@@ -635,15 +642,15 @@ return Runner;
     try{await connecting;msg('pageStatus','');}finally{connecting=null;}
   }
   async function openRegistration(){
+    await connect();await refreshStatus();requireOpen();
     if(!registrationDialog.open)registrationDialog.showModal();
     $('emailForm').hidden=true;$('otpForm').hidden=true;$('profileForm').hidden=false;
     $('registrationTitle').textContent='Zaregistrovat a hrát';msg('registrationStatus','');
-    const local=practice();$('previewNote').hidden=!local;$('existingAccount').hidden=local;$('authCaptcha').hidden=local;
+    $('existingAccount').hidden=false;$('authCaptcha').hidden=false;
     $('email').readOnly=false;
-    if(local){$('firstName').focus();return;}
     const {data:{session}}=await client.auth.getSession();
     if(session){$('email').value=session.user.email;$('email').readOnly=true;$('authCaptcha').hidden=true;return;}
-    await ensureCaptcha();if(!registrationDialog.open)return;
+    await ensureCaptcha();requireOpen();if(!registrationDialog.open)return;
     authToken='';
     if(authWidget===null)authWidget=window.turnstile.render('#authCaptcha',{sitekey:cfg.turnstileSiteKey,action:'vx_auth',callback:token=>{authToken=token;},'expired-callback':()=>{authToken='';},'error-callback':()=>{authToken='';msg('registrationStatus','Ověření proti robotům se nepodařilo. Otevři přihlášení znovu.',true);}});
     else window.turnstile.reset(authWidget);
@@ -659,24 +666,18 @@ return Runner;
     });
   }
   async function edge(name,payload){
+    requireOpen();
     const {data:{session}}=await client.auth.getSession();if(!session)throw new Error('Přihlas se znovu.');
     const r=await fetch(cfg.supabaseUrl.replace(/\/$/,'')+'/functions/v1/'+name,{method:'POST',headers:{Authorization:'Bearer '+session.access_token,apikey:cfg.supabasePublishableKey,'Content-Type':'application/json'},body:JSON.stringify(payload),signal:AbortSignal.timeout(20000)});
     let data;try{data=await r.json();}catch{throw new Error('Server neodpověděl správně. Zkus to za chvíli.');}
     if(!r.ok)throw new Error(data.error||'Požadavek se nepodařil.');return data;
   }
   async function start(){
-    if(busy||runner.playing||ended())return;
+    if(busy||runner.playing||phase()!=='open'){updatePhase();return;}
     const current=++generation;setBusy(true);msg('gameStatus','');
     try{
       if(configured){await connect();checkGeneration(current);await refreshStatus();checkGeneration(current);}
-      if(ended())return;
-      $('practiceTools').hidden=!practice();
-      if(practice()){
-        if(!previewProfile){await openRegistration();return;}
-        attempt=null;const level=Number($('practiceDifficulty').value)||0;
-        runner.start(crypto.getRandomValues(new Uint32Array(1))[0],false,Math.max(0,Math.min(LEVELS.length-1,level)));
-        $('gameMode').textContent=previewProfile.first+' '+previewProfile.last.slice(0,1)+'. · zkušební hra';return;
-      }
+      requireOpen();
       await refreshProfile();checkGeneration(current);
       if(!profile){await openRegistration();return;}
       if(!profile.active)throw new Error('Účet je pozastavený. Kontaktuj pořadatele.');
@@ -690,7 +691,7 @@ return Runner;
   }
   async function onFinish(result){
     if(!result){attempt=null;return;}
-    if(!result.ranked){runner.overlay('Střih! '+result.localScore.toLocaleString('cs-CZ')+' bodů','Trénink dokončen. Do soutěžního žebříčku se nezapisuje.');msg('gameStatus','Trénink · '+result.localScore.toLocaleString('cs-CZ')+' bodů · '+result.jumpTicks.length+' skoků.');return;}
+    if(!result.ranked||phase()!=='open'){updatePhase();return;}
     const currentAttempt=attempt,current=generation;attempt=null;setBusy(true);
     runner.overlay('Ověřujeme výsledek','Za chvíli bude hotovo.','OVĚŘUJI…');
     try{
@@ -717,17 +718,13 @@ return Runner;
   }
   $('enterButton').addEventListener('click',async()=>{
     if(ended()){$('zebricek').scrollIntoView({behavior:'smooth'});return;}
-    if(practice()){await openRegistration();return;}
+    if(phase()!=='open'){updatePhase();return;}
     if(!gameDialog.open)gameDialog.showModal();runner.wake();await start();
   });
   $('startButton').addEventListener('click',start);
   $('closeGame').addEventListener('click',closeGame);
   gameDialog.addEventListener('cancel',event=>{event.preventDefault();closeGame();});
   $('closeRegistration').addEventListener('click',()=>registrationDialog.close());
-  $('applyDifficulty').addEventListener('click',async()=>{
-    if(!practice()||busy)return;
-    if(runner.playing)runner.abort('Spouštím zvolenou úroveň.');await start();
-  });
   $('existingAccount').addEventListener('click',()=>{
     pendingRegistration=null;$('profileForm').hidden=true;$('otpForm').hidden=true;$('emailForm').hidden=false;
     $('registrationTitle').textContent='Přihlásit a hrát';$('loginEmail').value=$('email').value;$('loginEmail').focus();msg('registrationStatus','');
@@ -738,10 +735,11 @@ return Runner;
     $('authCaptcha').hidden=false;authToken='';if(authWidget!==null)window.turnstile.reset(authWidget);
   });
   async function sendCode(value){
+    requireOpen();
     email=value.trim().toLowerCase();if(!authToken)throw new Error('Dokonči ověření proti robotům.');
     const {error}=await client.auth.signInWithOtp({email,options:{shouldCreateUser:Boolean(pendingRegistration),captchaToken:authToken}});
     authToken='';window.turnstile.reset(authWidget);if(error)throw new Error('Kód se nepodařilo poslat. Ověř adresu a mezi žádostmi počkej alespoň minutu.');
-    $('emailForm').hidden=true;$('profileForm').hidden=true;$('otpForm').hidden=false;$('authCaptcha').hidden=true;
+    requireOpen();$('emailForm').hidden=true;$('profileForm').hidden=true;$('otpForm').hidden=false;$('authCaptcha').hidden=true;
     $('otpHint').textContent='Kód jsme poslali na '+email+'. Zkontroluj i spam.';$('otp').value='';$('otp').focus();msg('registrationStatus','');
   }
   function registrationValues(){
@@ -752,8 +750,9 @@ return Runner;
     return {first,last,email:emailValue,marketing:$('marketingConsent').checked};
   }
   async function registerVerified(values){
+    requireOpen();
     const {data,error}=await client.rpc('vx_register',{p_first:values.first,p_last:values.last,p_adult_cz:true,p_rules:RULES_VERSION,p_privacy:RULES_VERSION,p_marketing:values.marketing});
-    if(error)throw error;profile=data;pendingRegistration=null;await refreshProfile();registrationDialog.close();$('profileForm').reset();
+    if(error)throw error;requireOpen();profile=data;pendingRegistration=null;await refreshProfile();requireOpen();registrationDialog.close();$('profileForm').reset();
     if(!gameDialog.open)gameDialog.showModal();runner.wake();await start();
   }
   $('emailForm').addEventListener('submit',async event=>{
@@ -765,7 +764,7 @@ return Runner;
   $('otpForm').addEventListener('submit',async event=>{
     event.preventDefault();const button=event.submitter;button.disabled=true;
     try{
-      const {error}=await client.auth.verifyOtp({email,token:$('otp').value.trim(),type:'email'});if(error)throw error;
+      requireOpen();const {error}=await client.auth.verifyOtp({email,token:$('otp').value.trim(),type:'email'});if(error)throw error;requireOpen();
       await refreshProfile();$('otpForm').hidden=true;msg('registrationStatus','');
       if(profile){registrationDialog.close();if(gameDialog.open)await start();}
       else if(pendingRegistration){await registerVerified(pendingRegistration);}
@@ -775,13 +774,8 @@ return Runner;
   $('profileForm').addEventListener('submit',async event=>{
     event.preventDefault();const button=event.submitter;button.disabled=true;
     try{
-      if(!$('profileForm').reportValidity())return;
+      requireOpen();if(!$('profileForm').reportValidity())return;
       const values=registrationValues();
-      if(practice()){
-        // Jen paměť této stránky: žádný fetch, cookies, localStorage ani e-mail.
-        previewProfile=values;registrationDialog.close();
-        if(!gameDialog.open)gameDialog.showModal();runner.wake();await start();return;
-      }
       const {data:{session}}=await client.auth.getSession();
       if(session)await registerVerified(values);
       else{pendingRegistration=values;await sendCode(values.email);}
@@ -789,7 +783,7 @@ return Runner;
   });
   $('withdrawButton').addEventListener('click',async()=>{try{const {error}=await client.rpc('vx_withdraw_marketing');if(error)throw error;await refreshProfile();msg('pageStatus','Souhlas s nabídkou byl odvolán. Soutěžit můžeš dál.');}catch{msg('pageStatus','Odvolání se nepodařilo uložit. Napiš na '+cfg.contactEmail+'.',true);}});
   $('logoutButton').addEventListener('click',async()=>{try{closeGame();const {error}=await client.auth.signOut();if(error)throw error;profile=null;++profileGeneration;$('accountRow').hidden=true;msg('pageStatus','Jsi odhlášený.');}catch{msg('pageStatus','Odhlášení se nepodařilo. Zkus to znovu.',true);}});
-  $('refreshButton').addEventListener('click',async()=>{try{if(configured&&!client)await connect();await loadLeaderboard();}catch(error){msg('leaderboardStatus',error.message,true);}});
+  $('refreshButton').addEventListener('click',async()=>{try{if(configured){await connect();await refreshStatus(true);}await loadLeaderboard();msg('pageStatus','');}catch(error){msg('leaderboardStatus',error.message,true);}});
 
   // Z dokumentu v registraci se po zavření vrátí fokus k původnímu odkazu.
   const documents=new Set(['pravidla','gdpr','marketing']);
@@ -810,8 +804,9 @@ return Runner;
     let retried=false;img.onload=()=>{img.hidden=false;};img.onerror=()=>{if(!retried){retried=true;img.src='https://videoxpert.cz/'+brand.url;}else img.hidden=true;};img.src=brand.url;
   }
   updatePhase();setInterval(updatePhase,1000);
-  window.addEventListener('pageshow',updatePhase);
-  document.addEventListener('visibilitychange',()=>{if(!document.hidden)updatePhase();});
+  function resumePage(){updatePhase();if(client&&!document.hidden)refreshStatus(true).catch(error=>msg('pageStatus',error.message,true));}
+  window.addEventListener('pageshow',resumePage);
+  document.addEventListener('visibilitychange',()=>{if(!document.hidden)resumePage();});
   if(configured){connect().catch(error=>msg('pageStatus',error.message,true));setInterval(()=>{if(client&&!document.hidden&&!runner.playing)refreshStatus().catch(()=>{});},60000+Math.floor(Math.random()*15000));}
   else loadLeaderboard();
 })();
