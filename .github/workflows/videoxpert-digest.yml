@@ -37,7 +37,7 @@ jobs:
       SMTP_USERNAME: marekstoll@seznam.cz
       SMTP_PASSWORD: ${{ secrets.VX_SMTP_PASSWORD }}
       EMAIL_FROM: "VideoXpert – přehledy <marekstoll@seznam.cz>"
-      DIGEST_RECIPIENTS: stolle@videoxpert.cz,nezdara@videoxpert.cz
+      DIGEST_RECIPIENTS: marekstoll@seznam.cz
       TEST_RECIPIENT: marekstoll@seznam.cz
     steps:
       - name: Odeslat test nebo prehled
