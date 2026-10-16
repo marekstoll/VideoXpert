@@ -1,0 +1,216 @@
+# V repozitáři marekstoll/VideoXpert uložte jako .github/workflows/videoxpert-digest.yml.
+# GitHub Settings > Secrets and variables > Actions:
+#   VX_SMTP_PASSWORD = heslo pro poštovní aplikace ke schránce marekstoll@seznam.cz
+#   VX_SUPABASE_SECRET_KEY = tajný serverový klíč projektu videoxpert-soutez
+# Režim test nepotřebuje Supabase klíč a neposílá údaje skutečných hráčů.
+# Automatické přehledy se zapnou proměnnou VX_DIGEST_ENABLED = true až po testu.
+# Hesla/klíče patří pouze do GitHub Secrets, nikdy do tohoto souboru.
+
+name: VideoXpert prehledy registraci
+on:
+  schedule:
+    - cron: "7 * * * *"
+  workflow_dispatch:
+    inputs:
+      mode:
+        description: "test = ukazka na Seznam; test_firemni = ukazka na oba VideoXpert maily; prehled = skutecne zmeny"
+        required: true
+        default: test
+        type: choice
+        options:
+          - test
+          - test_firemni
+          - prehled
+permissions: {}
+concurrency:
+  group: videoxpert-registration-digest
+  cancel-in-progress: false
+jobs:
+  send:
+    if: github.event_name == 'workflow_dispatch' || vars.VX_DIGEST_ENABLED == 'true'
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    env:
+      DIGEST_MODE: ${{ github.event_name == 'workflow_dispatch' && inputs.mode || 'prehled' }}
+      SUPABASE_URL: https://fodsndmquvnpykajxtcw.supabase.co
+      SUPABASE_SECRET_KEY: ${{ secrets.VX_SUPABASE_SECRET_KEY }}
+      SMTP_USERNAME: marekstoll@seznam.cz
+      SMTP_PASSWORD: ${{ secrets.VX_SMTP_PASSWORD }}
+      EMAIL_FROM: "VideoXpert – přehledy <marekstoll@seznam.cz>"
+      DIGEST_RECIPIENTS: stolle@videoxpert.cz,nezdara@videoxpert.cz
+      TEST_RECIPIENT: marekstoll@seznam.cz
+    steps:
+      - name: Odeslat test nebo prehled
+        shell: bash
+        run: |
+          python3 - <<'VIDEOXPERT_PYTHON'
+          """Hodinový interní přehled; bez změn neodesílá nic. Nezasílá marketing."""
+          import base64
+          import csv
+          import hashlib
+          import io
+          import json
+          import os
+          import smtplib
+          import ssl
+          import urllib.error
+          import urllib.request
+          from datetime import datetime, timezone
+          from email import policy
+          from email.message import EmailMessage
+          from email.utils import format_datetime, parseaddr
+          from zoneinfo import ZoneInfo
+          
+          
+          def required(name):
+              value = os.environ.get(name, "").strip()
+              if not value:
+                  raise RuntimeError(f"Chybí nastavení {name}.")
+              return value
+          
+          
+          def api(url, body, headers):
+              request = urllib.request.Request(url, data=json.dumps(body, ensure_ascii=False).encode("utf-8"),
+                                              headers={"Content-Type": "application/json", "User-Agent": "VideoXpert-digest/1.0", **headers}, method="POST")
+              try:
+                  with urllib.request.urlopen(request, timeout=40) as response:
+                      return json.load(response)
+              except urllib.error.HTTPError as error:
+                  # Obsah chyby může obsahovat osobní údaje; nepatří do veřejného Actions logu.
+                  raise RuntimeError(f"Externí služba vrátila HTTP {error.code}.") from None
+          
+          
+          def rpc(name, body):
+              key = required("SUPABASE_SECRET_KEY")
+              headers = {"apikey": key}
+              if not key.startswith("sb_secret_"):
+                  headers["Authorization"] = "Bearer " + key
+              return api(required("SUPABASE_URL").rstrip("/") + "/rest/v1/rpc/" + name, body, headers)
+          
+          
+          def csv_cell(value):
+              text = str(value if value is not None else "")
+              if text.lstrip().startswith(("=", "+", "-", "@")) or text.startswith(("\t", "\r", "\n")):
+                  return "'" + text
+              return text
+          
+          
+          def create_csv(rows):
+              stream = io.StringIO(newline="")
+              writer = csv.writer(stream, delimiter=";")
+              writer.writerow(["Jméno", "Příjmení", "E-mail", "Souhlas s jednou nabídkou", "Nejlepší ověřené skóre", "Změněno",
+                               "Registrován", "Věk 18+ a bydliště ČR potvrzeny", "Přijatá verze pravidel",
+                               "Verze informací o osobních údajích", "Verze marketingového souhlasu", "Marketingová volba změněna"])
+              for row in rows:
+                  writer.writerow([csv_cell(row.get("first_name")), csv_cell(row.get("last_name")), csv_cell(row.get("email")),
+                                   "ANO" if row.get("marketing_consent") is True else "NE", row.get("best_score", 0), row["version"],
+                                   row.get("registered_at", ""), row.get("adult_and_cz_confirmed_at", ""),
+                                   csv_cell(row.get("rules_version")), csv_cell(row.get("privacy_version")),
+                                   csv_cell(row.get("marketing_version")), row.get("marketing_changed_at", "")])
+              return stream.getvalue().encode("utf-8-sig")
+          
+          
+          def mail_payload(rows, sender, recipients):
+              # Stejná dávka má stejné údaje a Message-ID; SMTP nezaručuje potlačení duplicit.
+              changed = max(row["version"] for row in rows)
+              date = datetime.fromisoformat(changed.replace("Z", "+00:00")).astimezone(ZoneInfo("Europe/Prague"))
+              return {
+                  "from": sender, "to": recipients,
+                  "subject": f"VideoXpert – {len(rows)} nových nebo změněných registrací – {date:%d. %m. %Y %H:%M}",
+                  "text": f"V příloze je interní souhrn {len(rows)} nových nebo změněných registrací do soutěže VideoXpert.\n"
+                          "Osobní údaje chraňte před neoprávněným přístupem. Marketingový souhlas je uveden zvlášť; účast není souhlasem s nabídkou.\n"
+                          "Nabídka je určena až po vyhodnocení soutěže pouze nevýhercům s platným souhlasem. "
+                          "Před rozesláním ověřte aktuální souhlas v databázi, protože mohl být odvolán po vytvoření přílohy. "
+                          "Časy v CSV jsou včetně časového posunu; přehled sám žádné nabídky soutěžícím neposílá.",
+                  "attachments": [{"filename": f"videoxpert-registrace-{date:%Y-%m-%d-%H%M}.csv", "content": base64.b64encode(create_csv(rows)).decode("ascii")}]
+              }
+          
+          
+          def smtp_send(payload):
+              username = required('SMTP_USERNAME')
+              password = required('SMTP_PASSWORD')
+              sender = parseaddr(payload['from'])[1]
+              if sender.lower() != username.lower():
+                  raise RuntimeError('Odesílatel musí odpovídat přihlášené schránce.')
+              recipients = payload['to']
+              message = EmailMessage(policy=policy.SMTP)
+              message['From'] = payload['from']
+              message['To'] = ', '.join(recipients)
+              message['Subject'] = payload['subject']
+              message['Date'] = format_datetime(datetime.now(timezone.utc))
+              digest_id = hashlib.sha256(json.dumps(payload, sort_keys=True, ensure_ascii=False).encode()).hexdigest()
+              message['Message-ID'] = f'<vx-{digest_id}@{sender.split("@", 1)[1]}>'
+              message.set_content(payload['text'])
+              for item in payload.get('attachments', []):
+                  message.add_attachment(base64.b64decode(item['content']), maintype='text', subtype='csv', filename=item['filename'])
+              client = None
+              try:
+                  client = smtplib.SMTP_SSL('smtp.seznam.cz', 465, context=ssl.create_default_context(), timeout=40)
+                  client.login(username, password)
+                  code, _ = client.mail(sender)
+                  if code != 250:
+                      raise RuntimeError('Poštovní server odmítl odesílatele.')
+                  # Nejprve přijmout všechny adresáty; při odmítnutí neodeslat část dávky.
+                  for recipient in recipients:
+                      code, _ = client.rcpt(recipient)
+                      if code not in (250, 251):
+                          client.rset()
+                          raise RuntimeError('Poštovní server odmítl některého příjemce. Přehled nebyl potvrzen.')
+                  code, _ = client.data(message.as_bytes())
+                  if code != 250:
+                      raise RuntimeError('Poštovní server nepřijal přehled.')
+              except (smtplib.SMTPException, OSError):
+                  # Odpověď SMTP může obsahovat adresy. Nezapisovat ji do veřejného logu.
+                  raise RuntimeError('Odeslání přes Seznam selhalo. Zkontroluj heslo pro poštovní aplikace a stav schránky.') from None
+              finally:
+                  if client is not None:
+                      try:
+                          client.close()
+                      except OSError:
+                          pass
+          
+          
+          def test_delivery(company_mailboxes=False):
+              # Jen ukázkové řádky: žádný přístup do Supabase ani zápis do žebříčku.
+              timestamp = datetime.now(timezone.utc).isoformat()
+              rows = []
+              for first, consent in [('TEST-ANO', True), ('TEST-NE', False)]:
+                  rows.append(dict(first_name=first, last_name='Ukázkový záznam', email='test@example.invalid',
+                      marketing_consent=consent, best_score=1234, version=timestamp, registered_at=timestamp,
+                      adult_and_cz_confirmed_at=timestamp, rules_version='2026-10-16-v5', privacy_version='2026-10-16-v5',
+                      marketing_version='2026-10-16-v5', marketing_changed_at=timestamp))
+              recipients = ([x.strip() for x in required('DIGEST_RECIPIENTS').split(',') if x.strip()]
+                            if company_mailboxes else [required('TEST_RECIPIENT')])
+              payload = mail_payload(rows, required('EMAIL_FROM'), recipients)
+              payload['subject'] = 'TEST VideoXpert – přehled registrací a souhlasů'
+              payload['text'] = ('Toto je test doručení, nikoli skutečná registrace ani odehraná hra. '
+                  'Příloha obsahuje dva ukázkové záznamy: jeden s nabídkou ANO, druhý NE. '
+                  'Do soutěže ani žebříčku se nic nezapsalo.\n\n' + payload['text'])
+              smtp_send(payload)
+              print('Test přijal poštovní server. Ověř doručení v příchozí poště a spamu.')
+          
+          
+          def main():
+              mode = required('DIGEST_MODE')
+              if mode in ('test', 'test_firemni'):
+                  test_delivery(company_mailboxes=(mode == 'test_firemni'))
+                  return
+              if mode != 'prehled':
+                  raise RuntimeError('Neplatný režim přehledu.')
+              rows = rpc("vx_pending_digest", {}) or []
+              if not rows:
+                  print("Bez změn; e-mail se neposílá.")
+                  return
+              versions = [{"user_id": row["user_id"], "version": row["version"]} for row in rows]
+              recipients = [x.strip() for x in required("DIGEST_RECIPIENTS").split(",") if x.strip()]
+              if not recipients:
+                  raise RuntimeError("Chybí příjemce souhrnu.")
+              payload = mail_payload(rows, required("EMAIL_FROM"), recipients)
+              smtp_send(payload)
+              count = rpc("vx_ack_digest", {"p_versions": versions})
+              print(f"Souhrn přijal poštovní server. Potvrzeno záznamů: {count}.")
+          
+          
+          if __name__ == "__main__":
+              main()
+          VIDEOXPERT_PYTHON
