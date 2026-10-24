@@ -3,7 +3,103 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>VideoXpert</title>
+  <title>VideoXpert | Video, foto a postprodukce</title>
+  <meta name="description" content="Video a foto produkce od nápadu po postprodukci. VideoXpert propojuje značky Memoria, Brandárna a Klipáci pro firmy, eventy i hudební projekty.">
+  <link rel="canonical" href="https://videoxpert.cz/">
+  <meta name="robots" content="index,follow,max-image-preview:large">
+  <meta name="referrer" content="strict-origin-when-cross-origin">
+  <meta name="theme-color" content="#030303">
+  <link rel="icon" href="/favicon.ico" sizes="any">
+  <link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon-32.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="/assets/apple-touch-icon.png">
+  <meta property="og:type" content="website">
+  <meta property="og:locale" content="cs_CZ">
+  <meta property="og:site_name" content="VideoXpert">
+  <meta property="og:url" content="https://videoxpert.cz/">
+  <meta property="og:title" content="VideoXpert | Video, foto a postprodukce">
+  <meta property="og:description" content="Video a foto produkce od nápadu po postprodukci. VideoXpert propojuje značky Memoria, Brandárna a Klipáci pro firmy, eventy i hudební projekty.">
+  <meta property="og:image" content="https://videoxpert.cz/assets/previews/videoxpert.jpg">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="VideoXpert – VideoXpert">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="VideoXpert | Video, foto a postprodukce">
+  <meta name="twitter:description" content="Video a foto produkce od nápadu po postprodukci. VideoXpert propojuje značky Memoria, Brandárna a Klipáci pro firmy, eventy i hudební projekty.">
+  <meta name="twitter:image" content="https://videoxpert.cz/assets/previews/videoxpert.jpg">
+  <link rel="stylesheet" href="/assets/privacy.css">
+  <script src="/assets/site-config.js" defer></script>
+  <script src="/assets/privacy-core.js" defer></script>
+  <script src="/assets/privacy.js" defer></script>
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Organization",
+      "@id": "https://videoxpert.cz/#organization",
+      "name": "VideoXpert",
+      "url": "https://videoxpert.cz/",
+      "logo": {
+        "@type": "ImageObject",
+        "url": "https://videoxpert.cz/assets/apple-touch-icon.png",
+        "width": 180,
+        "height": 180
+      },
+      "email": "info@videoxpert.cz",
+      "telephone": "+420602696202",
+      "sameAs": [
+        "https://www.facebook.com/profile.php?id=61591622726263",
+        "https://www.instagram.com/videoxpert.cz/",
+        "https://www.youtube.com/@videoxpert_cz"
+      ],
+      "brand": [
+        {
+          "@type": "Brand",
+          "@id": "https://videoxpert.cz/maturitni-plesy/#brand",
+          "name": "Memoria",
+          "url": "https://videoxpert.cz/maturitni-plesy/"
+        },
+        {
+          "@type": "Brand",
+          "@id": "https://videoxpert.cz/firemni-videa/#brand",
+          "name": "Brandárna",
+          "url": "https://videoxpert.cz/firemni-videa/"
+        },
+        {
+          "@type": "Brand",
+          "@id": "https://videoxpert.cz/klipaci/#brand",
+          "name": "Klipáci",
+          "url": "https://videoxpert.cz/klipaci/"
+        }
+      ]
+    },
+    {
+      "@type": "WebSite",
+      "@id": "https://videoxpert.cz/#website",
+      "url": "https://videoxpert.cz/",
+      "name": "VideoXpert",
+      "inLanguage": "cs",
+      "publisher": {
+        "@id": "https://videoxpert.cz/#organization"
+      }
+    },
+    {
+      "@type": "WebPage",
+      "@id": "https://videoxpert.cz/#webpage",
+      "url": "https://videoxpert.cz/",
+      "name": "VideoXpert | Video, foto a postprodukce",
+      "description": "Video a foto produkce od nápadu po postprodukci. VideoXpert propojuje značky Memoria, Brandárna a Klipáci pro firmy, eventy i hudební projekty.",
+      "inLanguage": "cs",
+      "isPartOf": {
+        "@id": "https://videoxpert.cz/#website"
+      },
+      "about": {
+        "@id": "https://videoxpert.cz/#organization"
+      }
+    }
+  ]
+}
+  </script>
 
   <style>
     :root { 
@@ -1282,183 +1378,6 @@ will-change: transform, opacity;
   }
   
 }
-    .cookie-overlay {
-  position: fixed;
-  inset: 0;
-  z-index: 99999;
-  display: none;
-  align-items: center;
-  justify-content: center;
-  padding: 24px;
-  background: rgba(0,0,0,.72);
-  backdrop-filter: blur(8px);
-}
-
-.cookie-overlay.is-visible {
-  display: flex;
-}
-
-.cookie-box {
-  width: min(940px, 94vw);
-  max-height: 92vh;
-  overflow: auto;
-  display: grid;
-  grid-template-columns: 38% 62%;
-  background:
-  radial-gradient(circle at 18% 28%, rgba(255,255,255,.55), transparent 26%),
-  radial-gradient(circle at 88% 82%, rgba(0,0,0,.10), transparent 30%),
-  linear-gradient(135deg, #d8d2c8 0%, #eee8dd 44%, #c9c2b8 100%);
-  background-blend-mode: screen, multiply, normal;
-  color: #111;
-  border: 1px solid rgba(255,255,255,.25);
-  box-shadow: 0 40px 120px rgba(0,0,0,.65);
-}
-
-.cookie-visual {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 34px 22px;
-}
-
-.cookie-visual img {
-  width: 100%;
-  max-width: 330px;
-  height: auto;
-  object-fit: contain;
-  filter: drop-shadow(0 18px 28px rgba(0,0,0,.28));
-}
-
-.cookie-content {
-  padding: clamp(34px, 5vw, 62px);
-}
-
-.cookie-content h2 {
-  margin: 0 0 26px;
-  font-size: clamp(30px, 3vw, 46px);
-  line-height: 1.05;
-  font-weight: 950;
-}
-
-.cookie-content p {
-  margin: 0;
-  max-width: 560px;
-  font-size: clamp(17px, 1.45vw, 22px);
-  line-height: 1.65;
-}
-
-.cookie-main-actions {
-  margin-top: 42px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 22px;
-}
-
-.cookie-link {
-  padding: 0;
-  border: 0;
-  background: transparent;
-  color: #222;
-  font-size: 16px;
-  text-decoration: underline;
-  cursor: pointer;
-}
-
-.cookie-accept {
-  border: 0;
-  padding: 20px 38px;
-  background: #111;
-  color: #fff;
-  font-size: 17px;
-  font-weight: 950;
-  letter-spacing: .08em;
-  cursor: pointer;
-}
-
-.cookie-settings {
-  display: none;
-  margin-top: 36px;
-  padding-top: 28px;
-  border-top: 1px solid rgba(0,0,0,.16);
-}
-
-.cookie-settings.is-open {
-  display: block;
-}
-
-.cookie-settings h3 {
-  margin: 0 0 20px;
-  font-size: 28px;
-}
-
-.cookie-toggle {
-  display: flex;
-  justify-content: space-between;
-  gap: 22px;
-  padding: 18px 0;
-  border-bottom: 1px solid rgba(0,0,0,.12);
-}
-
-.cookie-toggle strong {
-  display: block;
-  font-size: 18px;
-}
-
-.cookie-toggle small {
-  display: block;
-  margin-top: 6px;
-  font-size: 14px;
-  line-height: 1.45;
-  color: rgba(0,0,0,.62);
-}
-
-.cookie-toggle input {
-  width: 26px;
-  height: 26px;
-  accent-color: #111;
-}
-
-.cookie-settings-actions {
-  margin-top: 26px;
-  display: flex;
-  gap: 14px;
-}
-
-.cookie-settings-actions button {
-  flex: 1;
-  padding: 16px 18px;
-  border: 1px solid #111;
-  background: transparent;
-  color: #111;
-  font-weight: 950;
-  cursor: pointer;
-}
-
-.cookie-settings-actions button:last-child {
-  background: #111;
-  color: #fff;
-}
-
-@media (max-width: 760px) {
-  .cookie-box {
-    grid-template-columns: 1fr;
-  }
-
-  .cookie-visual {
-    padding-bottom: 0;
-  }
-
-  .cookie-visual img {
-    max-width: 220px;
-  }
-
-  .cookie-main-actions,
-  .cookie-settings-actions {
-    flex-direction: column;
-    align-items: stretch;
-  }
-}
     @media (max-width: 860px) {
   .portal-fan {
     min-height: 930px !important;
@@ -2641,24 +2560,25 @@ document.addEventListener("DOMContentLoaded", () => {
         <div class="film-strip film-right"></div>
 
         <p class="hero-kicker">Video • Foto • Postprodukce • Sociální sítě</p>
+        <h1 class="hero-title" id="heroTitle" aria-label="VideoXpert">
+          Video<br>Xpert
+        </h1>
 <div class="hero-copy" id="heroCopy">
   <h2>VÁŠ PŘÍBĚH - NÁŠ OBJEKTIV</h2>
   <p>
     Každý projekt natáčíme tak, aby prezentoval a měl co říct. Ať už se jedná o maturitní ples, firemní prezentaci nebo videa na přání. 
   </p>
 </div>
-        <h1 class="hero-title" id="heroTitle">
-          Video<br>Xpert
-        </h1>
+
 
         <div class="device-scene" id="deviceScene" aria-label="Kamera, která při přejetí myší odkrývá foťák">
-         <img class="device-img camera-img" src="images/KLAPKA2.png" alt="VideoXpert klapka">
-<img class="device-img photo-img" src="images/VideoXpert fotak.png" alt="VideoXpert kamera">
+         <img class="device-img camera-img" src="/assets/images/klapka2.webp" alt="VideoXpert klapka" width="2048" height="2048" fetchpriority="high">
+<img class="device-img photo-img" src="/assets/images/videoxpert-fotak.webp" alt="VideoXpert kamera" width="2000" height="2000">
           <span class="reveal-light"></span>
         </div>
 
-        <img class="morph-logo" id="morphLogo" src="images/VideoXpert LOGO.png" alt="VideoXpert logo">
-<img class="morph-banner" id="morphBanner" src="images/videoxpert white.png" alt="VideoXpert – experti přes videa">
+        <img class="morph-logo" id="morphLogo" src="/assets/images/videoxpert-logo.webp" alt="VideoXpert logo" width="2560" height="2788">
+<img class="morph-banner" id="morphBanner" src="/assets/images/videoxpert-white.webp" alt="VideoXpert – experti přes videa" width="816" height="218">
 
         <div class="scroll-hint" id="scrollHint">Scroll</div>
       </div>
@@ -2666,14 +2586,14 @@ document.addEventListener("DOMContentLoaded", () => {
     <!-- CAREER EXPO 2026 -->
 <section class="career-expo-promo" id="careerExpoPromo" hidden>
   <button class="career-expo-banner" type="button">
-    <img src="images/CE26 ig.png" alt="Jsme součástí Career Expo 2026">
+    <img src="/assets/images/ce26-ig.webp" alt="Jsme součástí Career Expo 2026" width="1080" height="1350" loading="lazy" decoding="async">
     <span class="career-expo-hover">CLICK HERE</span>
   </button>
 </section>
 
 <div class="career-expo-lightbox" id="careerExpoLightbox" role="dialog" aria-modal="true" aria-label="Career Expo 2026" hidden>
   <button class="career-expo-close" type="button" aria-label="Zavřít">×</button>
-  <img src="images/CE26 ig.png" alt="Career Expo 2026 – celý banner">
+  <img src="/assets/images/ce26-ig.webp" alt="Career Expo 2026 – celý banner" width="1080" height="1350" loading="lazy" decoding="async">
 </div>
 <section class="info-section" id="onas">
   <div class="info-bubble">
@@ -2685,7 +2605,7 @@ document.addEventListener("DOMContentLoaded", () => {
   A pokud váš projekt nezapadá ani do jedné z nich, postará se o něj přímo VideoXpert.
 </p>
 
-<img class="onas-banner" src="images/bannery.jpeg" alt="VideoXpert – Brandárna, Memoria a Klipáci">
+<img class="onas-banner" src="images/bannery.jpeg" alt="VideoXpert – Brandárna, Memoria a Klipáci" width="1600" height="609" loading="lazy" decoding="async">
   </div>
 </section>
     <section class="info-section" id="cena">
@@ -2706,15 +2626,15 @@ document.addEventListener("DOMContentLoaded", () => {
      <div class="portal-fan" aria-label="Rozcestník služeb VideoXpert">
 
   <a class="portal-card" href="maturitni-plesy/" target="_blank" rel="noopener noreferrer" aria-label="Otevřít Memoria v nové záložce">
-    <img class="portal-banner" src="images/Memoria karta.png" alt="Memoria">
+    <img class="portal-banner" src="/assets/images/memoria-karta.webp" alt="Memoria" width="2172" height="724" loading="lazy" decoding="async">
   </a>
 
   <a class="portal-card" href="firemni-videa/" target="_blank" rel="noopener noreferrer" aria-label="Otevřít Brandárna v nové záložce">
-    <img class="portal-banner" src="images/Brandárna karta.png" alt="Brandárna">
+    <img class="portal-banner" src="/assets/images/brandarna-karta.webp" alt="Brandárna" width="2172" height="724" loading="lazy" decoding="async">
   </a>
 
   <a class="portal-card" href="klipaci/" target="_blank" rel="noopener noreferrer" aria-label="Otevřít Klipáci v nové záložce">
-    <img class="portal-banner" src="images/Klipáci karta.png" alt="Klipáci">
+    <img class="portal-banner" src="/assets/images/klipaci-karta.webp" alt="Klipáci" width="1721" height="652" loading="lazy" decoding="async">
   </a>
 
 </div>
@@ -2737,23 +2657,23 @@ document.addEventListener("DOMContentLoaded", () => {
       <div class="project-track" id="projectTrack">
 
         <button class="project-thumb" type="button">
-          <img src="images/120-DSC01409.jpg" alt="Projekt 1">
+          <img src="images/120-DSC01409.jpg" alt="Projekt 1" width="1600" height="1067" loading="lazy" decoding="async">
         </button>
 
         <button class="project-thumb" type="button">
-          <img src="images/c1.00_00_52_17.Still134.jpg" alt="Projekt 2">
+          <img src="images/c1.00_00_52_17.Still134.jpg" alt="Projekt 2" width="1600" height="900" loading="lazy" decoding="async">
         </button>
 
         <button class="project-thumb" type="button">
-          <img src="images/DSC00207.JPG" alt="Projekt 3">
+          <img src="images/DSC00207.JPG" alt="Projekt 3" width="1600" height="1066" loading="lazy" decoding="async">
         </button>
 
         <button class="project-thumb" type="button">
-          <img src="images/IMG_6887.jpg" alt="Projekt 5">
+          <img src="images/IMG_6887.jpg" alt="Projekt 5" width="1600" height="1066" loading="lazy" decoding="async">
         </button>
 
         <button class="project-thumb" type="button">
-          <img src="images/DSC00249.JPG" alt="Projekt 4">
+          <img src="images/DSC00249.JPG" alt="Projekt 4" width="1600" height="1067" loading="lazy" decoding="async">
         </button>
 
       </div>
@@ -2788,31 +2708,31 @@ document.addEventListener("DOMContentLoaded", () => {
       <div class="partners-track" id="partnersTrack">
 
         <a href="https://www.telocvicny.cz/" target="_blank" rel="noopener noreferrer">
-          <img src="images/logaPodlahy_MAN-gigapixel-cgi-4x.png" alt="Podlahy MAN">
+          <img src="/assets/images/logapodlahy-man-gigapixel-cgi-4x.webp" alt="Podlahy MAN" width="452" height="304" loading="lazy" decoding="async">
         </a>
 
         <a href="https://narezakfest.com/" target="_blank" rel="noopener noreferrer">
-          <img src="images/Logo Nářezák.png" alt="Nářezákfest">
+          <img src="/assets/images/logo-narezak.webp" alt="Nářezákfest" width="3072" height="2048" loading="lazy" decoding="async">
         </a>
 
         <a href="https://hefty74.cz/hefty74-cup/" target="_blank" rel="noopener noreferrer">
-          <img src="images/logaHefty74_Cup-gigapixel-cgi-4x.png" alt="Hefty74 Cup">
+          <img src="/assets/images/logahefty74-cup-gigapixel-cgi-4x.webp" alt="Hefty74 Cup" width="768" height="304" loading="lazy" decoding="async">
         </a>
 
         <a href="https://kapelastinovlas.cz/" target="_blank" rel="noopener noreferrer">
-          <img src="images/Stinovlas.png" alt="Stínovlas">
+          <img src="/assets/images/stinovlas.webp" alt="Stínovlas" width="1200" height="630" loading="lazy" decoding="async">
         </a>
 
         <a href="https://www.floorcolor.cz/" target="_blank" rel="noopener noreferrer">
-          <img src="images/logaFloorcolor-gigapixel-cgi-4x.png" alt="Floorcolor">
+          <img src="/assets/images/logafloorcolor-gigapixel-cgi-4x.webp" alt="Floorcolor" width="960" height="212" loading="lazy" decoding="async">
         </a>
 
         <a href="https://www.almacareer.com/cz" target="_blank" rel="noopener noreferrer">
-          <img src="images/logaAlma_Career-gigapixel-cgi-4x.png" alt="Alma Career">
+          <img src="/assets/images/logaalma-career-gigapixel-cgi-4x.webp" alt="Alma Career" width="496" height="184" loading="lazy" decoding="async">
         </a>
 
         <a href="https://careerexpo.cz/" target="_blank" rel="noopener noreferrer">
-          <img src="images/logo-brno-2026.png" alt="Career Expo">
+          <img src="/assets/images/logo-brno-2026.webp" alt="Career Expo" width="1207" height="679" loading="lazy" decoding="async">
         </a>
 
       </div>
@@ -2836,77 +2756,28 @@ document.addEventListener("DOMContentLoaded", () => {
   </div>
 
   <div class="contact-item social-icons">
-    <a href="https://www.facebook.com/profile.php?id=61591622726263&locale=cs_CZ" target="_blank" aria-label="Facebook">
-      <img src="images/fb.png" alt="Facebook">
+    <a href="https://www.facebook.com/profile.php?id=61591622726263&locale=cs_CZ" target="_blank" rel="noopener noreferrer" aria-label="Facebook">
+      <img src="/assets/images/fb.webp" alt="Facebook" width="960" height="961" loading="lazy" decoding="async">
     </a>
 
-    <a href="https://www.instagram.com/videoxpert.cz/" target="_blank" aria-label="Instagram">
-      <img src="images/ig.png" alt="Instagram">
+    <a href="https://www.instagram.com/videoxpert.cz/" target="_blank" rel="noopener noreferrer" aria-label="Instagram">
+      <img src="/assets/images/ig.webp" alt="Instagram" width="3000" height="3000" loading="lazy" decoding="async">
     </a>
 
-    <a href="https://www.youtube.com/@videoxpert_cz" target="_blank" aria-label="YouTube">
-      <img src="images/youtube.png" alt="YouTube">
+    <a href="https://www.youtube.com/@videoxpert_cz" target="_blank" rel="noopener noreferrer" aria-label="YouTube">
+      <img src="/assets/images/youtube.webp" alt="YouTube" width="740" height="740" loading="lazy" decoding="async">
     </a>
   </div>
 </section>
 
 <footer class="site-footer">
   <p>© 2026 VideoXpert Group. Všechna práva vyhrazena.</p>
+<div class="vx-privacy-links">
+    <a href="/ochrana-soukromi-VIDEOXPERT.html">Ochrana soukromí</a>
+    <button type="button" data-vx-cookie-settings hidden>Nastavení cookies</button>
+  </div>
 </footer>
   </main>
-  <div class="cookie-overlay" id="cookieOverlay">
-  <div class="cookie-box" role="dialog" aria-modal="true" aria-label="Nastavení cookies">
-    <div class="cookie-visual">
-      <img src="images/KLAPKA2.png" alt="Filmová klapka">
-    </div>
-
-    <div class="cookie-content">
-      <h2>Klapka, kamera aaa AKCE!</h2>
-      <p>
-        Než se pustíme do akce, prosíme o potvrzení cookies. Zpracováváme osobní údaje
-        pro personalizaci reklam. Děkujeme.
-      </p>
-
-      <div class="cookie-main-actions">
-        <button class="cookie-link" id="cookieSettingsBtn">Detailnější nastavení cookies</button>
-        <button class="cookie-accept" id="cookieAcceptAll">PŘIJMOUT VŠE</button>
-      </div>
-
-      <div class="cookie-settings" id="cookieSettings">
-        <h3>Nastavení</h3>
-
-        <label class="cookie-toggle">
-          <span>
-            <strong>Nezbytné</strong>
-            <small>Nutné pro správné fungování webu.</small>
-          </span>
-          <input type="checkbox" checked disabled>
-        </label>
-
-        <label class="cookie-toggle">
-          <span>
-            <strong>Analytické</strong>
-            <small>Pomáhají nám měřit výkon webu.</small>
-          </span>
-          <input type="checkbox" id="analyticsCookies">
-        </label>
-
-        <label class="cookie-toggle">
-          <span>
-            <strong>Marketingové</strong>
-            <small>Umožní retargeting a měření reklam, například přes Facebook / Meta Pixel.</small>
-          </span>
-          <input type="checkbox" id="marketingCookies">
-        </label>
-
-        <div class="cookie-settings-actions">
-          <button id="cookieRejectAll">ZAKÁZAT VŠE</button>
-          <button id="cookieSaveSelected">PŘIJMOUT VYBRANÉ</button>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
 
   <script>
     const hero = document.querySelector(".hero");
@@ -3593,82 +3464,33 @@ if (activeRipples >= 2) return;
   setInterval(checkDate, 60000);
 })();
 
-    const META_PIXEL_ID = "SEM_DEJ_PIXEL_ID";
-
-function loadMetaPixel() {
-  if (!META_PIXEL_ID || META_PIXEL_ID === "SEM_DEJ_PIXEL_ID") return;
-  if (window.fbq) return;
-
-  !function(f,b,e,v,n,t,s){
-    if(f.fbq)return;n=f.fbq=function(){n.callMethod?
-    n.callMethod.apply(n,arguments):n.queue.push(arguments)};
-    if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version="2.0";
-    n.queue=[];t=b.createElement(e);t.async=!0;
-    t.src=v;s=b.getElementsByTagName(e)[0];
-    s.parentNode.insertBefore(t,s)
-  }(window, document,"script","https://connect.facebook.net/en_US/fbevents.js");
-
-  fbq("init", META_PIXEL_ID);
-  fbq("track", "PageView");
-}
-
-function saveCookieConsent(settings) {
-  localStorage.setItem("vx_cookie_consent", JSON.stringify(settings));
-
-  if (settings.marketing) {
-    loadMetaPixel();
-  }
-}
-
-const cookieOverlay = document.getElementById("cookieOverlay");
-const cookieSettings = document.getElementById("cookieSettings");
-const cookieSettingsBtn = document.getElementById("cookieSettingsBtn");
-const cookieAcceptAll = document.getElementById("cookieAcceptAll");
-const cookieRejectAll = document.getElementById("cookieRejectAll");
-const cookieSaveSelected = document.getElementById("cookieSaveSelected");
-const analyticsCookies = document.getElementById("analyticsCookies");
-const marketingCookies = document.getElementById("marketingCookies");
-
-const existingConsent = localStorage.getItem("vx_cookie_consent");
-
-if (!existingConsent) {
-  cookieOverlay.classList.add("is-visible");
-} else {
-  const saved = JSON.parse(existingConsent);
-  if (saved.marketing) loadMetaPixel();
-}
-
-cookieSettingsBtn.addEventListener("click", () => {
-  cookieSettings.classList.toggle("is-open");
-});
-
-cookieAcceptAll.addEventListener("click", () => {
-  saveCookieConsent({
-    necessary: true,
-    analytics: true,
-    marketing: true
-  });
-  cookieOverlay.classList.remove("is-visible");
-});
-
-cookieRejectAll.addEventListener("click", () => {
-  saveCookieConsent({
-    necessary: true,
-    analytics: false,
-    marketing: false
-  });
-  cookieOverlay.classList.remove("is-visible");
-});
-
-cookieSaveSelected.addEventListener("click", () => {
-  saveCookieConsent({
-    necessary: true,
-    analytics: analyticsCookies.checked,
-    marketing: marketingCookies.checked
-  });
-  cookieOverlay.classList.remove("is-visible");
-});
   </script>
 
+<div class="cookie-overlay" id="cookieOverlay" hidden>
+  <div class="cookie-box" role="dialog" aria-modal="true" aria-labelledby="vxCookieTitle" aria-describedby="vxCookieDescription" tabindex="-1">
+    <button type="button" class="cookie-close" id="cookieClose" aria-label="Zavřít nastavení bez změny souhlasu">×</button>
+    <div class="cookie-visual">
+      <img class="cookie-clapper" src="/assets/images/klapka2.webp" alt="" width="2048" height="2048" loading="lazy" decoding="async">
+      <img class="cookie-brand" src="/images/videoxpert black.png" alt="VideoXpert" width="816" height="218" loading="lazy" decoding="async">
+    </div>
+    <div class="cookie-content">
+      <h2 id="vxCookieTitle">Klapka, kamera aaa AKCE!</h2>
+      <p id="vxCookieDescription">Vyberte si, co nám dovolíte. Nezbytné úložiště pamatuje vaši volbu. YouTube se připojí až při přehrání videa s vaším svolením.<span data-vx-analytics-only hidden> Volitelná analytika pomáhá vyhodnotit návštěvnost.</span> Odmítnutí nebrání prohlížení webu.</p>
+      <div class="cookie-main-actions">
+        <button type="button" id="cookieAcceptAll">Přijmout vše</button>
+        <button type="button" id="cookieRejectAll">Odmítnout vše</button>
+        <button type="button" id="cookieSettingsBtn" aria-controls="cookieSettings" aria-expanded="false">Nastavení</button>
+      </div>
+      <p><a href="/ochrana-soukromi-VIDEOXPERT.html">Ochrana soukromí a podrobnosti o cookies</a></p>
+      <div class="cookie-settings" id="cookieSettings" hidden>
+        <h3>Vaše nastavení</h3>
+        <label class="cookie-toggle"><span><strong>Nezbytné</strong><small>Uložení této volby na 180 dnů. Vždy zapnuto.</small></span><input type="checkbox" checked disabled></label>
+        <label class="cookie-toggle" data-vx-analytics-only hidden><span><strong>Analytika</strong><small>Google Analytics 4: návštěvnost a kliknutí na kontakty. Bez reklamního měření.</small></span><input type="checkbox" id="analyticsCookies"></label>
+        <label class="cookie-toggle"><span><strong>Videa YouTube</strong><small>Při přehrání se předá IP adresa a údaje o zařízení Googlu. YouTube může používat cookies a jiné úložiště. Tato volba nezapíná analytiku.</small></span><input type="checkbox" id="youtubeCookies"></label>
+        <button type="button" class="cookie-save" id="cookieSaveSelected">Uložit výběr</button>
+      </div>
+    </div>
+  </div>
+</div>
 </body>
 </html>

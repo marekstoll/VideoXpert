@@ -1,0 +1,47 @@
+/* Společná volba soukromí; původní vzhled webu a jeho animace zůstávají v HTML. */
+.cookie-overlay[hidden], .cookie-overlay [hidden], [data-vx-analytics-only][hidden],
+[data-vx-analytics-off][hidden], [data-vx-cookie-settings][hidden], .vx-video-play[hidden] { display:none !important; }
+.cookie-overlay { position:fixed; inset:0; z-index:99999; display:flex; align-items:center; justify-content:center; padding:24px; background:rgba(0,0,0,.72); backdrop-filter:blur(8px); font-family:Arial,Helvetica,sans-serif; }
+.cookie-overlay * { box-sizing:border-box; }
+.cookie-overlay .cookie-box { position:relative; width:min(940px,94vw); max-height:92vh; max-height:92dvh; overflow:auto; overscroll-behavior:contain; display:grid; grid-template-columns:32% 68%; background:radial-gradient(circle at 18% 28%,rgba(255,255,255,.55),transparent 26%),radial-gradient(circle at 88% 82%,rgba(0,0,0,.10),transparent 30%),linear-gradient(135deg,#d8d2c8 0%,#eee8dd 44%,#c9c2b8 100%); color:#111; border:1px solid rgba(255,255,255,.25); box-shadow:0 40px 120px rgba(0,0,0,.65); text-align:left; }
+.cookie-overlay .cookie-visual { display:flex; flex-direction:column; align-items:center; justify-content:center; gap:20px; padding:34px 22px; }
+.cookie-overlay .cookie-visual img { max-width:100%; height:auto; object-fit:contain; }
+.cookie-overlay .cookie-content { padding:48px 32px 36px; min-width:0; }
+.cookie-overlay h2 { margin:0 0 20px; color:#111; font-size:clamp(28px,3vw,40px); line-height:1.12; letter-spacing:-.025em; text-transform:none; font-weight:900; }
+.cookie-overlay p { margin:0 0 16px; color:#222; font-size:16px; line-height:1.6; }
+.cookie-overlay a { color:#111; text-decoration:underline; }
+.cookie-overlay .cookie-main-actions { display:flex; flex-wrap:wrap; gap:10px; margin:24px 0; }
+.cookie-overlay .cookie-main-actions button, .cookie-overlay .cookie-save { flex:1 1 130px; min-height:48px; padding:12px 14px; border:1px solid #111; background:#111; color:#fff; font:700 14px Arial,Helvetica,sans-serif; cursor:pointer; }
+.cookie-overlay .cookie-settings { margin-top:24px; padding-top:20px; border-top:1px solid #777; }
+.cookie-overlay h3 { margin:0 0 16px; font-size:22px; color:#111; }
+.cookie-overlay .cookie-toggle { display:flex; align-items:center; justify-content:space-between; gap:20px; padding:16px 0; border-bottom:1px solid #999; cursor:pointer; }
+.cookie-overlay .cookie-toggle strong { display:block; color:#111; font-size:17px; }
+.cookie-overlay .cookie-toggle small { display:block; margin-top:5px; font-size:14px; line-height:1.5; color:#333; }
+.cookie-overlay .cookie-toggle input { flex:0 0 24px; width:24px; height:24px; accent-color:#111; }
+.cookie-overlay .cookie-save { width:100%; margin-top:20px; }
+.cookie-overlay .cookie-close { position:absolute; top:10px; right:10px; width:36px; height:36px; border:1px solid #777; background:transparent; color:#111; font-size:25px; cursor:pointer; }
+.cookie-overlay :focus-visible { outline:3px solid #0001fc; outline-offset:4px; }
+.vx-privacy-links { display:flex; justify-content:center; align-items:center; flex-wrap:wrap; gap:12px 22px; margin-top:14px; letter-spacing:.04em; }
+.vx-privacy-links a,.vx-privacy-links button { color:#c8c8c8; font:inherit; font-size:12px; text-transform:none; text-decoration:underline; }
+.vx-privacy-links button { border:0; padding:5px 0; background:none; cursor:pointer; }
+.vx-privacy-links :focus-visible,.vx-video-play:focus-visible { outline:3px solid #7777ff; outline-offset:4px; }
+.video-box[data-youtube-id] { isolation:isolate; }
+.vx-video-play { display:flex; position:absolute; inset:0; width:100%; height:100%; align-items:center; justify-content:center; flex-direction:column; gap:8px; border:0; padding:12px; background:#111; color:#fff; cursor:pointer; font-family:Arial,Helvetica,sans-serif; }
+.vx-video-play img { position:absolute; inset:0; width:100%; height:100%; object-fit:cover; z-index:-2; }
+.vx-video-play::before { content:""; position:absolute; inset:0; background:linear-gradient(180deg,rgba(0,0,0,.2),rgba(0,0,0,.9)); z-index:-1; }
+.vx-video-play .vx-play-icon { display:grid; place-items:center; width:52px; height:38px; border-radius:10px; background:#e00000; font-size:22px; line-height:1; }
+.vx-video-play .vx-video-action { font-size:15px; font-weight:700; line-height:1.25; }
+.vx-video-play .vx-video-notice { max-width:420px; font-size:12px; line-height:1.35; }
+.video-box[data-youtube-id] iframe { position:absolute; inset:0; width:100%; height:100%; border:0; }
+.vx-video-noscript { position:absolute; inset:0; display:flex; align-items:center; justify-content:center; background:#111; color:white; z-index:3; padding:20px; }
+@media(max-width:760px) {
+  .cookie-overlay { padding:12px; }
+  .cookie-overlay .cookie-box { width:100%; grid-template-columns:1fr; }
+  .cookie-overlay .cookie-visual { padding:24px 24px 0; }
+  .cookie-overlay .cookie-visual .cookie-clapper { display:none; }
+  .cookie-overlay .cookie-visual .cookie-brand { max-width:180px; }
+  .cookie-overlay .cookie-content { padding:28px 24px; }
+  .cookie-overlay .cookie-main-actions { flex-direction:column; }
+  .cookie-overlay .cookie-main-actions button { flex:auto; }
+}
+@media(max-width:420px) { .vx-video-play { gap:5px; padding:8px; } .vx-video-play .vx-video-notice { font-size:11px; } }
