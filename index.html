@@ -2705,15 +2705,15 @@ document.addEventListener("DOMContentLoaded", () => {
 
      <div class="portal-fan" aria-label="Rozcestník služeb VideoXpert">
 
-  <a class="portal-card" href="maturitni-plesy/" aria-label="Otevřít Memoria">
+  <a class="portal-card" href="maturitni-plesy/" target="_blank" rel="noopener noreferrer" aria-label="Otevřít Memoria v nové záložce">
     <img class="portal-banner" src="images/Memoria karta.png" alt="Memoria">
   </a>
 
-  <a class="portal-card" href="firemni-videa/" aria-label="Otevřít Brandárna">
+  <a class="portal-card" href="firemni-videa/" target="_blank" rel="noopener noreferrer" aria-label="Otevřít Brandárna v nové záložce">
     <img class="portal-banner" src="images/Brandárna karta.png" alt="Brandárna">
   </a>
 
-  <a class="portal-card" href="klipaci/" aria-label="Otevřít Klipáci">
+  <a class="portal-card" href="klipaci/" target="_blank" rel="noopener noreferrer" aria-label="Otevřít Klipáci v nové záložce">
     <img class="portal-banner" src="images/Klipáci karta.png" alt="Klipáci">
   </a>
 
@@ -3070,7 +3070,7 @@ portalCards.forEach((card) => {
     if (!window.matchMedia("(max-width: 860px)").matches) return;
 
     if (!card.classList.contains("is-mobile-open")) {
-      event.preventDefault();
+      if (card.target !== "_blank") event.preventDefault();
       portalCards.forEach((item) => item.classList.remove("is-mobile-open"));
       card.classList.add("is-mobile-open");
     }
