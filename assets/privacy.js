@@ -20,6 +20,37 @@
   const analytics = core.createAnalytics(window, document, config, current);
   function mediaAllowed() { const s = current(); return !!s && s.youtube; }
 
+  function updateThumbnail(box, button, permitted) {
+    const image = button.querySelector("img"), id = box.dataset.youtubeId;
+    if (!image || !/^[A-Za-z0-9_-]{11}$/.test(id)) return;
+    if (!image.dataset.vxLocalPoster) image.dataset.vxLocalPoster = image.getAttribute("src");
+    const mode = permitted ? "youtube" : "local";
+    if (image.dataset.vxPosterMode === mode) return;
+    image.dataset.vxPosterMode = mode;
+    image.onload = null;
+    image.onerror = null;
+    if (!permitted) {
+      if (image.getAttribute("src") !== image.dataset.vxLocalPoster) image.src = image.dataset.vxLocalPoster;
+      return;
+    }
+    let fallbackUsed = false;
+    function fallback() {
+      if (!mediaAllowed() || image.dataset.vxPosterMode !== "youtube") return;
+      if (!fallbackUsed) {
+        fallbackUsed = true;
+        image.src = "https://i.ytimg.com/vi/" + id + "/hqdefault.jpg";
+      } else {
+        image.onload = null;
+        image.onerror = null;
+        image.src = image.dataset.vxLocalPoster;
+      }
+    }
+    image.referrerPolicy = "no-referrer";
+    image.onerror = fallback;
+    image.onload = function () { if (image.naturalWidth <= 120) fallback(); };
+    image.src = "https://i.ytimg.com/vi/" + id + "/maxresdefault.jpg";
+  }
+
   function updateMedia() {
     const permitted = mediaAllowed();
     document.querySelectorAll("[data-youtube-id]").forEach(box => {
@@ -29,10 +60,11 @@
         if (button) button.hidden = false;
       }
       if (!button) return;
+      updateThumbnail(box, button, permitted);
       button.setAttribute("aria-label", (permitted ? "Přehrát: " : "Povolit YouTube a přehrát: ") + box.dataset.videoTitle);
       button.querySelector(".vx-video-action").textContent = permitted ? "Přehrát video" : "Povolit YouTube a přehrát";
       button.querySelector(".vx-video-notice").textContent = permitted ?
-        "Video se načte z YouTube. Souhlas lze změnit v patičce." :
+        "Náhled se načítá z YouTube. Souhlas lze změnit v patičce." :
         "Kliknutím povolíte spojení s Googlem, předání IP adresy a použití úložiště YouTube. Analytiku tím nepovolujete.";
     });
   }
