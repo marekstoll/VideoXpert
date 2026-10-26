@@ -1,9 +1,9 @@
-/* GA4 zapněte až po doplnění ID VideoXpertu a kontrole účtu podle předávacího návodu. */
+/* GA4 pro VideoXpert; měření se načítá pouze po novém analytickém souhlasu. */
 window.VX_CONFIG = Object.freeze({
-  consentVersion: 2,
+  consentVersion: 3,
   consentDays: 180,
-  analyticsEnabled: false,
-  measurementId: "",
+  analyticsEnabled: true,
+  measurementId: "G-32WM06HF54",
   analyticsRetentionMonths: 2,
   pages: {
     "/": {url: "https://videoxpert.cz/", title: "VideoXpert | Video, foto a postprodukce"},
