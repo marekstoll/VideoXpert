@@ -7,7 +7,7 @@
   const dialog = overlay.querySelector('[role="dialog"]');
   const settings = document.getElementById("cookieSettings");
   const analyticsInput = document.getElementById("analyticsCookies");
-  const youtubeInput = document.getElementById("youtubeCookies");
+  const mediaConsent = document.getElementById("vxMediaConsent");
   const analyticsOn = core.analyticsAvailable(config);
   let state = null, expiryTimer = null, lastFocus = null, oldOverflow = "", inertItems = [];
   function read() {
@@ -20,8 +20,36 @@
   const analytics = core.createAnalytics(window, document, config, current);
   function mediaAllowed() { const s = current(); return !!s && s.youtube; }
 
+  function updateThumbnail(box, button) {
+    const image = button.querySelector("img"), id = box.dataset.youtubeId;
+    if (!image || !/^[A-Za-z0-9_-]{11}$/.test(id)) return;
+    if (!image.dataset.vxLocalPoster) image.dataset.vxLocalPoster = image.getAttribute("src");
+    if (image.dataset.vxPosterReady === "true") return;
+    image.dataset.vxPosterReady = "true";
+    image.onload = null;
+    image.onerror = null;
+    let fallbackUsed = false;
+    function fallback() {
+      if (!fallbackUsed) {
+        fallbackUsed = true;
+        image.src = "https://i.ytimg.com/vi/" + id + "/hqdefault.jpg";
+      } else {
+        image.onload = null;
+        image.onerror = null;
+        image.src = image.dataset.vxLocalPoster;
+      }
+    }
+    image.referrerPolicy = "no-referrer";
+    image.onerror = fallback;
+    image.onload = function () { if (image.naturalWidth <= 120) fallback(); };
+    const source = "https://i.ytimg.com/vi/" + id + "/maxresdefault.jpg";
+    if (image.getAttribute("src") !== source) image.src = source;
+    else if (image.complete && image.naturalWidth <= 120) fallback();
+  }
+
   function updateMedia() {
     const permitted = mediaAllowed();
+    if (mediaConsent) mediaConsent.hidden = !permitted;
     document.querySelectorAll("[data-youtube-id]").forEach(box => {
       const button = box.querySelector(".vx-video-play");
       if (!permitted) {
@@ -29,11 +57,12 @@
         if (button) button.hidden = false;
       }
       if (!button) return;
-      button.setAttribute("aria-label", (permitted ? "Přehrát: " : "Povolit YouTube a přehrát: ") + box.dataset.videoTitle);
-      button.querySelector(".vx-video-action").textContent = permitted ? "Přehrát video" : "Povolit YouTube a přehrát";
+      updateThumbnail(box, button);
+      button.setAttribute("aria-label", "Přehrát video: " + box.dataset.videoTitle);
+      button.querySelector(".vx-video-action").textContent = "Přehrát video";
       button.querySelector(".vx-video-notice").textContent = permitted ?
-        "Video se načte z YouTube. Souhlas lze změnit v patičce." :
-        "Kliknutím povolíte spojení s Googlem, předání IP adresy a použití úložiště YouTube. Analytiku tím nepovolujete.";
+        "Přehrávač YouTube se načte po kliknutí. Povolení lze odvolat v nastavení cookies." :
+        "Kliknutím povolíte přehrávač YouTube, předání IP adresy Googlu a použití jeho úložiště. Analytiku tím nepovolujete.";
     });
   }
   function armExpiry() {
@@ -50,8 +79,13 @@
     }, Math.min(s.expiresAt - Date.now() + 1, 2147483000));
   }
   function apply() { analytics.sync(); updateMedia(); armExpiry(); }
-  function save(choices) {
+  function save(choices, preserveExpiry) {
+    const previous = current();
     state = core.makeConsent(choices, config, Date.now());
+    if (preserveExpiry && previous) {
+      state.createdAt = previous.createdAt;
+      state.expiresAt = previous.expiresAt;
+    }
     try { localStorage.setItem(core.STORAGE_KEY, JSON.stringify(state)); } catch (_) {}
     apply();
   }
@@ -66,7 +100,7 @@
     }
     const s = current();
     analyticsInput.checked = !!s && s.analytics && analyticsOn;
-    youtubeInput.checked = !!s && s.youtube;
+    if (mediaConsent) mediaConsent.hidden = !mediaAllowed();
     settings.hidden = !details;
     document.getElementById("cookieSettingsBtn").setAttribute("aria-expanded", String(!!details));
     overlay.hidden = false;
@@ -83,13 +117,17 @@
     if (lastFocus && lastFocus.isConnected && typeof lastFocus.focus === "function") lastFocus.focus({preventScroll: true});
   }
   document.getElementById("cookieAcceptAll").addEventListener("click", function () {
-    save({analytics: analyticsOn, youtube: true}); hide();
+    save({analytics: analyticsOn, youtube: mediaAllowed()}); hide();
   });
   document.getElementById("cookieRejectAll").addEventListener("click", function () {
     save({analytics: false, youtube: false}); hide();
   });
   document.getElementById("cookieSaveSelected").addEventListener("click", function () {
-    save({analytics: analyticsInput.checked, youtube: youtubeInput.checked}); hide();
+    save({analytics: analyticsInput.checked, youtube: mediaAllowed()}); hide();
+  });
+  document.getElementById("cookieRevokeMedia").addEventListener("click", function () {
+    save({analytics: !!current() && current().analytics, youtube: false}, true);
+    document.getElementById("cookieSaveSelected").focus({preventScroll: true});
   });
   document.getElementById("cookieSettingsBtn").addEventListener("click", function () {
     settings.hidden = !settings.hidden;
@@ -126,7 +164,7 @@
     button.addEventListener("click", function () {
       const id = box.dataset.youtubeId;
       if (!/^[A-Za-z0-9_-]{11}$/.test(id) || box.querySelector("iframe")) return;
-      if (!mediaAllowed()) save({analytics: !!current() && current().analytics, youtube: true});
+      if (!mediaAllowed()) save({analytics: !!current() && current().analytics, youtube: true}, true);
       const frame = document.createElement("iframe");
       frame.title = box.dataset.videoTitle;
       frame.allow = "autoplay; encrypted-media; picture-in-picture; fullscreen";

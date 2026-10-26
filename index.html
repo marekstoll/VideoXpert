@@ -29,7 +29,7 @@
   <link rel="stylesheet" href="/assets/privacy.css?v=20261024-thumbnails">
   <script src="/assets/site-config.js" defer></script>
   <script src="/assets/privacy-core.js" defer></script>
-  <script src="/assets/privacy.js?v=20261024-thumbnails" defer></script>
+  <script src="/assets/privacy.js?v=20261026-previews" defer></script>
   <script type="application/ld+json">
 {
   "@context": "https://schema.org",
@@ -3475,7 +3475,7 @@ if (activeRipples >= 2) return;
     </div>
     <div class="cookie-content">
       <h2 id="vxCookieTitle">Klapka, kamera aaa AKCE!</h2>
-      <p id="vxCookieDescription">Vyberte si, co nám dovolíte. Nezbytné úložiště pamatuje vaši volbu. Po povolení YouTube se načtou jeho náhledy; přehrávač až po kliknutí na video.<span data-vx-analytics-only hidden> Volitelná analytika pomáhá vyhodnotit návštěvnost.</span> Odmítnutí nebrání prohlížení webu.</p>
+      <p id="vxCookieDescription">Nezbytné úložiště pamatuje vaši volbu pro celý web.<span data-vx-analytics-only hidden> Volitelná analytika nám pomáhá vyhodnotit návštěvnost a zájem o naše služby.</span> Náhledy videí z YouTube se zobrazují i po odmítnutí. Přehrávač povolíte kliknutím na video.</p>
       <div class="cookie-main-actions">
         <button type="button" id="cookieAcceptAll">Přijmout vše</button>
         <button type="button" id="cookieRejectAll">Odmítnout vše</button>
@@ -3486,7 +3486,10 @@ if (activeRipples >= 2) return;
         <h3>Vaše nastavení</h3>
         <label class="cookie-toggle"><span><strong>Nezbytné</strong><small>Uložení této volby na 180 dnů. Vždy zapnuto.</small></span><input type="checkbox" checked disabled></label>
         <label class="cookie-toggle" data-vx-analytics-only hidden><span><strong>Analytika</strong><small>Google Analytics 4: návštěvnost a kliknutí na kontakty. Bez reklamního měření.</small></span><input type="checkbox" id="analyticsCookies"></label>
-        <label class="cookie-toggle"><span><strong>Videa YouTube</strong><small>Po povolení se načtou náhledy z YouTube. Načtení náhledů a přehrávače předá IP adresu a údaje o zařízení Googlu. Přehrávač může používat cookies a jiné úložiště. Tato volba nezapíná analytiku.</small></span><input type="checkbox" id="youtubeCookies"></label>
+        <div id="vxMediaConsent" hidden>
+          <p>Přehrávače YouTube máte povolené. Toto povolení je nezávislé na analytice.</p>
+          <button type="button" class="cookie-save" id="cookieRevokeMedia">Odvolat povolení přehrávačů YouTube</button>
+        </div>
         <button type="button" class="cookie-save" id="cookieSaveSelected">Uložit výběr</button>
       </div>
     </div>
