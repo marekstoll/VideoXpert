@@ -2536,7 +2536,7 @@ document.addEventListener("DOMContentLoaded", () => {
   position: relative;
   z-index: 4;
   width: 100%;
-  padding: clamp(64px, 9vw, 125px) 5vw clamp(60px, 8vw, 110px);
+  padding: clamp(28px, 4vw, 50px) 5vw clamp(60px, 8vw, 110px);
   background: #030303;
 }
 .vx-season-gallery-inner { width: min(1120px, 100%); margin: 0 auto; }
@@ -2544,10 +2544,10 @@ document.addEventListener("DOMContentLoaded", () => {
   display: block;
   width: 100%;
   padding: 0;
-  border: 1px solid rgba(255,255,255,.16);
-  border-radius: 22px;
+  border: 0;
+  border-radius: 0;
   overflow: hidden;
-  background: #080808;
+  background: transparent;
   cursor: zoom-in;
 }
 .vx-season-feature img {
@@ -2616,8 +2616,8 @@ document.addEventListener("DOMContentLoaded", () => {
 .vx-season-prev { left: 13px; top: 50%; transform: translateY(-50%); }
 .vx-season-next { right: 13px; top: 50%; transform: translateY(-50%); }
 @media (max-width: 600px) {
-  .vx-season-gallery { padding: 45px 5vw 45px; }
-  .vx-season-feature { border-radius: 14px; }
+  .vx-season-gallery { padding: 24px 5vw 45px; }
+  .vx-season-feature { border-radius: 0; }
   .vx-season-thumbs { grid-template-columns: repeat(2,minmax(0,1fr)); gap: 10px; margin-top: 12px; }
   .vx-season-thumb { border-radius: 10px; }
   .vx-season-lightbox { padding: 66px 38px; }
@@ -2687,16 +2687,16 @@ document.addEventListener("DOMContentLoaded", () => {
     </button>
     <div class="vx-season-thumbs" aria-label="Další fotografie">
       <button class="vx-season-thumb" type="button" data-vx-photo-index="1" aria-label="Zvětšit fotografii 2">
-        <img src="/images/DSC00067.jpg" alt="Fotografie 2" loading="lazy" decoding="async">
+        <img src="/DSC00067-web.jpg" alt="Fotografie 2" loading="lazy" decoding="async">
       </button>
       <button class="vx-season-thumb" type="button" data-vx-photo-index="2" aria-label="Zvětšit fotografii 3">
-        <img src="/images/DSC00122.jpg" alt="Fotografie 3" loading="lazy" decoding="async">
+        <img src="/DSC00122-web.jpg" alt="Fotografie 3" loading="lazy" decoding="async">
       </button>
       <button class="vx-season-thumb" type="button" data-vx-photo-index="3" aria-label="Zvětšit fotografii 4">
-        <img src="/images/Tmavší DSC09998.jpg" alt="Fotografie 4" loading="lazy" decoding="async">
+        <img src="/Tmavší_DSC09998-web.jpg" alt="Fotografie 4" loading="lazy" decoding="async">
       </button>
       <button class="vx-season-thumb" type="button" data-vx-photo-index="4" aria-label="Zvětšit fotografii 5">
-        <img src="/images/DSC00109.jpg" alt="Fotografie 5" loading="lazy" decoding="async">
+        <img src="/DSC00109-web.jpg" alt="Fotografie 5" loading="lazy" decoding="async">
       </button>
     </div>
   </div>
