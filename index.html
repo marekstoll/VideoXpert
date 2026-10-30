@@ -2536,6 +2536,8 @@ document.addEventListener("DOMContentLoaded", () => {
   position: relative;
   z-index: 4;
   width: 100%;
+  /* Cela docasna fotosekce bliz ke SCROLL; nic ostatniho se neposouva samostatne. */
+  margin-top: -190px;
   padding: clamp(28px, 4vw, 50px) 5vw clamp(60px, 8vw, 110px);
   background: #030303;
 }
@@ -2581,6 +2583,9 @@ document.addEventListener("DOMContentLoaded", () => {
   border-color: rgba(255,255,255,.8);
 }
 .vx-season-thumb img { width: 100%; height: 100%; display: block; object-fit: cover; }
+/* Prvni dva nahledy: vyrez vys, aby byly videt obliceje. */
+.vx-season-thumb:nth-child(1) img,
+.vx-season-thumb:nth-child(2) img { object-position: center 18%; }
 .vx-season-lightbox {
   position: fixed;
   z-index: 200000;
@@ -2616,7 +2621,7 @@ document.addEventListener("DOMContentLoaded", () => {
 .vx-season-prev { left: 13px; top: 50%; transform: translateY(-50%); }
 .vx-season-next { right: 13px; top: 50%; transform: translateY(-50%); }
 @media (max-width: 600px) {
-  .vx-season-gallery { padding: 24px 5vw 45px; }
+  .vx-season-gallery { margin-top: -95px; padding: 24px 5vw 45px; }
   .vx-season-feature { border-radius: 0; }
   .vx-season-thumbs { grid-template-columns: repeat(2,minmax(0,1fr)); gap: 10px; margin-top: 12px; }
   .vx-season-thumb { border-radius: 10px; }
