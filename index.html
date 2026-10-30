@@ -2529,6 +2529,102 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 });
 </script>
+<style>
+/* DOCASNA FOTOSEKCE VIDEOXPERT: skryta mimo 30.10.-29.11.2026. */
+.vx-season-gallery[hidden], .vx-season-lightbox[hidden] { display: none !important; }
+.vx-season-gallery {
+  position: relative;
+  z-index: 4;
+  width: 100%;
+  padding: clamp(64px, 9vw, 125px) 5vw clamp(60px, 8vw, 110px);
+  background: #030303;
+}
+.vx-season-gallery-inner { width: min(1120px, 100%); margin: 0 auto; }
+.vx-season-feature {
+  display: block;
+  width: 100%;
+  padding: 0;
+  border: 1px solid rgba(255,255,255,.16);
+  border-radius: 22px;
+  overflow: hidden;
+  background: #080808;
+  cursor: zoom-in;
+}
+.vx-season-feature img {
+  display: block;
+  width: 100%;
+  height: auto;
+  max-height: 74vh;
+  object-fit: contain;
+  margin: 0 auto;
+}
+.vx-season-thumbs {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: clamp(10px, 1.8vw, 18px);
+  margin-top: clamp(16px, 2.8vw, 28px);
+}
+.vx-season-thumb {
+  display: block;
+  min-width: 0;
+  aspect-ratio: 16 / 10;
+  padding: 0;
+  border: 1px solid rgba(255,255,255,.18);
+  border-radius: 14px;
+  background: #080808;
+  overflow: hidden;
+  cursor: zoom-in;
+  transition: border-color .2s ease;
+}
+.vx-season-thumb:hover, .vx-season-thumb:focus-visible,
+.vx-season-feature:hover, .vx-season-feature:focus-visible {
+  border-color: rgba(255,255,255,.8);
+}
+.vx-season-thumb img { width: 100%; height: 100%; display: block; object-fit: cover; }
+.vx-season-lightbox {
+  position: fixed;
+  z-index: 200000;
+  inset: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 60px 72px;
+  background: rgba(0,0,0,.97);
+}
+.vx-season-lightbox-image {
+  max-width: 100%;
+  max-height: calc(100dvh - 100px);
+  width: auto;
+  height: auto;
+  object-fit: contain;
+}
+.vx-season-lightbox button {
+  position: absolute;
+  z-index: 2;
+  display: grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  border: 1px solid rgba(255,255,255,.42);
+  border-radius: 50%;
+  background: rgba(18,18,18,.88);
+  color: #fff;
+  font: 26px/1 Arial,sans-serif;
+  cursor: pointer;
+}
+.vx-season-close { top: 17px; right: 20px; }
+.vx-season-prev { left: 13px; top: 50%; transform: translateY(-50%); }
+.vx-season-next { right: 13px; top: 50%; transform: translateY(-50%); }
+@media (max-width: 600px) {
+  .vx-season-gallery { padding: 45px 5vw 45px; }
+  .vx-season-feature { border-radius: 14px; }
+  .vx-season-thumbs { grid-template-columns: repeat(2,minmax(0,1fr)); gap: 10px; margin-top: 12px; }
+  .vx-season-thumb { border-radius: 10px; }
+  .vx-season-lightbox { padding: 66px 38px; }
+  .vx-season-lightbox button { width: 35px; height: 35px; font-size: 22px; }
+  .vx-season-prev { left: 2px; } .vx-season-next { right: 2px; }
+}
+</style>
 </head>
 
 <body>
@@ -2583,6 +2679,107 @@ document.addEventListener("DOMContentLoaded", () => {
         <div class="scroll-hint" id="scrollHint">Scroll</div>
       </div>
     </section>
+<!-- DOCASNA GALERIE: pouze od 30.10. do 29.11.2026 vcetne. -->
+<section class="vx-season-gallery" id="vxSeasonGallery" aria-label="Dočasná fotogalerie VideoXpert" hidden>
+  <div class="vx-season-gallery-inner">
+    <button class="vx-season-feature" type="button" data-vx-photo-index="0" aria-label="Zvětšit hlavní fotografii">
+      <img src="/images/DSC09948.jpg" alt="Hlavní fotografie" loading="lazy" decoding="async">
+    </button>
+    <div class="vx-season-thumbs" aria-label="Další fotografie">
+      <button class="vx-season-thumb" type="button" data-vx-photo-index="1" aria-label="Zvětšit fotografii 2">
+        <img src="/images/DSC00067.jpg" alt="Fotografie 2" loading="lazy" decoding="async">
+      </button>
+      <button class="vx-season-thumb" type="button" data-vx-photo-index="2" aria-label="Zvětšit fotografii 3">
+        <img src="/images/DSC00122.jpg" alt="Fotografie 3" loading="lazy" decoding="async">
+      </button>
+      <button class="vx-season-thumb" type="button" data-vx-photo-index="3" aria-label="Zvětšit fotografii 4">
+        <img src="/images/Tmavší DSC09998.jpg" alt="Fotografie 4" loading="lazy" decoding="async">
+      </button>
+      <button class="vx-season-thumb" type="button" data-vx-photo-index="4" aria-label="Zvětšit fotografii 5">
+        <img src="/images/DSC00109.jpg" alt="Fotografie 5" loading="lazy" decoding="async">
+      </button>
+    </div>
+  </div>
+</section>
+<div class="vx-season-lightbox" id="vxSeasonLightbox" role="dialog" aria-modal="true" aria-label="Zvětšená fotografie" hidden>
+  <button type="button" class="vx-season-close" aria-label="Zavřít fotografii">×</button>
+  <button type="button" class="vx-season-prev" aria-label="Předchozí fotografie">‹</button>
+  <img class="vx-season-lightbox-image" alt="Zvětšená fotografie">
+  <button type="button" class="vx-season-next" aria-label="Další fotografie">›</button>
+</div>
+<script>
+/* Docasna listopadova uprava: 30.11.2026 od 00:00 SEČ se vrati vychozi stav. */
+(() => {
+  const originalLogo = "/assets/images/videoxpert-logo.webp";
+  const temporaryLogo = "/images/logo halloween.png";
+  const startsAt = Date.parse("2026-10-30T00:00:00+01:00");
+  const endsAt = Date.parse("2026-11-30T00:00:00+01:00");
+  const logo = document.getElementById("morphLogo");
+  const gallery = document.getElementById("vxSeasonGallery");
+  const modal = document.getElementById("vxSeasonLightbox");
+  if (!logo || !gallery || !modal) return;
+
+  const photoUrls = Array.from(gallery.querySelectorAll("[data-vx-photo-index] img"),
+    img => img.getAttribute("src"));
+  const large = modal.querySelector(".vx-season-lightbox-image");
+  const closeButton = modal.querySelector(".vx-season-close");
+  let selected = 0;
+  let focusBefore = null;
+  let oldOverflow = "";
+  let temporaryLogoMissing = false;
+  logo.addEventListener("error", () => {
+    if (logo.getAttribute("src") === temporaryLogo) {
+      temporaryLogoMissing = true;
+      logo.setAttribute("src", originalLogo);
+    }
+  });
+
+  function close() {
+    if (modal.hidden) return;
+    modal.hidden = true;
+    document.body.style.overflow = oldOverflow;
+    if (focusBefore && focusBefore.isConnected) focusBefore.focus({preventScroll:true});
+  }
+  function showPhoto(index) {
+    selected = (index + photoUrls.length) % photoUrls.length;
+    large.src = photoUrls[selected];
+    large.alt = `Fotografie ${selected + 1} z ${photoUrls.length}`;
+  }
+  function open(index) {
+    if (gallery.hidden) return;
+    focusBefore = document.activeElement;
+    oldOverflow = document.body.style.overflow;
+    showPhoto(index);
+    modal.hidden = false;
+    document.body.style.overflow = "hidden";
+    closeButton.focus({preventScroll:true});
+  }
+  function refreshTemporaryContent() {
+    const now = Date.now();
+    const active = now >= startsAt && now < endsAt;
+    gallery.hidden = !active;
+    const correctSrc = active && !temporaryLogoMissing ? temporaryLogo : originalLogo;
+    if (logo.getAttribute("src") !== correctSrc) logo.setAttribute("src", correctSrc);
+    if (!active) close();
+  }
+  gallery.querySelectorAll("[data-vx-photo-index]").forEach(button => {
+    button.addEventListener("click", () => open(Number(button.dataset.vxPhotoIndex)));
+  });
+  closeButton.addEventListener("click", close);
+  modal.querySelector(".vx-season-prev").addEventListener("click", () => showPhoto(selected - 1));
+  modal.querySelector(".vx-season-next").addEventListener("click", () => showPhoto(selected + 1));
+  modal.addEventListener("click", event => { if (event.target === modal) close(); });
+  document.addEventListener("keydown", event => {
+    if (modal.hidden) return;
+    if (event.key === "Escape") { event.preventDefault(); close(); }
+    if (event.key === "ArrowRight") showPhoto(selected + 1);
+    if (event.key === "ArrowLeft") showPhoto(selected - 1);
+  });
+  refreshTemporaryContent();
+  setInterval(refreshTemporaryContent, 30000);
+  document.addEventListener("visibilitychange", () => { if (!document.hidden) refreshTemporaryContent(); });
+})();
+</script>
     <!-- CAREER EXPO 2026 -->
 <section class="career-expo-promo" id="careerExpoPromo" hidden>
   <button class="career-expo-banner" type="button">
@@ -3423,6 +3620,8 @@ if (activeRipples >= 2) return;
   }, { passive: true });
 })();
     
+
+
 /* CAREER EXPO 2026 */
 (() => {
   const promo = document.getElementById("careerExpoPromo");

@@ -21,30 +21,12 @@
   function mediaAllowed() { const s = current(); return !!s && s.youtube; }
 
   function updateThumbnail(box, button) {
-    const image = button.querySelector("img"), id = box.dataset.youtubeId;
-    if (!image || !/^[A-Za-z0-9_-]{11}$/.test(id)) return;
-    if (!image.dataset.vxLocalPoster) image.dataset.vxLocalPoster = image.getAttribute("src");
-    if (image.dataset.vxPosterReady === "true") return;
-    image.dataset.vxPosterReady = "true";
-    image.onload = null;
-    image.onerror = null;
-    let fallbackUsed = false;
-    function fallback() {
-      if (!fallbackUsed) {
-        fallbackUsed = true;
-        image.src = "https://i.ytimg.com/vi/" + id + "/hqdefault.jpg";
-      } else {
-        image.onload = null;
-        image.onerror = null;
-        image.src = image.dataset.vxLocalPoster;
-      }
+    const image = button.querySelector("img");
+    if (!image) return;
+    const localPoster = image.dataset.vxLocalPoster;
+    if (localPoster && image.getAttribute("src") !== localPoster) {
+      image.setAttribute("src", localPoster);
     }
-    image.referrerPolicy = "no-referrer";
-    image.onerror = fallback;
-    image.onload = function () { if (image.naturalWidth <= 120) fallback(); };
-    const source = "https://i.ytimg.com/vi/" + id + "/maxresdefault.jpg";
-    if (image.getAttribute("src") !== source) image.src = source;
-    else if (image.complete && image.naturalWidth <= 120) fallback();
   }
 
   function updateMedia() {

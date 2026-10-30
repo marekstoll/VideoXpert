@@ -1,0 +1,25 @@
+VIDEOXPERT – OPRAVY 30. 10. 2026
+
+Tento ZIP obsahuje POUZE zmenene soubory a 7 existujicich lokalnich obrazku nahledu videi.
+Rozbal ZIP a nahraj obsah do korenove slozky repozitare VideoXpert, tj. nahraz
+stejne pojmenovane soubory v tech samych podslozkach.
+Slozka images/ zamerne NENI v tomto balicku, takze se nove fotografie nezmeni.
+
+NOVE SOUBORY POTREBNE NA GITHUBU (uz je mas podle popisu nahrane v images/):
+images/logo halloween.png
+images/DSC09948.jpg
+images/DSC00067.jpg
+images/DSC00122.jpg
+images/Tmavší DSC09998.jpg
+images/DSC00109.jpg
+
+DOČASNÉ: Od 30. 10. 2026 do 29. 11. 2026 včetně se zobrazi Halloween logo
+a nova fotosekce mezi SCROLL a O NAS. Od 30. 11. 2026 00:00 CET
+se automaticky zobrazuje opet puvodni logo a fotosekce je skryta bez mezery.
+Bez rucniho commitu na konci mesice. Soubory fotek zustanou ulozene v GitHubu.
+
+TRVALÉ: Opraveny nahledy 7 videi na strankach Memoria, Brandarna, Klipaci.
+Nahledy nyni pouzivaji lokalni WebP soubory z assets/previews;
+prehravac YouTube se dale spousti az po kliknuti jako dosud.
+
+Mimo tyto casti neni menen vzhled, mezery ani obsah webu.
